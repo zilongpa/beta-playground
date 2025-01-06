@@ -1,0 +1,243 @@
+<svg width="3100" height="3000" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="m-231.2665,491.53429l0.27938,-1.49l0.93125,0l0.27937,1.49l-1.49,0z" id="svg_12"/>
+  <g id="svg_27">
+   <path fill="#fff" stroke-width="2" d="m1852.92013,538.56271l28.45218,-37.30299l94.84058,0l28.45217,37.30299l-151.74492,0c0,0 0,0 -0.00001,0z" id="svg_51" stroke="#000" transform="rotate(-180 1928.79 519.912)"/>
+   <path fill="none" stroke="#000" opacity="undefined" d="m1888.22385,501.07199l0,10" id="svg_52"/>
+   <line fill="none" x1="1960.70037" y1="500.9438" x2="1960.70037" y2="510.94379" id="svg_53" stroke="#000"/>
+   <text fill="#000000" stroke="#000" stroke-width="0" x="1886.07152" y="536.28079" id="svg_8" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">RA2SEL</text>
+   <text fill="#000000" stroke="#000" stroke-width="0" x="1885.58372" y="517.7442" id="svg_17" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">0</text>
+   <text fill="#000000" stroke="#000" stroke-width="0" x="1958.26664" y="517.7442" id="svg_22" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">1</text>
+  </g>
+  <g id="svg_106" stroke="null" stroke-width="2">
+   <rect id="svg_104" height="55.88235" width="55.88235" y="957.96972" x="472.94835" fill="none" stroke="#000"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_105" y="996.20501" x="485.88953" fill="#000000" stroke="#000">+4</text>
+  </g>
+  <g id="svg_98">
+   <path id="svg_15" d="m252.3546,722.31392l0.27938,-1.49l0.93125,0l0.27937,1.49l-1.49,0z" stroke-width="0" stroke="#000" fill="#e5e5e5"/>
+   <path stroke-width="2" stroke="#000" id="svg_89" d="m253.29757,736.9289l32.06251,-35.99996l106.87502,0l32.06249,35.99996l-171.00002,0z" fill="#fff" transform="rotate(-180 338.797 718.928)"/>
+   <line stroke="#000" id="svg_93" y2="709.99225" x2="300.441" y1="700.48225" x1="300.441" fill="none"/>
+   <line stroke="#000" id="svg_94" y2="709.99225" x2="376.91158" y1="700.48225" x1="376.91158" fill="none"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_95" y="728.80804" x="303.20118" stroke="#000" fill="#000000">RESET</text>
+   <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" stroke-width="0" id="svg_96" y="716.95283" x="298.08806" stroke="#000" fill="#000000">1</text>
+   <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" stroke-width="0" id="svg_97" y="716.95283" x="374.55864" stroke="#000" fill="#000000">0</text>
+  </g>
+  <g id="svg_120">
+   <g id="svg_113">
+    <g stroke="null" id="svg_61">
+     <path stroke="#000" fill="#fff" stroke-width="2" d="m644.85549,590.1896l-65.25906,50.44121l-217.53014,0l-65.25903,-50.44121l348.0482,0c0,0 0,0 0.00003,0z" id="svg_39"/>
+     <line stroke="#000" fill="none" x1="340.11716" y1="589.91781" x2="340.11716" y2="604.18617" id="svg_45"/>
+     <line stroke="#000" fill="none" x1="406.23572" y1="589.7349" x2="406.23572" y2="604.00325" id="svg_50"/>
+     <path stroke="#000" id="svg_54" d="m479.52581,589.7349l0,14.26836" opacity="undefined" fill="none"/>
+     <line stroke="#000" fill="none" x1="544.67256" y1="589.7349" x2="544.67256" y2="604.00325" id="svg_55"/>
+     <line stroke="#000" fill="none" x1="601.67597" y1="589.7349" x2="601.67597" y2="604.00325" id="svg_56"/>
+     <text transform="matrix(1.26223 0 0 1.42684 53.1935 282.971)" stroke="#000" fill="#000000" stroke-width="0" x="294.13393" y="243.14874" id="svg_29" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">PCSEL</text>
+     <text transform="matrix(1.26223 0 0 1.42684 53.1935 290.663)" stroke="#000" fill="#000000" stroke-width="0" x="224.41992" y="226.57737" id="svg_30" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">4</text>
+     <text transform="matrix(1.26223 0 0 1.42684 53.1935 290.663)" stroke="#000" fill="#000000" stroke-width="0" x="277.56257" y="226.57737" id="svg_57" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">3</text>
+     <text transform="matrix(1.26223 0 0 1.42684 53.1935 290.663)" stroke="#000" fill="#000000" stroke-width="0" x="335.84806" y="226.57737" id="svg_58" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">2</text>
+     <text transform="matrix(1.26223 0 0 1.42684 53.1935 290.663)" stroke="#000" fill="#000000" stroke-width="0" x="387.27643" y="226.57737" id="svg_59" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">1</text>
+     <text transform="matrix(1.26223 0 0 1.42684 53.1935 290.663)" stroke="#000" fill="#000000" stroke-width="0" x="432.41911" y="226.57737" id="svg_60" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">0</text>
+    </g>
+    <line stroke-width="2" id="svg_108" y2="649.96477" x2="469.90376" y1="639.53406" x1="469.90376" stroke="#000" fill="none"/>
+   </g>
+   <line stroke-width="2" id="svg_115" y2="579.66946" x2="339.65774" y1="590.15689" x1="339.65774" stroke="#000" fill="none"/>
+   <line stroke-width="2" id="svg_116" y2="579.66946" x2="406.73038" y1="590.15689" x1="406.73038" stroke="#000" fill="none"/>
+   <line stroke-width="2" id="svg_117" y2="579.66946" x2="479.90053" y1="590.15689" x1="479.90053" stroke="#000" fill="none"/>
+   <line stroke-width="2" id="svg_118" y2="579.66946" x2="544.53417" y1="590.15689" x1="544.53417" stroke="#000" fill="none"/>
+   <line stroke-width="2" id="svg_119" y2="579.66946" x2="601.85079" y1="590.15689" x1="601.85079" stroke="#000" fill="none"/>
+  </g>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_122" y="550.40417" x="202.47241" stroke="#000" fill="#000000">XAddr</text>
+  <path stroke-width="3" fill="none" stroke="#000" opacity="NaN" d="m407.1112,579.89517c0,-54.29898 -34.99644,-54.9944 -35.62106,-55.37904" id="svg_87"/>
+  <text fill="#000000" stroke="#000" stroke-width="0" x="303.55941" y="526.94313" id="svg_103" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">ILLOP</text>
+  <path stroke-width="3" fill="#fff" stroke="#00ffff" opacity="NaN" d="m479.82627,580.50125c0,-69.27866 0,-69.27866 -0.62462,-69.6633" id="svg_109"/>
+  <text fill="#000000" stroke="#000" x="468.11373" y="503.71935" id="svg_111" stroke-width="0" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">JT</text>
+  <path stroke-width="3" id="svg_107" d="m544.82226,581.0028c3,-75 36,-77 35.00004,-77.33334" opacity="NaN" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_123" y="506.36042" x="586.1921" stroke="#000" fill="#000000">PC + 4 + 4*SXTC</text>
+  <line stroke-width="2" id="svg_129" y2="745.66946" x2="337.64873" y1="736.08453" x1="337.64873" stroke="#000" fill="none"/>
+  <path id="svg_130" d="m470.14552,647.75333c0,28.33265 0,28.33265 -0.81185,28.07663c0.81185,0.25601 -92.51922,0.25601 -93.33107,0c0.8115,0 0.81185,24.42209 0.81185,24.42209" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <path id="svg_131" d="m337.64873,743.58435c0,24.16608 0,24.16608 -0.81185,23.91007c0.81185,0.25601 160.86222,0.25601 160.82944,0c0.02608,0 -0.02146,26.08872 0,25.83271" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <line id="svg_132" y2="849.66946" x2="498.47817" y1="839.41536" x1="498.47817" stroke-width="2" stroke="#000" fill="none"/>
+  <path id="svg_133" d="m498.68861,848.91583c0,110.4382 0.86957,110.43478 0.00004,110.14493" opacity="NaN" stroke-width="3" stroke="#000" fill="#fff"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m339.34079,580.0028c0,-38 -53,-37 -53.99997,-37.33334" id="svg_102" stroke-width="3"/>
+  <path fill="none" stroke-width="3" opacity="NaN" d="m498.05635,900.2657c369.84338,0 369.84338,0 369.60882,-0.53792c0.23456,0.53792 0.23456,-226.24088 0,-552.03436c0,0.49367 98.34141,0.53792 98.10169,0" id="svg_124" stroke="#000"/>
+  <path fill="none" stroke="#ff0000" stroke-width="3" opacity="NaN" d="m500.72318,1012.27267c0,78.68286 0,78.68286 -1.65223,78.13364c0.31881,0.53792 212.3362,0.53792 212.0132,-1.33342c0.3203,1.33342 0.31881,-528.82836 0,-529.36628c0,0.53782 -109.02946,0.53792 -109.34014,0c0.31591,0 0.31881,29.87308 0,29.33516" id="svg_126"/>
+  <path stroke="#000" fill="#000000" stroke-width="0" opacity="NaN" d="m805.68538,490.33997" id="svg_136"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m1120.85699,413.29612c0,930.89095 0,932.7091 -0.87878,932.13225" id="svg_125" stroke-width="3"/>
+  <g id="svg_101">
+   <rect stroke="#000" stroke-width="2" id="svg_83" height="65.65513" width="65.65513" y="686.1384" x="2236.23735" fill="#fff"/>
+   <text fill="#000000" stroke="#000" stroke-width="0" x="2236.04666" y="728.46587" id="svg_84" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">WERF</text>
+  </g>
+  <path stroke-width="3" id="svg_85" d="m2136.85703,719.37921c100.005,0 100,1 99.00011,0.66658" opacity="NaN" stroke="#000" fill="#fff"/>
+  <path id="svg_142" d="m1343.34704,690.79038c-220.80906,0 -220.80735,0.86932 -221.67466,0.13261" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <g id="svg_145">
+   <rect id="svg_143" height="56" width="56" y="714.12121" x="965.2508" stroke-width="3" stroke="#000" fill="none"/>
+   <text stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_144" y="751.54857" x="976.3214" stroke-width="0" fill="#000000">+C</text>
+  </g>
+  <path id="svg_146" d="m500.46582,1089.1763c0,37.37302 0,37.37302 -0.47536,37.06484c0.47536,0.30819 425.72456,0.30819 425.24441,0c0.4788,0 0.47535,-382.51412 0,-382.82098c0,0.30782 39.98202,0.30819 39.39319,0" opacity="NaN" stroke-width="3" stroke="#bf00bf" fill="none"/>
+  <path id="svg_148" d="m992.37562,767.97019c0,47.47384 0,47.47384 -0.47535,47.16577c0.47535,0.30807 -180.34056,0.30807 -180.80463,0c0.46723,0 0.47536,-217.87902 0,-317.16566c0,0.30431 -23.78955,0.30808 -24.24196,0" opacity="NaN" stroke-width="3" stroke="#bf00bf" fill="none"/>
+  <path id="svg_149" d="m1020.6579,742.71815c99.99809,0 100.00319,0 99.52274,-1.31815" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <path id="svg_151" d="m1342.70087,616.58056c-42.42343,0 -46.46376,-19.19155 -46.93911,-19.49962" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_152" y="591.41112" x="1268.9649" stroke-width="0" fill="#000000" stroke="#000">XP</text>
+  <g id="svg_82">
+   <rect stroke="#000" stroke-width="2" id="svg_112" height="43" width="207.99542" y="795.59513" x="394.44037" fill="#fff"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_114" y="826.5952" x="399.07808" stroke-width="0" stroke="#000" fill="#000000">Program Counter</text>
+  </g>
+  <path fill="none" stroke="#000" stroke-width="3" opacity="NaN" d="m1552.08206,1169.262c0,96.29195 0,96.29195 -0.30036,95.86599" id="svg_134"/>
+  <path fill="none" stroke="#000" stroke-width="3" opacity="NaN" d="m1899.32854,1168.88544l-0.66442,95.77953" id="svg_138"/>
+  <g id="svg_150">
+   <g id="svg_49">
+    <path fill="#fff" stroke-width="2" d="m1835.50468,1161.18475l23.87901,-35.35177l79.59668,0l23.879,35.35177l-127.35468,0l-0.00001,0z" id="svg_23" stroke="#000" transform="rotate(-180 1899.18 1143.51)"/>
+    <path fill="#fff" stroke="#000" stroke-width="2" opacity="NaN" d="m1865.61234,1124.00157" id="svg_24"/>
+    <line fill="none" stroke="#000" x1="1868.39505" y1="1124.86119" x2="1868.39505" y2="1134.86118" id="svg_25"/>
+    <line fill="none" x1="1929.16427" y1="1125.2458" x2="1929.16427" y2="1135.2458" id="svg_26" stroke="#000"/>
+    <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_13" y="1153.07535" x="1871.93101" stroke-width="0" stroke="#000" fill="#000000">BSEL</text>
+    <text stroke-width="0" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" id="svg_5" y="1142.00157" x="1866.41183" stroke="#000" fill="#000000">1</text>
+    <text stroke-width="0" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" id="svg_7" y="1142.00157" x="1926.87278" stroke="#000" fill="#000000">0</text>
+   </g>
+   <line fill="none" stroke="#000" stroke-width="2" x1="1899.17549" y1="1160.37351" x2="1899.17549" y2="1170" id="svg_135"/>
+  </g>
+  <g id="svg_154">
+   <g id="svg_153">
+    <path fill="#fff" stroke-width="2" d="m1488.14645,1161.82219l23.87901,-35.35177l79.59668,0l23.879,35.35177l-127.35468,0c0,0 0,0 -0.00001,0z" id="svg_10" stroke="#000" transform="rotate(-180 1551.82 1144.15)"/>
+    <path fill="#fff" stroke="#000" stroke-width="2" opacity="NaN" d="m1517.74129,1123.9383" id="svg_14"/>
+    <line fill="none" stroke="#000" x1="1520.524" y1="1125.31073" x2="1520.524" y2="1135.31073" id="svg_18"/>
+    <line fill="none" x1="1581.29321" y1="1125.18254" x2="1581.29321" y2="1135.18253" id="svg_19" stroke="#000"/>
+    <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_9" y="1153.69678" x="1523.67705" stroke-width="0" stroke="#000" fill="#000000">ASEL</text>
+    <text stroke-width="0" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" id="svg_28" y="1142.34973" x="1518.09246" stroke="#000" fill="#000000">1</text>
+    <text stroke-width="0" fill="#000000" stroke="#000" x="1578.90936" y="1142.15727" id="svg_3" font-size="8" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">0</text>
+   </g>
+   <line fill="none" stroke="#000" x1="1551.81947" y1="1161.11422" x2="1551.81947" y2="1171" id="svg_128" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="2"/>
+  </g>
+  <text fill="#000000" stroke="#000" stroke-width="0" x="1493.17728" y="939.44862" id="svg_155" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve"/>
+  <path stroke-width="3" id="svg_156" d="m1435.85705,651.37922c52,0 52,0 51.00009,-0.33343" opacity="NaN" stroke="#000" fill="#fff"/>
+  <path fill="none" stroke="#000" stroke-width="2" opacity="NaN" d="m1581.2046,1032.88005c37.49946,0 37.49946,0 36.272,-0.395" id="svg_160"/>
+  <text fill="#000000" stroke="#000" stroke-width="0" x="1629.95389" y="1042.87991" id="svg_161" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">JT</text>
+  <path fill="none" stroke="#bf00bf" stroke-width="3" opacity="NaN" d="m811.33302,816.44418c0,0 0,292.003 -0.66642,291.55572c0.66642,0.44728 710.00091,0.44424 709.33327,0c0.66695,0 1.99972,20.44423 1.33333,20" id="svg_163"/>
+  <g id="svg_167">
+   <rect fill="none" stroke="#000" stroke-width="2" x="1225.58302" y="1004.44409" width="56" height="56" id="svg_165"/>
+   <text fill="#000000" stroke="#000" stroke-width="0" x="1246.13845" y="1041.9997" id="svg_166" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">Z</text>
+  </g>
+  <path fill="none" stroke="#00ffff" stroke-width="3" opacity="NaN" d="m1579.74939,1032.66621c0,0 -298.6696,0 -299.33303,-0.44424" id="svg_169"/>
+  <path stroke-width="3" id="svg_100" d="m1867.9999,1126.33342c0,-40 0,-40 0,-40c0,0 -748.00599,0 -748.9999,-0.33342" opacity="NaN" stroke="#000" fill="none"/>
+  <g stroke-width="2" id="svg_92">
+   <rect fill="#fff" x="965.21599" y="280.79465" width="319.88895" height="134.1111" id="svg_66" stroke="#000"/>
+   <text fill="#000000" stroke="#000" x="982.54859" y="319.68355" id="svg_69" stroke-width="0" font-size="30" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">Instruction Memory</text>
+   <line fill="none" stroke="#000" x1="965.10273" y1="348.27442" x2="975.21604" y2="348.27442" id="svg_86"/>
+   <text fill="#000000" stroke="#000" x="978.88617" y="355.79747" id="svg_88" stroke-width="0" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">A</text>
+   <line fill="none" stroke="#000" x1="1120.42468" y1="414.16171" x2="1120.42468" y2="404.46131" id="svg_90"/>
+   <text fill="#000000" stroke="#000" x="1112.00363" y="400.47752" id="svg_91" stroke-width="0" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">D</text>
+  </g>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_48" y="399.33332" x="978.99992" stroke-width="0" stroke="#000" fill="#000000">CLK</text>
+  <g id="svg_159">
+   <g id="svg_137">
+    <path transform="rotate(-270 1385.45 652.632)" fill="#fff" stroke-width="2" d="m1311.16863,694.63158l27.85703,-83.99965l92.85679,0l27.85702,83.99965l-148.57084,0z" id="svg_62" stroke="#000"/>
+    <line transform="rotate(-90 1347.85 691.488)" fill="none" stroke-width="2" x1="1347.84355" y1="686.62226" x2="1347.84355" y2="696.3533" id="svg_63" stroke="#000"/>
+    <line transform="rotate(-90 1347.85 617.203)" fill="none" stroke-width="2" x1="1347.84358" y1="612.33686" x2="1347.84358" y2="622.0679" id="svg_64" stroke="#000"/>
+    <text transform="rotate(-90 1362.82 616.559)" stroke="#000" fill="#000000" stroke-width="0" x="1359.88602" y="620.61586" id="svg_65" font-size="10" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">1</text>
+    <text fill="#000000" stroke="#000" stroke-width="0" x="1345.01079" y="665.13877" id="svg_68" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">WASEL</text>
+    <text transform="rotate(-90 1363.01 690.775)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="10" id="svg_81" y="694.83124" x="1360.07756" stroke-width="0" fill="#000000">0</text>
+   </g>
+   <line id="svg_140" y2="651.08879" x2="1436.0093" y1="651.08879" x1="1426.40734" stroke-width="2" stroke="#000" fill="none"/>
+  </g>
+  <g id="svg_164">
+   <line fill="none" stroke="#000" x1="1583.40715" y1="763.01272" x2="1583.40715" y2="773.30075" id="svg_99" stroke-width="2"/>
+   <line fill="none" stroke="#000" x1="1931.71941" y1="761.1081" x2="1931.71941" y2="771.39613" id="svg_110" stroke-width="2"/>
+   <g id="svg_162">
+    <line fill="none" x1="2127.19777" y1="719.43316" x2="2136.90459" y2="719.43316" id="svg_139" stroke="#000" stroke-width="2"/>
+    <g id="svg_158">
+     <g id="svg_80">
+      <path id="svg_70" d="m1487.92523,554.27129l640.40668,0l0,208.43871l-640.40668,0l0,-208.43871z" opacity="undefined" stroke-width="2" stroke="#000" fill="none"/>
+      <text fill="#000000" stroke="#000" stroke-width="0" x="1558.10202" y="590.36344" id="svg_71" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">RA1</text>
+      <text fill="none" stroke="#000" stroke-width="2" x="1909.19215" y="519.39674" id="svg_72" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve"/>
+      <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_16" y="590.53399" x="1906.33242" stroke-width="0" stroke="#000" fill="#000000">RA2</text>
+      <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_34" y="661.63569" x="1496.79397" stroke-width="0" stroke="#000" fill="#000000">WA</text>
+      <text fill="#000000" stroke="#000" stroke-width="0" x="1561.60938" y="746.69412" id="svg_4" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">RD1</text>
+      <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_36" y="746.53399" x="1909.48627" stroke-width="0" stroke="#000" fill="#000000">RD2</text>
+      <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="48" id="svg_37" y="664.86731" x="1652.48627" stroke-width="0" stroke="#000" fill="#000000">Register File</text>
+      <path id="svg_38" d="m1577.07632,553.14927l0,10.39678" opacity="undefined" stroke="#000" fill="none"/>
+      <path id="svg_67" d="m1928.92767,553.14928l0,10.39677" opacity="undefined" stroke="#000" fill="none"/>
+      <line id="svg_73" y2="752.53399" x2="1583.74298" y1="762.03786" x1="1583.74298" stroke="#000" fill="none"/>
+      <line id="svg_74" y2="752.53399" x2="1931.89062" y1="762.03786" x1="1931.89062" stroke="#000" fill="none"/>
+      <line id="svg_75" y2="649.53399" x2="1497.48633" y1="649.44543" x1="1487.44682" stroke="#000" fill="none"/>
+      <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_76" y="728.70458" x="2069.6682" stroke="#000" fill="#000000">WE</text>
+      <line id="svg_77" y2="719.35728" x2="2117.48633" y1="719.35728" x1="2127.81639" stroke="#000" fill="none"/>
+      <line id="svg_78" y2="619.8336" x2="2117.71488" y1="619.8336" x1="2127.81639" stroke="#000" fill="none"/>
+      <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_79" y="628.40502" x="2073.53075" stroke-width="0" stroke="#000" fill="#000000">WD</text>
+     </g>
+     <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_33" y="740.69679" x="1497.63628" stroke-width="0" stroke="#000" fill="#000000">CLK</text>
+    </g>
+   </g>
+  </g>
+  <path id="svg_168" d="m1583.10435,771.89743c0,356.16954 -1.90462,355.21213 -2.26749,354.68691" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <path id="svg_170" d="m1931.65029,770.94512c0,356.16954 -1.90462,355.21214 -2.26749,354.68691" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m1576.92238,553.31092c0,-68.70041 -0.86956,-68.6949 -1.28734,-68.96836c0.41778,0.27346 -456.10229,0.27346 -456.51678,0" id="svg_172" stroke-width="3"/>
+  <path fill="#fff" stroke="#000" opacity="NaN" d="m1928.84635,553.3649c0,-15.12298 -0.84017,-15.96315 -1.50613,-16.49899" id="svg_174" stroke-width="3"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m1573.45624,483.63115c314.22311,0 314.22199,-0.84017 313.55602,-1.37601c0.66597,0.53584 1.50613,19.01949 1.50613,19.01949" id="svg_175" stroke-width="3"/>
+  <path fill="none" stroke="#000" stroke-width="3" opacity="NaN" d="m1887.67823,481.95081c72.27379,0 72.27379,0 71.58829,1.14449c0.66597,0.53584 0.66597,17.33916 0,16.80331" id="svg_176"/>
+  <g id="svg_181">
+   <rect fill="#fff" stroke="#000" stroke-width="3" x="967.62016" y="1348.00874" width="211.76244" height="58.8229" id="svg_179"/>
+   <text fill="#000000" stroke="#000" stroke-width="0" x="1002.93043" y="1386.24362" id="svg_180" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">control logic</text>
+  </g>
+  <g id="svg_127">
+   <g id="svg_147">
+    <g id="svg_11" stroke="null">
+     <path id="svg_2" d="m1921.79111,1265.30879l-74.79433,176.07066l-249.31443,0l-74.79427,-176.07066l398.90304,0l-0.00001,0z" stroke-width="2" fill="#fff" stroke="#000"/>
+     <path stroke-width="2" fill="#fff" d="m1752.93406,1265.75042l-31.71046,52.42307l-31.71046,-52.42307l63.42092,0l-0.00001,0l0.00001,0z" id="svg_6" stroke="#000"/>
+     <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_31" y2="1275.56307" x2="1551.46247" y1="1264.97325" x1="1551.46247" fill="none" stroke="#000"/>
+     <line id="svg_32" y2="1275.56307" x2="1899.13974" y1="1264.26233" x1="1899.13974" fill="none" stroke="#000"/>
+    </g>
+    <text fill="#000000" stroke-width="0" x="1547.96248" y="1294.97551" id="svg_20" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(1.11145 0 0 1.11145 -178.286 -140.791)">A</text>
+    <text fill="#000000" stroke-width="0" x="1862.14426" y="1295" id="svg_21" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(1.11145 0 0 1.11145 -178.286 -140.791)">B</text>
+    <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="48" id="svg_1" y="1383.26724" x="1667.43802" stroke-width="0" fill="#000000" stroke="#000" transform="matrix(1.11145 0 0 1.11145 -178.286 -140.791)">ALU</text>
+   </g>
+   <line fill="none" stroke="#000" x1="1722.33962" y1="1440.33341" x2="1722.33962" y2="1450" id="svg_157" stroke-width="2"/>
+  </g>
+  <path id="svg_121" d="m2038.52505,1297.16826l582.5,0l0,225l-582.5,0l0,-225z" opacity="undefined" stroke-width="2" stroke="#000" fill="#fff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_177" y="1495.23199" x="2559.64494" stroke-width="0" stroke="#000" fill="#000000">CLK</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_178" y="1327.73228" x="2280.47781" stroke-width="0" stroke="#000" fill="#000000">WD</text>
+  <line id="svg_183" y2="1305.67095" x2="2301.82833" y1="1295.88836" x1="2301.82833" stroke="#000" fill="none"/>
+  <path stroke="#000" id="svg_184" d="m2605.02853,1323.75961" opacity="NaN" fill="none"/>
+  <line id="svg_185" y2="1323.10889" x2="2609.81119" y1="1323.10889" x1="2620.04756" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_186" y="1332.5527" x="2568.62381" stroke="#000" fill="#000000">WE</text>
+  <path stroke="#000" id="svg_188" d="m2620.76239,1409.66817l-10.23636,0" opacity="undefined" fill="none"/>
+  <text fill="#000000" stroke="#000" stroke-width="0" x="2576.2823" y="1419.2053" id="svg_187" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">OE</text>
+  <text fill="#000000" stroke="#000" stroke-width="0" x="2171.09593" y="1414.12563" id="svg_189" font-size="48" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">Data Memory</text>
+  <line fill="none" stroke="#000" x1="2038.15555" y1="1483.06586" x2="2048.52603" y2="1483.06586" id="svg_190"/>
+  <text fill="#000000" stroke="#000" stroke-width="0" x="2050.74815" y="1492.69549" id="svg_191" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve">A</text>
+  <line fill="none" stroke="#000" x1="2306.62264" y1="1521.58438" x2="2306.62264" y2="1511.21401" id="svg_192"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_193" y="1506.80123" x="2289.6481" stroke-width="0" stroke="#000" fill="#000000">RD</text>
+  <path stroke="#000000" id="svg_197" d="m2038.13863,1482.10343c-315.3621,0 -316.31769,0 -317.13966,-0.50599" opacity="NaN" stroke-width="3" fill="none"/>
+  <g id="svg_198">
+   <g id="svg_182">
+    <path transform="rotate(-180 1724.58 1632.04)" stroke="#000" fill="#fff" stroke-width="2" d="m1634.0153,1649.71211l33.96473,-35.35177l113.21575,0l33.96472,35.35177l-181.14518,0l-0.00001,0l-0.00001,0z" id="svg_35"/>
+    <line id="svg_40" y2="1621.5378" x2="1680.0814" y1="1611.77275" x1="1680.0814" stroke="#000" fill="none"/>
+    <path id="svg_41" d="m1762.90078,1611.77275l0,9.76506" opacity="undefined" stroke="#000" fill="none"/>
+    <line id="svg_42" y2="1621.5378" x2="1723.2532" y1="1611.77275" x1="1723.2532" stroke="#000" fill="none"/>
+    <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_43" y="1641.58677" x="1683.53317" stroke-width="0" stroke="#000" fill="#000000">WDSEL</text>
+    <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" id="svg_44" y="1628.27091" x="1677.61331" stroke-width="0" stroke="#000" fill="#000000">0</text>
+    <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" id="svg_46" y="1628.54294" x="1720.55222" stroke-width="0" stroke="#000" fill="#000000">1</text>
+    <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="8" id="svg_47" y="1628.71984" x="1760.62852" stroke-width="0" stroke="#000" fill="#000000">2</text>
+   </g>
+   <line id="svg_173" y2="1659.11115" x2="1722.4969" y1="1649.0527" x1="1722.4969" stroke-width="2" stroke="#000" fill="none"/>
+  </g>
+  <path id="svg_199" d="m1722.85963,1612.97379c0,-163.55824 0,-163.55824 -0.83712,-163.83083" opacity="NaN" stroke-width="3" stroke="#000" fill="#fff"/>
+  <path id="svg_200" d="m2305.90661,1521.44897c0,50.84712 0,49.99967 -0.83711,49.72708c0.83711,0.27259 -542.38029,0.27259 -543.21675,0c0.83682,0 0.83712,41.79774 0,41.52515" opacity="NaN" stroke-width="3" stroke="#000" fill="none"/>
+  <path stroke="#ff0000" id="svg_202" d="m1679.46413,1612.40988c0,-39.53497 0,-39.60331 -2.70037,-40.31348c0.38846,0.77851 -1176.3765,0.77851 -1176.76269,-2.32559c0.38745,2.32559 0.38846,-448.06569 0,-448.83817" opacity="NaN" stroke-width="3" fill="none"/>
+  <path id="svg_204" d="m2302.24298,1295.81184c0,-385.2243 0,-385.2243 -1.12438,-385.59159c1.12438,0.36729 -370.47062,0.36729 -371.58804,0" opacity="NaN" stroke-width="3" stroke="#000000" fill="none"/>
+  <line id="svg_205" y2="1322.68038" x2="2630" y1="1322.68038" x1="2620.25267" stroke-width="2" stroke="#000000" fill="none"/>
+  <line id="svg_206" y2="1409.66827" x2="2630" y1="1409.66827" x1="2620.25267" stroke-width="2" stroke="#000000" fill="none"/>
+  <g id="svg_212">
+   <rect id="svg_209" height="56" width="56" y="1381.47725" x="2680.87092" stroke-width="2" stroke="#000000" fill="none"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_211" y="1419.04518" x="2680.76809" stroke-width="0" stroke="#000" fill="#000000">MOE</text>
+  </g>
+  <g id="svg_213">
+   <rect id="svg_208" height="56" width="56" y="1294.25421" x="2680.68018" stroke-width="2" stroke="#000000" fill="none"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_210" y="1331.82199" x="2676.87437" stroke="#000" fill="#000000">MWR</text>
+  </g>
+  <path id="svg_214" d="m2627.61263,1322.71877c53.15133,0 53.15133,0 52.80084,-0.92902" opacity="NaN" stroke-width="3" stroke="#000000" fill="none"/>
+  <path id="svg_216" d="m2629.71053,1409.94181c51.05362,0 51.04883,-0.6993 50.70294,-0.92902" opacity="NaN" stroke-width="3" stroke="#000000" fill="none"/>
+  <path id="svg_218" d="m2127.74172,618.75763c697.67395,0 697.67395,0 696.51227,-0.7742c1.16168,0.7742 1.16168,1100.77346 0,1099.99929c0,0.77479 -1101.17298,0.77417 -1102.32487,-2.32558c1.15488,2.32558 1.16171,-57.36532 0,-58.1395" opacity="NaN" stroke-width="3" stroke="#000000" fill="none"/>
+ </g>
+
+</svg>

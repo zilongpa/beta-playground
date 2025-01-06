@@ -1,0 +1,82 @@
+html,
+body,
+#app,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  /* overflow: hidden; */
+}
+
+.mosaic {
+  height: calc(100% - 50px);
+}
+
+.editorGlyphMarginClassPC {
+  padding-left: 20px;
+}
+
+.editorGlyphMarginClassPC::before {
+  color: rgb(119, 148, 157);
+  content: "PC";
+  font-weight: 500;
+  transform: translateX(10%);
+  position: absolute;
+  top: 50%;
+  padding-right: 20px;
+  transform: translateY(-55%);
+}
+
+.editorGlyphMarginClassPC::after {
+  color: rgb(119, 148, 157);
+  content: "➡";
+  font-size: x-large;
+  transform: translateX(10%);
+  position: absolute;
+  padding-left: 25px;
+  top: 50%;
+  transform: translateY(-55%);
+}
+
+.editorContentClassPC {
+  background: rgb(119, 148, 157, 0.2);
+}
+
+.editorGlyphMarginClassXP {
+  padding-left: 20px;
+}
+
+.editorGlyphMarginClassXP::before {
+  color: rgb(157, 119, 119);
+  content: "XP";
+  font-weight: 500;
+  transform: translateX(10%);
+  position: absolute;
+  top: 50%;
+  padding-right: 20px;
+  transform: translateY(-55%);
+}
+
+.editorGlyphMarginClassXP::after {
+  color: rgb(157, 119, 119);
+  content: "➡";
+  font-size: x-large;
+  transform: translateX(10%);
+  position: absolute;
+  padding-left: 25px;
+  top: 50%;
+  transform: translateY(-55%);
+}
+
+.editorContentClassXP {
+  background: rgba(230, 173, 173, 0.2);
+}
+
+div > div > div.monaco-menu {
+  z-index: 999999 !important; /* 确保菜单位于最上层 */
+}
+
+/* 全局覆盖 Mosaic 的默认样式，让内容可以溢出显示 */
+.mosaic-window-body {
+  overflow: visible !important;
+}
