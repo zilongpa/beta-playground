@@ -728,7 +728,7 @@ function executeALUFN(A: number, B: number, alufn: string): number {
   }
 }
 
-function simulate(
+export function simulate(
   buffer: ArrayBuffer,
   programCounter: number = 0,
   registers: number[] = new Array(32).fill(0),

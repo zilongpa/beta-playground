@@ -1,5 +1,5 @@
 // import { invoke } from "@tauri-apps/api/core";
-import { assemble } from "./emulator";
+import { assemble, simulate } from "./emulator";
 
 import {
   Navbar,
@@ -29,9 +29,9 @@ import Beta from "./BetaVisualization";
 
 import "./App.css"; // Must be the last css import
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Table2, Column } from "@blueprintjs/table";
 import BetaVisualization from "./BetaVisualization";
 import AssemblyEditor from "./AssemblyEditor";
+import MemoryViewer from "./MemoryViewer";
 
 const data = ((length) => {
   var array = new Uint8Array(length);
@@ -191,6 +191,10 @@ HALT()`;
   //   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
   //   setGreetMsg(await invoke("greet", { name }));
 
+  const renderMemoryViewer= useCallback(() => {
+    return <MemoryViewer buffer={buffer} />;
+  }, [buffer]);
+
   const COMPONENT_MAP = {
     a: () => (
       <div style={{ width: "100%", height: "100%" }}>
@@ -198,46 +202,18 @@ HALT()`;
       </div>
     ),
     c: () => <ScrollableTable />,
-    d: () => {
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "white",
-            overflowX: "auto",
-            flex: 1,
-            justifyContent: "center",
-          }}
-        >
-          <HexEditor
-            height="100%"
-            width="calc(100%);"
-            data={buffer}
-            showFooter={false}
-          />
-        </div>
-      );
-    },
+    d: () => renderMemoryViewer(),
     e: () => <MyTree />,
     b: () => (
       <AssemblyEditor
         defaultValue={assemblyCode}
         onChange={(val, viewUpdate) => {
-          console.log("val:", val);
           assemblyCode = val;
         }}
       />
     ),
     new: () => <h1>New</h1>,
   };
-  //   return <AssemblyEditor
-  //   defaultValue={assemblyCode}
-  //   onChange={(val, viewUpdate) => {
-  //     console.log("val:", val);
-  //     assemblyCode = val;
-  //   }}
-  // />;
 
   return (
     <div id="app">
@@ -256,7 +232,6 @@ HALT()`;
               onClick={async () => {
                 try {
                   setBuffer(assemble(assemblyCode));
-                  setNonce((v) => v + 1); // Trigger re-render of HexEditor
                   (
                     await OverlayToaster.createAsync({
                       position: "top",

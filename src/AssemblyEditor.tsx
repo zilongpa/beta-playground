@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import CodeMirror, { ReactCodeMirrorRef, ViewUpdate } from "@uiw/react-codemirror";
 import {EditorView} from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript"; // todo: replace with custom lang support
@@ -22,7 +22,6 @@ function AssemblyEditor({ defaultValue, onChange }: AssemblyEditorProps) {
         height: "100%",
         backgroundColor: "grey",
         display: "flex",
-        // flexDirection: "column",
       }}
     >
       <CodeMirror
@@ -37,4 +36,4 @@ function AssemblyEditor({ defaultValue, onChange }: AssemblyEditorProps) {
     </div>
   );
 }
-export default AssemblyEditor;
+export default memo(AssemblyEditor);
