@@ -1,5 +1,10 @@
 # Beta Playground
 
+## Main Todo:
+
+## QOL Todo
+1. replace js lang support with custom lang support
+
 An app designed for students to explore and study the `Beta Processor`, facilitating hands-on learning and experimentation with processor architecture and instruction execution.
 
 Author:

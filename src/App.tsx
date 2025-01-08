@@ -26,6 +26,7 @@ import "./App.css"; // Must be the last css import
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Table2, Column } from "@blueprintjs/table";
 import BetaVisualization from "./BetaVisualization";
+import AssemblyEditor from "./AssemblyEditor";
 
 const data = ((length) => {
   var array = new Uint8Array(length);
@@ -253,30 +254,55 @@ a: () => (
         </div>
     ),
     c: () => <ScrollableTable />,
-    d: () => <HexEditor />,
+    d: () =>
+    {
+      const [size, setSize] = useState({ width: 0, height: 0 });
+
+      useEffect(() => {
+        const updateSize = () => {
+          const node = document.querySelector(".react-mosaic-window");
+          if (node) {
+            const { width, height } = node.getBoundingClientRect();
+            setSize({ width, height });
+            console.log(`Memory size changed: ${width} x ${height}`); // 尺寸变化时弹出提示
+          }
+        };
+        updateSize();
+        window.addEventListener("resize", updateSize);
+        return () => window.removeEventListener("resize", updateSize);
+      }, []);
+
+      return <div style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "white",
+        display: "flex",
+      }}><HexEditor height="100%" width="100%"/></div>;
+    },
     e: () => <MyTree />,
     b: () => (
-      // <div style={{ zIndex: 1000 }}>
-      <Editor
-        height="100vh"
-        options={{
-          // fixedOverflowWidgets: true,
-          contextmenu: true,
-          glyphMargin: true,
-          useShadowDOM: false,
-        }}
-        beforeMount={handleEditorWillMount}
-        onMount={handleEditorDidMount}
-        defaultLanguage="javascript"
-        defaultValue="LD(R1,0x0,R3)
-ADD(R1,R2,R3)
-JMP(R2,0x3)
-XORC(R1,R2,0b10101010)"
-      />
+        <AssemblyEditor />
+//       <Editor
+//         height="100vh"
+//         options={{
+//           // fixedOverflowWidgets: true,
+//           contextmenu: true,
+//           glyphMargin: true,
+//           useShadowDOM: false,
+//         }}
+//         beforeMount={handleEditorWillMount}
+//         onMount={handleEditorDidMount}
+//         defaultLanguage="javascript"
+//         defaultValue="LD(R1,0x0,R3)
+// ADD(R1,R2,R3)
+// JMP(R2,0x3)
+// XORC(R1,R2,0b10101010)"
+//       />
       // </div>
     ),
     new: () => <h1>New</h1>,
   };
+  // return <AssemblyEditor />;
 
   return (
     <div id="app">

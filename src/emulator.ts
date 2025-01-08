@@ -790,6 +790,216 @@ function simulate(
   let WERF = 0;
   let WASEL = 0;
 
+  let PCSEL = 0;
+  let XP=null;
+
+  let frames = [{
+    flags: {
+      z: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      }
+    },
+    registers: Array(32).fill(0),
+    buffer: new ArrayBuffer(128),
+    mux: {
+      pcsel: {
+        value: 0,
+        dirty: true,
+        description: "PCSEL is set to 0 before the first instruction",
+        focus: false,
+      },
+      wdsel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      wasel: {
+        value: 0,
+        dirty: true,
+        description: "Usually WASEl is set to 0 or N/A, unless an exception occurs",
+        focus: false,
+      },
+      asel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      ra2sel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      bsel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      reset: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      }
+    },
+    gate: {
+      nor: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+    },
+    cu: {
+      alufn: {
+        value: null,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      ra2sel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      asel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      bsel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      wdsel: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      mwr: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      moe: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      werf: {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      }
+    },
+    path: {
+      "alu-to-data-memory": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "alu-to-wdsel": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "asel-to-alu": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "bsel-to-alu": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "data-memory-to-wdsel": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "instruction-memory-to-control-logic": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "pc-to-instruction-memory": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "pc-to-plus-four": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "plus-four-to-wdsel": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "ra2sel-to-register-file": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "register-file-to-bsel": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "register-file-to-data-memory": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "reset-to-pc": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "wasel-to-register-file": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      },
+      "wdsel-to-register-file": {
+        value: 0,
+        dirty: true,
+        description: null,
+        focus: false,
+      }
+    }
+  }];
+
   for (let step = 0; step <= maximumStep; step += 1) {
     // Fetch
     console.log("\n#Fetch#");
@@ -1091,6 +1301,10 @@ function simulate(
 
         programCounter = pcpf;
         break;
+      } else {
+        console.log("No instruction found for opcode " + opcode.toString(2));
+        XP=programCounter;
+        // PCSEL=3;
       }
     }
   }
