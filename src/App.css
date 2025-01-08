@@ -75,8 +75,3 @@ body,
 div > div > div.monaco-menu {
   z-index: 999999 !important; /* 确保菜单位于最上层 */
 }
-
-/* 全局覆盖 Mosaic 的默认样式，让内容可以溢出显示 */
-.mosaic-window-body {
-  overflow: visible !important;
-}

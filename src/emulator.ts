@@ -557,13 +557,14 @@ jsep.addIdentifierChar(":");
 
 const HALT_OPCODE = instructionSet.HALT.opcode;
 
-function assemble(
+export function assemble(
   assemblyCode: string,
   buffer: ArrayBuffer = new ArrayBuffer(128),
   offset: number = 0,
   ensureHaltAtEnd: boolean = true,
   littleEndian: boolean = false
 ) {
+  console.log("Assembling code...", assemblyCode);
   function canBeUint16(number: number): boolean {
     return number >= -32768 && number <= 32767 && Number.isInteger(number);
   }
@@ -856,7 +857,7 @@ function simulate(
         focus: false,
       },
     },
-    cu: {
+    cl: {
       alufn: {
         value: null,
         dirty: true,
@@ -999,6 +1000,8 @@ function simulate(
       }
     }
   }];
+
+  frames[0].path["register-file-to-bsel"]
 
   for (let step = 0; step <= maximumStep; step += 1) {
     // Fetch
@@ -1312,13 +1315,13 @@ function simulate(
   // todo: XP, Z, WASEL after the exam :(
 }
 
-let asm = `
-ADDC(R31, 6, R1) | 6
-SUBC(R31, 18, R2) | -18
-ADD(R1, R2, R3) | write R1+R2 to R3
-HALT()
-`;
+// let asm = `
+// ADDC(R31, 6, R1) | 6
+// SUBC(R31, 18, R2) | -18
+// ADD(R1, R2, R3) | write R1+R2 to R3
+// HALT()
+// `;
 
-let asmed = assemble(asm);
-console.log(asmed);
-console.log(simulate(asmed, 0));
+// let asmed = assemble(asm);
+// console.log(asmed);
+// console.log(simulate(asmed, 0));

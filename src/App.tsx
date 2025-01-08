@@ -1,4 +1,6 @@
 // import { invoke } from "@tauri-apps/api/core";
+import { assemble } from "./emulator";
+
 import {
   Navbar,
   Alignment,
@@ -8,10 +10,13 @@ import {
   Tree,
   Icon,
   HotkeysProvider,
+  Toaster,
+  OverlayToaster,
+  Intent,
 } from "@blueprintjs/core";
 import { Mosaic, MosaicWindow } from "react-mosaic-component";
 import "react-mosaic-component/react-mosaic-component.css";
-import debounce from 'lodash/debounce';
+import debounce from "lodash/debounce";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import Editor from "@monaco-editor/react";
@@ -154,6 +159,12 @@ const TITLE_MAP: Record<ViewId, string> = {
 };
 
 function App() {
+  let assemblyCode = `ADDC(R31, 6, R1) | 6
+SUBC(R31, 18, R2) | -18
+ADD(R1, R2, R3) | write R1+R2 to R3
+HALT()`;
+  const [buffer, setBuffer] = useState<ArrayBuffer>(new ArrayBuffer(1024));
+
   const [nonce, setNonce] = useState(0);
   // The callback facilitates updates to the source data.
   const handleSetValue = useCallback(
@@ -164,76 +175,9 @@ function App() {
     [data]
   );
 
-  function handleEditorWillMount(monaco: any) {
-    // here is the monaco instance
-    // do something before editor is mounted
-    monaco.languages.typescript.javascriptDefaults.setEagerModelSync(true);
-  }
-
-  function handleEditorDidMount(editor: any, monaco: any) {
-    // here is another way to get monaco instance
-    // you can also store it in `useRef` for further usage
-    var decorations = editor.createDecorationsCollection([
-      {
-        range: new monaco.Range(3, 1, 3, 1),
-        options: {
-          isWholeLine: true,
-          className: "editorContentClassPC",
-          glyphMarginClassName: "editorGlyphMarginClassPC",
-        },
-      },
-    ]);
-
-    monacoRef.current = monaco;
-  }
-
-  const monacoRef = useRef(null);
-  // const mosaicRef = useRef(null);
-  // const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const elementRef = useRef(null); // 创建 ref
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  // useEffect(() => {
-  //   if (elementRef.current) {
-  //     const rect = elementRef.current.getBoundingClientRect();
-  //     setSize({ width: rect.width, height: rect.height });
-  //   }
-  // }, []); 
-  // useEffect(() => {
-  //   // 创建 ResizeObserver
-  //   const observer = new ResizeObserver((entries) => {
-  //     if (entries[0]) {
-  //       const { width, height } = entries[0].contentRect;
-  //       setDimensions({ width, height });
-  //       alert(`Mosaic size changed: ${width} x ${height}`); // 尺寸变化时弹出提示
-  //     }
-  //   });
-
-  //   if (mosaicRef.current) {
-  //     observer.observe(mosaicRef.current); // 监听 Mosaic 的 DOM 元素
-  //   }
-
-  //   return () => {
-  //     observer.disconnect(); // 组件卸载时清除监听器
-  //   };
-  // }, []);
-  // useEffect(() => {
-  //   const updateSize = () => {
-  //     if (mosaicRef.current) {
-  //       const { offsetWidth: width, offsetHeight: height } = mosaicRef.current;
-  //       setDimensions({ width, height });
-  //     }
-  //   };
-
-  //   updateSize(); // 初始化时获取尺寸
-
-  //   // 监听窗口大小变化
-  //   window.addEventListener('resize', updateSize);
-  //   return () => window.removeEventListener('resize', updateSize);
-  // }, []);
-
   const handleLayoutChange = useCallback((newLayout: any) => {
     // Handle layout changes here if needed
-    console.log('Layout changed:', newLayout);
+    console.log("Layout changed:", newLayout);
     //     if (elementRef.current) {
     //   const rect = elementRef.current.getBoundingClientRect();
     //   setSize({ width: rect.width, height: rect.height });
@@ -248,61 +192,52 @@ function App() {
   //   setGreetMsg(await invoke("greet", { name }));
 
   const COMPONENT_MAP = {
-a: () => (
-  <div style={{ width: '100%', height: '100%' }}>
-    <BetaVisualization/>
-        </div>
+    a: () => (
+      <div style={{ width: "100%", height: "100%" }}>
+        <BetaVisualization />
+      </div>
     ),
     c: () => <ScrollableTable />,
-    d: () =>
-    {
-      const [size, setSize] = useState({ width: 0, height: 0 });
-
-      useEffect(() => {
-        const updateSize = () => {
-          const node = document.querySelector(".react-mosaic-window");
-          if (node) {
-            const { width, height } = node.getBoundingClientRect();
-            setSize({ width, height });
-            console.log(`Memory size changed: ${width} x ${height}`); // 尺寸变化时弹出提示
-          }
-        };
-        updateSize();
-        window.addEventListener("resize", updateSize);
-        return () => window.removeEventListener("resize", updateSize);
-      }, []);
-
-      return <div style={{
-        width: "100%",
-        height: "100%",
-        backgroundColor: "white",
-        display: "flex",
-      }}><HexEditor height="100%" width="100%"/></div>;
+    d: () => {
+      return (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "white",
+            overflowX: "auto",
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <HexEditor
+            height="100%"
+            width="calc(100%);"
+            data={buffer}
+            showFooter={false}
+          />
+        </div>
+      );
     },
     e: () => <MyTree />,
     b: () => (
-        <AssemblyEditor />
-//       <Editor
-//         height="100vh"
-//         options={{
-//           // fixedOverflowWidgets: true,
-//           contextmenu: true,
-//           glyphMargin: true,
-//           useShadowDOM: false,
-//         }}
-//         beforeMount={handleEditorWillMount}
-//         onMount={handleEditorDidMount}
-//         defaultLanguage="javascript"
-//         defaultValue="LD(R1,0x0,R3)
-// ADD(R1,R2,R3)
-// JMP(R2,0x3)
-// XORC(R1,R2,0b10101010)"
-//       />
-      // </div>
+      <AssemblyEditor
+        defaultValue={assemblyCode}
+        onChange={(val, viewUpdate) => {
+          console.log("val:", val);
+          assemblyCode = val;
+        }}
+      />
     ),
     new: () => <h1>New</h1>,
   };
-  // return <AssemblyEditor />;
+  //   return <AssemblyEditor
+  //   defaultValue={assemblyCode}
+  //   onChange={(val, viewUpdate) => {
+  //     console.log("val:", val);
+  //     assemblyCode = val;
+  //   }}
+  // />;
 
   return (
     <div id="app">
@@ -315,7 +250,36 @@ a: () => (
           <Button className="bp5-minimal" icon="floppy-disk" text="Save" />
           <Navbar.Divider />
           <ButtonGroup large={false}>
-            <Button icon="manually-entered-data" intent="primary">
+            <Button
+              icon="manually-entered-data"
+              intent="primary"
+              onClick={async () => {
+                try {
+                  setBuffer(assemble(assemblyCode));
+                  setNonce((v) => v + 1); // Trigger re-render of HexEditor
+                  (
+                    await OverlayToaster.createAsync({
+                      position: "top",
+                    })
+                  ).show({
+                    message: "Successfully assembled the code",
+                    icon: "tick",
+                    intent: Intent.SUCCESS,
+                  });
+                } catch (error: any) {
+                  console.log(error);
+                  (
+                    await OverlayToaster.createAsync({
+                      position: "top",
+                    })
+                  ).show({
+                    message: `An error occurred during the assembly process: ${error.message}`,
+                    icon: "warning-sign",
+                    intent: Intent.DANGER,
+                  });
+                }
+              }}
+            >
               Write ASM to RAM
             </Button>
             <Button icon="fast-backward" intent="warning">
