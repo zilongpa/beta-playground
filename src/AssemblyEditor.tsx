@@ -20,7 +20,6 @@ function AssemblyEditor({ defaultValue, onChange }: AssemblyEditorProps) {
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: "grey",
         display: "flex",
       }}
     >
@@ -36,4 +35,4 @@ function AssemblyEditor({ defaultValue, onChange }: AssemblyEditorProps) {
     </div>
   );
 }
-export default memo(AssemblyEditor);
+export default AssemblyEditor;

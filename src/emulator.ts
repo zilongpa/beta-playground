@@ -31,6 +31,7 @@ const instructionSet = {
     ALUFN: "A+B",
     PCSEL: 0,
     RA2SEL: 0,
+    WASEL = 0,
     ASEL: 0,
     BSEL: 1,
     WDSEL: 2,
@@ -723,6 +724,84 @@ function executeALUFN(A: number, B: number, alufn: string): number {
       }
       return result;
     }
+    case "A MUL B": {
+      const result = (A * B) | 0;
+      if (A !== 0 && B !== 0 && (result / A !== B)) { 
+        console.log("Arithmetic overflow in multiplication");
+      }
+      return result;
+    }
+    case "A DIV B": {
+      if (B === 0) {
+        console.log("Division by zero is an error.");
+        return 0;
+      }
+      const result = (A / B) | 0; 
+      return result;
+    }
+    case "A AND B": {
+      const result = A & B;
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Bitwise AND operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A OR B": {
+      const result = A | B;
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Bitwise OR operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A XOR B": {
+      const result = A ^ B;
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Bitwise XOR operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A NAND B": {
+      const result = ~(A & B) | 0; 
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Bitwise NAND operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A NOR B": {
+      const result = ~(A | B) | 0; 
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Bitwise NOR operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A SHL B": { 
+      const result = (A << B) | 0;
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Shift Left Logical operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A SRL B": { 
+      const result = (A >>> B) | 0;
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Shift Right Logical operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A SLA B": {
+      const result = (A << B) | 0;
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Shift Left Arithmetic operation may result in overflow.");
+      }
+      return result;
+    }
+    case "A SRA B": { 
+      const result = (A >> B) | 0;
+      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
+        console.log("Shift Right Arithmetic operation may result in overflow.");
+      }
+      return result;
+    }
     default:
       throw new Error(`Unknown ALUFN: ${alufn}`);
   }
@@ -809,43 +888,43 @@ export function simulate(
       pcsel: {
         value: 0,
         dirty: true,
-        description: "PCSEL is set to 0 before the first instruction",
+        description: "Usually PCSEL is set to 0, selecting PC + 4, unless a branch or jump occurs.",
         focus: false,
       },
       wdsel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually WDSEL is set to 0 or N/A, unless an exception or special instruction requires writing to PC.",
         focus: false,
       },
       wasel: {
         value: 0,
         dirty: true,
-        description: "Usually WASEl is set to 0 or N/A, unless an exception occurs",
+        description: "Usually WASEL is set to 0 or N/A, unless an exception occurs",
         focus: false,
       },
       asel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually ASEL is set to 0, selecting RD1 as the source for A, unless a branch/jump requires using PC + 4 + 4 * SXT(C).",
         focus: false,
       },
       ra2sel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually RA2SEL is set to 0 or 1, unless an exception occurs",
         focus: false,
       },
       bsel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually BSEL is set to 0, selecting RD2 as the source for B, unless an immediate value is required (in which case BSEL = 1).",
         focus: false,
       },
       reset: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually reset is set to 0, with no reset behavior, unless a reset signal is triggered by an external event.",
         focus: false,
       }
     },
@@ -861,49 +940,49 @@ export function simulate(
       alufn: {
         value: null,
         dirty: true,
-        description: null,
+        description: "Usually ALUFN is set to N/A, unless a specific ALU operation (ADD, SUB, etc.) is required by the instruction.",
         focus: false,
       },
       ra2sel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually RA2SEL is set to 0 or 1, unless an exception occurs",
         focus: false,
       },
       asel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually ASEL is set to 0, selecting RD1 as the source for A, unless a branch/jump requires using PC + 4 + 4 * SXT(C).",
         focus: false,
       },
       bsel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually BSEL is set to 0, selecting RD2 as the source for B, unless an immediate value is required.",
         focus: false,
       },
       wdsel: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually WDSEL is set to 0 or N/A, unless an exception or special instruction requires writing to PC.",
         focus: false,
       },
       mwr: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually MWR is set to 0, meaning no memory write occurs, unless the instruction specifies writing data to memory.",
         focus: false,
       },
       moe: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually MOE is set to 0, meaning no memory read occurs, unless the instruction requires reading from memory.",
         focus: false,
       },
       werf: {
         value: 0,
         dirty: true,
-        description: null,
+        description: "Usually WERF is set to 0, meaning no register write occurs, unless the instruction specifies writing data to a register.",
         focus: false,
       }
     },
@@ -1006,6 +1085,7 @@ export function simulate(
   for (let step = 0; step <= maximumStep; step += 1) {
     // Fetch
     console.log("\n#Fetch#");
+    const newFrame = { ...frames[frames.length - 1] };
     console.log(
       "Program Counter:",
       "0x" + programCounter.toString(16),
@@ -1021,10 +1101,44 @@ export function simulate(
     );
     const opcode = instruction >>> 26;
     console.log("Opcode:", opcode.toString(2).padStart(6, "0"));
+
+    
+    let pcselDescription = "PCSEL default value is 0 (PC + 4)."
+
+    for (const [key, value] of Object.entries(instructionSet)) {
+      if (value.PCSEL === null) {
+        newFrame.mux.pcsel.value = 0;
+      } else if (Array.isArray(value.PCSEL)) {
+        const condition = RD1 === RD2;
+        newFrame.mux.pcsel.value = condition ? value.PCSEL[1] : value.PCSEL[0];
+        pcselDescription = `PCSEL is set to ${newFrame.mux.pcsel.value}, selecting ${condition ? "branch target" : "PC + 4 + SXT"}`;
+        //branch if equal to 1
+      } else {
+        newFrame.mux.pcsel.value = value.PCSEL;
+        switch (value.PCSEL) {
+          case 0:
+            pcselDescription = "PCSEL is set to 0 to select PC + 4 as the next program counter value. This is the default behavior, where the program continues to the next instruction";
+            break;
+          case 1:
+            pcselDescription = "PCSEL is set to 1 to select the branch target address. This is used for BEQ/BNE instructions. When a branch instruction is executed, the PC is changed to a calculated branch target, using the offset provided by the instruction."
+            break;
+          case 2:
+            pcselDescription = "PCSEL is set to 2 to select the jump target address. This is used in unconditional jump instructions. When a jump is executed, PCSEL switches to 2 to select the jump target, overriding the normal PC + 4.";
+            break;
+          default:
+            pcselDescription = `PCSEL is set to an unknown value (${value.PCSEL}).`;
+            break;
+        }
+      }
+    }
     if (opcode === HALT_OPCODE) {
       console.log("Halt opcode detected, stopping simulation");
       break;
     }
+    newFrame.mux.pcsel.dirty = true;
+    newFrame.mux.pcsel.description = pcselDescription;
+    frames.push(newFrame);
+    programCounter = pcpf;
     // Decode
     console.log("\n#Decode#");
     for (const [key, value] of Object.entries(instructionSet)) {
@@ -1034,7 +1148,9 @@ export function simulate(
           key
         );
 
+        const newFrame_dec = { ...frames[frames.length - 1] };
         let params = [0, 0, 0, 0]; // [literal, Ra, Rb, Rc]
+        let decodeDescription = `Decoding instruction ${key}:\n`;
         if (value.mf != null) {
           let cursor = 26;
           value.mf
@@ -1050,12 +1166,14 @@ export function simulate(
                 params[0] = uint16ToTwosComplement(
                   (instruction >>> (cursor -= 16)) & 0xffff
                 );
+                decodeDescription += `Parameter ${index} Literal: ${params[0]}\n`;
                 console.log("Parameter", index, "Literal:", params[0]);
               } else {
                 params[parseInt(bit)] =
                   (instruction >>> (cursor -= 5)) & 0b11111;
                 switch (bit) {
                   case "1":
+                    decodeDescription += `Parameter ${index} Ra: R${params[parseInt(bit)]}\n`;
                     console.log(
                       "Parameter",
                       index,
@@ -1064,6 +1182,7 @@ export function simulate(
                     );
                     break;
                   case "2":
+                    decodeDescription += `Parameter ${index} Rb: R${params[parseInt(bit)]}\n`;
                     console.log(
                       "Parameter",
                       index,
@@ -1072,6 +1191,7 @@ export function simulate(
                     );
                     break;
                   case "3":
+                    decodeDescription += `Parameter ${index} Rc: R${params[parseInt(bit)]}\n`;
                     console.log(
                       "Parameter",
                       index,
@@ -1095,10 +1215,12 @@ export function simulate(
           getRegisterValue(params[1])
         );
         console.log("[CU signal]", "RA2SEL:", RA2SEL);
+        let ra2selDescription = "";
         switch (value.RA2SEL) {
           case 0:
             RA2SEL = 0;
             RD2 = getRegisterValue(params[2]);
+            ra2selDescription = `RA2SEL = 0: Select Rb as the second operand (RD2 = R${params[2]}), selecting the second operand from register RD2`;
             console.log(
               "[MUX]",
               "RD2=Rb=R" + params[2],
@@ -1109,6 +1231,7 @@ export function simulate(
           case 1:
             RA2SEL = 1;
             RD2 = getRegisterValue(params[3]);
+            ra2selDescription = `RA2SEL is set to 1: Select Rc as the second operand (RD2 = R${params[3]}), selecting an immediate value (literal) for the second operand.`;
             console.log(
               "[MUX]",
               "RD2=Rc=R" + params[3],
@@ -1117,6 +1240,7 @@ export function simulate(
             );
             break;
           default:
+            ra2selDescription = `RA2SEL has an unknown value: ${value.RA2SEL}. Using dirty value from the previous instruction.`;
             console.log(
               "[MUX]",
               "RD2 not selected, use dirty value",
@@ -1125,20 +1249,39 @@ export function simulate(
             );
             break;
         }
+        
+        if (value.WASEL === 1) {
+          newFrame_dec.mux.wasel.description = "WASEL is set to 1 because the operation has triggered an Exception. Normally, WASEL is 0 to write the result to Rc, but when an Exception occurs, WASEL is switched to 1 to store the Program Counter (PC) to the XP register."
+          console.log("WASEL is set to 1, storing PC to XP due to Exception.");
+        } else {
+          newFrame_dec.mux.wasel.description = "WASEL is set to 0 to write the result to the target register Rc. The result of the ALU or memory operation is written to a specific register."
+        }
+
+        newFrame_dec.mux.wasel.dirty = true;
+        newFrame_dec.mux.ra2sel.value = value.RA2SEL;
+        newFrame_dec.mux.ra2sel.dirty = true;
+        newFrame_dec.mux.ra2sel.description = ra2selDescription;
+        frames.push(newFrame_dec);
 
         // Execute
         console.log("\n#Execute#");
+        const newFrame_exe = { ...frames[frames.length - 1] };
         console.log("[CU signal]", "ASEL:", value.ASEL);
-        switch (value.ASEL) {
+        let aselDescription = "";
+        const aselValue = value.ASEL !== null ? value.ASEL : 0; 
+        switch (aselValue) {
           case 0:
             A = RD1;
+            aselDescription = "ASEL is set to 0 to select the first operand from the register file RD1. This is common for most arithmetic or logic operations.";
             console.log("[MUX]", "A=RD1=" + A);
             break;
           case 1:
             A = pcpf + params[0] * 4;
+            aselDescription = "ASEL is set to 1 to select the Program Counter (PC) + 4 + 4 * SXT(C) as the first operand. This occurs in branch and jump instructions, used for calculate the target address for the jump or branch.";
             console.log("[MUX]", "A=(PC+4)+4*SXT(C)" + A);
             break;
           default:
+            aselDescription = "ASEL not selected, using dirty value for A.";
             console.log(
               "[MUX]",
               "A not selected, use dirty value",
@@ -1147,18 +1290,26 @@ export function simulate(
             );
             break;
         }
+        newFrame_exe.mux.asel.value = aselValue;
+        newFrame_exe.mux.asel.dirty = true;
+        newFrame_exe.mux.asel.description = aselDescription;
 
         console.log("[CU signal]", "BSEL:", value.BSEL);
-        switch (value.BSEL) {
+        let bselDescription = "";
+        const bselValue = value.BSEL !== null ? value.BSEL : 0;
+        switch (bselValue) {
           case 0:
             B = RD2;
+            bselDescription = "BSEL is set to 0 to select the second operand from the register file RD2. This is default for most arithmetic and logical instructions";
             console.log("[MUX]", "B=RD2=" + B);
             break;
           case 1:
             B = params[0];
+            bselDescription = "BSEL is set to 1 to select an immediate value (literal) as the second operand. This occurs in instructions like OPC, where one operand is from a register and the second operand is a constant value provided by the instruction.";
             console.log("[MUX]", "B=Literal=" + B);
             break;
           default:
+            bselDescription = "BSEL not selected, using dirty value for B.";
             console.log(
               "[MUX]",
               "B not selected, use dirty value",
@@ -1167,11 +1318,18 @@ export function simulate(
             );
             break;
         }
+        newFrame_exe.mux.bsel.value = bselValue;
+        newFrame_exe.mux.bsel.dirty = true;
+        newFrame_exe.mux.bsel.description = bselDescription;
+
+        let alufnDescription = "ALUFN default value is null.";
 
         if (value.ALUFN != null) {
           ALUFN = value.ALUFN;
+          alufnDescription = `ALUFN is set to ${ALUFN}, performing ALU operation.`;
           console.log("Excute ALUFN:", ALUFN);
         } else {
+          alufnDescription = "ALUFN not selected, using dirty value for ALU operation.";
           console.log(
             "[MUX]",
             "ALUFN not selected, use dirty value",
@@ -1179,23 +1337,31 @@ export function simulate(
             "from previous instruction"
           );
         }
+        newFrame_exe.cl.alufn.value = value.ALUFN;
+        newFrame_exe.cl.alufn.dirty = true;
+        newFrame_exe.cl.alufn.description = alufnDescription;
 
         aluo = executeALUFN(A, B, ALUFN); //todo: ensure the output is two complement
         console.log("ALU output:", aluo);
 
         console.log("\n#Memory#");
+        let mwrDescription = "";
+        const mwrValue = value.MWR !== null ? value.MWR : 0; 
         mWD = RD2;
         Adr = aluo;
-        switch (value.MWR) {
+        switch (mwrValue) {
           case 0:
             MWR = 0;
+            mwrDescription = "MWR is set to 0 to disable memory write. This is the default behavior that do not involve memory operations, ensuring no data is written to memory.";
             console.log("MWR==0, no memory write");
             break;
           case 1:
             MWR = 1;
+            mwrDescription = "MWR is set to 1 to enable memory write. This occurs in store instructions, such as ST. The result of the operation needs to be written to a specific address in memory.";
             console.log("MWR==1, memory write");
             break;
           default:
+            mwrDescription = "MWR not selected, using dirty value for memory write.";
             console.log(
               "MWR not selected, use dirty value",
               MWR,
@@ -1203,22 +1369,30 @@ export function simulate(
             );
             break;
         }
+        newFrame_exe.cl.mwr.value = mwrValue;
+        newFrame_exe.cl.mwr.dirty = true;
+        newFrame_exe.cl.mwr.description = mwrDescription;
 
         if (MWR == 1) {
           console.log("Write data", mWD, " to memory address:", Adr);
           memory.setUint32(Adr, mWD, littleEndian); // todo: ensure the output is two complement
         }
 
-        switch (value.MOE) {
+        let moeDescription = "MOE default value is 0 (no memory read).";
+        const moeValue = value.MOE !== null ? value.MOE : 0;
+        switch (moeValue) {
           case 0:
             MOE = 0;
+            moeDescription = "MOE is set to 0, no memory read. This indicates the instruction do not require reading from memory, ensuring that memory is not accessed unless necessary.";
             console.log("MWR==0, no memory read");
             break;
           case 1:
             MOE = 1;
+            moeDescription = "MOE is set to 1, memory read enabled. This occurs in load instructions, such as LD. Data from memory needs to be read and loaded into a register.";
             console.log("MWR==1, memory read");
             break;
           default:
+            moeDescription = "MOE not selected, using dirty value for memory read.";
             console.log(
               "MOE not selected, use dirty value",
               MOE,
@@ -1226,6 +1400,9 @@ export function simulate(
             );
             break;
         }
+        newFrame_exe.cl.moe.value = moeValue;
+        newFrame_exe.cl.moe.dirty = true;
+        newFrame_exe.cl.moe.description = moeDescription;
 
         if (MOE == 1) {
           RD = uint16ToTwosComplement(memory.getUint32(Adr, littleEndian));
@@ -1234,10 +1411,13 @@ export function simulate(
 
         console.log("\n#Write Back#");
         console.log("[CU signal]", "WDSEL:", value.WDSEL);
+        let wdselDescription = "";
         if (value.WDSEL != null) {
           WDSEL = value.WDSEL;
           console.log("[MUX]", "WDSEL=" + WDSEL);
         } else {
+          WDSEL = 0;
+          wdselDescription = "WDSEL is null, defaulting to the value of 0."
           console.log(
             "[MUX]",
             "WDSEL not selected, use dirty value",
@@ -1248,17 +1428,21 @@ export function simulate(
         switch (WDSEL) {
           case 0:
             rWD = pcpf;
+            wdselDescription = "WDSEL is set to 0 to select (PC + 4) as the data to write back to the register file. This is typically used when the program counter is written back to the register file after executing a jump or return instruction.";
             console.log("[MUX]", "rWD=(PC+4)=" + rWD);
             break;
           case 1:
             rWD = aluo;
+            wdselDescription = "WDSEL is set to 1 to select the ALU output as the data to write back to the register file. This is the default in most arithmetic or logical instructions.";
             console.log("[MUX]", "rWD=ALU output=" + rWD);
             break;
           case 2:
             rWD = RD;
+            wdselDescription = "WDSEL is set to 2 to select the data read from memory as the value to write back to the register file. This solely happens in LD instructions, where data from memory is written back to a register.";
             console.log("[MUX]", "rWD=RD(memory read)=" + rWD);
             break;
           default:
+            wdselDescription = "WDSEL not selected, using dirty value for write data.";
             console.log(
               "[MUX]",
               "rWD not selected, use dirty value",
@@ -1267,13 +1451,22 @@ export function simulate(
             );
             break;
         }
+        newFrame_exe.mux.wdsel.value = value.WDSEL;
+        newFrame_exe.mux.wdsel.dirty = true;
+        newFrame_exe.mux.wdsel.description = wdselDescription;
 
+        newFrame_exe.cl.wdsel.value = value.WDSEL;
+        newFrame_exe.cl.wdsel.dirty = true;
+        newFrame_exe.cl.wdsel.description = wdselDescription;
 
+        let werfDescription = "";
 
         if (value.WERF != null) {
             WERF = value.WERF;
             console.log("WERF=" + WERF);
           } else {
+            WERF = 0;
+            werfDescription = "WERF is null, select default value of 0."
             console.log(
               "WERF not selected, use dirty value",
               WERF,
@@ -1283,14 +1476,17 @@ export function simulate(
           switch (WERF) {
             case 0:
               console.log("No register write back");
+              werfDescription = "WERF is set to 0, no register write back. This is the instructions that do not write data back to a register, such as memory load instructions or conditional branch instructions.";
               break;
             case 1:
             // Currently, ignore XP
               console.log("Write value",rWD,"to register","R"+params[3]);
               setRegisterValue(params[3], rWD);
+              werfDescription = "WERF is set to 1, writing back to register. This occurs when an instruction requires the result to be written back into a register, such as in arithmetic, logical instructions.";
               break;
 
             default:
+              werfDescription = "WERF not selected, using dirty value for register write.";
               console.log(
                 "WERF not selected, use dirty value",
                 WERF,
@@ -1299,8 +1495,9 @@ export function simulate(
               break;
           }
           console.log("\n\n");
-
-
+          newFrame_exe.cl.werf.value = WERF;
+          newFrame_exe.cl.werf.dirty = true;
+          newFrame_exe.cl.werf.description = werfDescription;
 
         programCounter = pcpf;
         break;
