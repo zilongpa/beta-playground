@@ -18,6 +18,7 @@
     "@jsep-plugin/numbers": "^1.0.2",
     "@tauri-apps/api": "^2.2.0",
     "@tauri-apps/plugin-shell": "^2.2.0",
+    "@tauri-apps/plugin-store": "~2",
     "@types/lodash": "^4.17.14",
     "@types/react-svg-pan-zoom": "^3.3.9",
     "@uiw/react-codemirror": "^4.23.7",

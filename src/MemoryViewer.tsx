@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { HexEditor } from "hex-editor-react";
+import "hex-editor-react/dist/hex-editor.css";
 
 interface MemoryViewerProps {
   buffer: ArrayBuffer;
@@ -11,7 +12,8 @@ function MemoryViewer({ buffer }: MemoryViewerProps) {
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: "white",
+        overflowY: "auto",
+        overflowX: "hidden",
       }}
     >
       <HexEditor
@@ -20,6 +22,8 @@ function MemoryViewer({ buffer }: MemoryViewerProps) {
         data={buffer}
         showFooter={false}
         readonly={false}
+        dataBase={2}
+        bytesPerLine={2}
       />
     </div>
   );

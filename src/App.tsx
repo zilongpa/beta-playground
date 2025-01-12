@@ -1,6 +1,3 @@
-// import { invoke } from "@tauri-apps/api/core";
-import { assemble, simulate } from "./emulator";
-
 import {
   Navbar,
   Alignment,
@@ -9,29 +6,50 @@ import {
   HTMLTable,
   Tree,
   Icon,
-  HotkeysProvider,
-  Toaster,
   OverlayToaster,
   Intent,
 } from "@blueprintjs/core";
-import { Mosaic, MosaicWindow } from "react-mosaic-component";
-import "react-mosaic-component/react-mosaic-component.css";
-import debounce from "lodash/debounce";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
-import Editor from "@monaco-editor/react";
-// import HexEditor from 'react-hex-editor';
-// import oneDarkPro from 'react-hex-editor/themes/index';
-import { HexEditor } from "hex-editor-react";
-import "hex-editor-react/dist/hex-editor.css";
-import Beta from "./BetaVisualization";
-// draggle
 
-import "./App.css"; // Must be the last css import
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Mosaic, MosaicWindow } from "react-mosaic-component";
+import "react-mosaic-component/react-mosaic-component.css";
+
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
+import "./App.css";
+
 import BetaVisualization from "./BetaVisualization";
 import AssemblyEditor from "./AssemblyEditor";
 import MemoryViewer from "./MemoryViewer";
+import { assemble, simulate } from "./emulator";
+
+const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1) | 6
+SUBC(R31, 18, R2) | -18
+ADD(R1, R2, R3) | write R1+R2 to R3
+HALT()`;
+const getItem = (key: string, defaultValue: any = null): any => {
+  const value = localStorage.getItem(key);
+  if (value === null && defaultValue !== null) {
+    return defaultValue;
+  }
+  return value !== null ? value : defaultValue;
+};
+
+const setItem = (key: string, value: string): void => {
+  if (value === "") {
+    localStorage.removeItem(key);
+  } else {
+    localStorage.setItem(key, value);
+  }
+};
 
 const data = ((length) => {
   var array = new Uint8Array(length);
@@ -119,100 +137,82 @@ const ScrollableTable = () => {
   const rows = [];
   for (let i = 0; i <= 31; i++) {
     rows.push(
-      <tr key={i}>
-        <td>{`R${i}`}</td>
-        <td>
-          <div className="bp5-input-group" style={{ width: "200px" }}>
-            <span>{`0x${[...crypto.getRandomValues(new Uint8Array(4))]
-              .map((b) => b.toString(16).padStart(2, "0"))
-              .join("")}`}</span>{" "}
-          </div>
-        </td>
-      </tr>
+      <div
+        key={i}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "0.2em 1em",
+          width: "8em",
+          overflowX: "hidden",
+        }}
+      >
+        <b>{`R${i}: `}</b>
+        <span>{` 0x${[...crypto.getRandomValues(new Uint8Array(4))]
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("")}`}</span>
+      </div>
     );
   }
 
   return (
-    <div style={{ maxHeight: "100%", width: "100%", overflowY: "auto" }}>
-      <HTMLTable compact={true} bordered={true} striped={true} width={"10%"}>
-        <thead>
-          <tr>
-            <th>Register</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </HTMLTable>
+    <div
+      style={{
+        maxHeight: "100%",
+        width: "100%",
+        overflowY: "auto",
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+      }}
+    >
+      {rows}
     </div>
   );
 };
 
-export type ViewId = "a" | "b" | "c" | "d" | "e" | "new";
+export type ViewId =
+  | "processor"
+  | "assembly"
+  | "registers"
+  | "memory"
+  | "timeline"
+  | "new";
 
 const TITLE_MAP: Record<ViewId, string> = {
-  a: "Processor",
-  b: "Assembly Editor",
-  c: "Registers",
-  d: "Memory",
-  e: "Timeline",
-  new: "New Window",
+  processor: "Processor",
+  assembly: "Assembly Editor",
+  registers: "Registers",
+  memory: "Memory",
+  timeline: "Timeline",
+  new: "Empty Window",
 };
 
 function App() {
-  let assemblyCode = `ADDC(R31, 6, R1) | 6
-SUBC(R31, 18, R2) | -18
-ADD(R1, R2, R3) | write R1+R2 to R3
-HALT()`;
+  const assemblyCodeRef = useRef<string>(DEFAULT_ASSEMBLY_CODE);
   const [buffer, setBuffer] = useState<ArrayBuffer>(new ArrayBuffer(1024));
-
-  const [nonce, setNonce] = useState(0);
-  // The callback facilitates updates to the source data.
-  const handleSetValue = useCallback(
-    (offset: number, value: number) => {
-      data[offset] = value;
-      setNonce((v) => v + 1);
-    },
-    [data]
-  );
-
-  const handleLayoutChange = useCallback((newLayout: any) => {
-    // Handle layout changes here if needed
-    console.log("Layout changed:", newLayout);
-    //     if (elementRef.current) {
-    //   const rect = elementRef.current.getBoundingClientRect();
-    //   setSize({ width: rect.width, height: rect.height });
-    // }
-  }, []);
-
-  // const [greetMsg, setGreetMsg] = useState("");
-  // const [name, setName] = useState("");
-
-  // async function greet() {
-  //   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  //   setGreetMsg(await invoke("greet", { name }));
-
-  const renderMemoryViewer= useCallback(() => {
-    return <MemoryViewer buffer={buffer} />;
-  }, [buffer]);
+  const [frames, setFrames] = useState<any>(null);
 
   const COMPONENT_MAP = {
-    a: () => (
+    processor: () => (
       <div style={{ width: "100%", height: "100%" }}>
         <BetaVisualization />
       </div>
     ),
-    c: () => <ScrollableTable />,
-    d: () => renderMemoryViewer(),
-    e: () => <MyTree />,
-    b: () => (
+    assembly: () => (
       <AssemblyEditor
-        defaultValue={assemblyCode}
+        defaultValue={getItem("assemblyCode", DEFAULT_ASSEMBLY_CODE)}
         onChange={(val, viewUpdate) => {
-          assemblyCode = val;
+          assemblyCodeRef.current = val;
+          setItem("assemblyCode", val);
         }}
       />
     ),
-    new: () => <h1>New</h1>,
+    registers: () => <ScrollableTable />,
+    memory: () => <MemoryViewer buffer={buffer} />,
+    timeline: () => <MyTree />,
+
+    new: () => <h1>I am an empty window.</h1>,
   };
 
   return (
@@ -221,17 +221,19 @@ HALT()`;
         <Navbar.Group align={Alignment.LEFT}>
           <Navbar.Heading>Beta Playground</Navbar.Heading>
           <Navbar.Divider />
-          <Button className="bp5-minimal" icon="home" text="New" />
+          {/* <Button className="bp5-minimal" icon="home" text="New" />
           <Button className="bp5-minimal" icon="document-open" text="Open" />
           <Button className="bp5-minimal" icon="floppy-disk" text="Save" />
-          <Navbar.Divider />
+          <Navbar.Divider /> */}
           <ButtonGroup large={false}>
             <Button
               icon="manually-entered-data"
               intent="primary"
               onClick={async () => {
                 try {
-                  setBuffer(assemble(assemblyCode));
+                  let assembled = assemble(assemblyCodeRef.current);
+                  console.log(assemblyCodeRef.current);
+                  let simulation = simulate(assembled);
                   (
                     await OverlayToaster.createAsync({
                       position: "top",
@@ -241,6 +243,8 @@ HALT()`;
                     icon: "tick",
                     intent: Intent.SUCCESS,
                   });
+                  setBuffer(assembled);
+                  console.log(simulation);
                 } catch (error: any) {
                   console.log(error);
                   (
@@ -258,25 +262,24 @@ HALT()`;
               Write ASM to RAM
             </Button>
             <Button icon="fast-backward" intent="warning">
-              Rewind
+              Previous Instruction
             </Button>
             <Button icon="play" intent="success">
-              Play
+              Next Step
             </Button>
             <Button icon="fast-forward" intent="success">
-              Forward
+              Next Instruction
             </Button>
             <Button icon="reset" intent="danger">
               Reset
             </Button>
-            <Button icon="cog"></Button>
+            <Button icon="cog" disabled={true}></Button>
           </ButtonGroup>
         </Navbar.Group>
       </Navbar>
       <Mosaic<ViewId>
         renderTile={(id, path) => {
-          const Component =
-            COMPONENT_MAP[id] || (() => <div>Unknown Component</div>);
+          const Component = COMPONENT_MAP[id];
           return (
             <MosaicWindow<ViewId>
               path={path}
@@ -291,25 +294,24 @@ HALT()`;
           direction: "row",
           first: {
             direction: "column",
-            first: "a",
+            first: "processor",
             second: {
               direction: "row",
-              first: "c",
-              second: "d",
-              splitPercentage: 30,
+              first: "memory",
+              second: "registers",
+              splitPercentage: 54,
             },
             splitPercentage: 70,
           },
           second: {
             direction: "column",
-            first: "b",
-            second: "e",
-            splitPercentage: 60,
+            first: "assembly",
+            second: "timeline",
+            splitPercentage: 50,
           },
-          splitPercentage: 60,
+          splitPercentage: 65,
         }}
         blueprintNamespace="bp5"
-        onChange={handleLayoutChange}
       />
     </div>
   );

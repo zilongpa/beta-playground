@@ -35,4 +35,4 @@ function AssemblyEditor({ defaultValue, onChange }: AssemblyEditorProps) {
     </div>
   );
 }
-export default AssemblyEditor;
+export default memo(AssemblyEditor);

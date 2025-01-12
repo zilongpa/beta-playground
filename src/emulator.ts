@@ -31,7 +31,7 @@ const instructionSet = {
     ALUFN: "A+B",
     PCSEL: 0,
     RA2SEL: 0,
-    WASEL = 0,
+    WASEL: 0,
     ASEL: 0,
     BSEL: 1,
     WDSEL: 2,
@@ -565,7 +565,6 @@ export function assemble(
   ensureHaltAtEnd: boolean = true,
   littleEndian: boolean = false
 ) {
-  console.log("Assembling code...", assemblyCode);
   function canBeUint16(number: number): boolean {
     return number >= -32768 && number <= 32767 && Number.isInteger(number);
   }
@@ -733,7 +732,7 @@ function executeALUFN(A: number, B: number, alufn: string): number {
     }
     case "A DIV B": {
       if (B === 0) {
-        console.log("Division by zero is an error.");
+        console.log("Division by zero is an error."); // todo: 到这一步才应该把WASEl设置为1
         return 0;
       }
       const result = (A / B) | 0; 
@@ -847,7 +846,7 @@ export function simulate(
   }
 
   const memory = new DataView(buffer);
-  const result: string[] = [];
+  // const result: string[] = [];
 
   let pcpf = 0;
   let RA2SEL = 0;
@@ -1508,7 +1507,7 @@ export function simulate(
       }
     }
   }
-  return result;
+  return frames;
   // todo: XP, Z, WASEL after the exam :(
 }
 
