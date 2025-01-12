@@ -7,6 +7,7 @@
 3. reminder for dirty value
 4. setting panel
 5. layout fix
+inf. support macro
 
 An app designed for students to explore and study the `Beta Processor`, facilitating hands-on learning and experimentation with processor architecture and instruction execution.
 

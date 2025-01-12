@@ -26,10 +26,11 @@ import {
 
 import "./App.css";
 
+import { assemble, simulate } from "./emulator";
 import BetaVisualization from "./BetaVisualization";
 import AssemblyEditor from "./AssemblyEditor";
 import MemoryViewer from "./MemoryViewer";
-import { assemble, simulate } from "./emulator";
+import Registers from "./Registers";
 
 const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
 SUBC(R31, 18, R2)
@@ -51,12 +52,6 @@ const setItem = (key: string, value: string): void => {
     localStorage.setItem(key, value);
   }
 };
-
-const data = ((length) => {
-  var array = new Uint8Array(length);
-  window.crypto.getRandomValues(array);
-  return array;
-})(100);
 
 const MyTree = () => {
   return (
@@ -134,44 +129,6 @@ const MyTree = () => {
   );
 };
 
-const ScrollableTable = () => {
-  const rows = [];
-  for (let i = 0; i <= 31; i++) {
-    rows.push(
-      <div
-        key={i}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          margin: "0.2em 1em",
-          width: "8em",
-          overflowX: "hidden",
-        }}
-      >
-        <b>{`R${i}: `}</b>
-        <span>{` 0x${[...crypto.getRandomValues(new Uint8Array(4))]
-          .map((b) => b.toString(16).padStart(2, "0"))
-          .join("")}`}</span>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      style={{
-        maxHeight: "100%",
-        width: "100%",
-        overflowY: "auto",
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-      }}
-    >
-      {rows}
-    </div>
-  );
-};
-
 export type ViewId =
   | "processor"
   | "assembly"
@@ -215,10 +172,9 @@ function App() {
         }}
       />
     ),
-    registers: () => <ScrollableTable />,
+    registers: () => <Registers values={[1]} />,
     memory: () => <MemoryViewer buffer={buffer} />,
     timeline: () => <MyTree />,
-
     new: () => <h1>I am an empty window.</h1>,
   };
 
@@ -322,16 +278,16 @@ function App() {
       <Mosaic<ViewId>
         renderTile={(id, path) => {
           const Component = COMPONENT_MAP[id];
-          return (
+            return (
             <MosaicWindow<ViewId>
               path={path}
               createNode={() => "new"}
               title={TITLE_MAP[id]}
               toolbarControls={[]}
             >
-              <Component />
+              <Component key={id} />
             </MosaicWindow>
-          );
+            );
         }}
         initialValue={JSON.parse(
           getItem(
