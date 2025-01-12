@@ -1,6 +1,7 @@
 # Beta Playground
 
 ## Todo
+0. support nagetive constant
 1. replace js lang support with custom lang support
 2. allow RAM edit
 3. reminder for dirty value

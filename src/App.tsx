@@ -31,10 +31,10 @@ import AssemblyEditor from "./AssemblyEditor";
 import MemoryViewer from "./MemoryViewer";
 import { assemble, simulate } from "./emulator";
 
-const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1) | 6
-SUBC(R31, 18, R2) | -18
+const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
+SUBC(R31, 18, R2)
 ADD(R1, R2, R3) | write R1+R2 to R3
-HALT()`;
+HALT() | exit`;
 const getItem = (key: string, defaultValue: any = null): any => {
   const value = localStorage.getItem(key);
   if (value === null && defaultValue !== null) {

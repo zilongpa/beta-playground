@@ -873,6 +873,15 @@ export function simulate(
   let XP=null;
 
   let frames = [{
+    offsetOfInstruction: 0x00, // 目前正在运行的这条指令本身的位置
+    titleOfInstruction: "ADD(R1, R2, R3)",
+    descriptionOfInstruction: "write R1+R2 to R3",
+    iconOfInstruction: "cog", // 暂时都用cog就行
+    titleOfStep: "Fetch: Read instruction from memory",
+    descriptionOfStep: "Read the instruction from the memory at the address specified by the program counter at 0x0.",
+    iconOfStep: "cog", // 花里胡哨的图标，从https://blueprintjs.com/docs/#icons/icons-list 里面找你觉得能对应上的
+    exception : false, // 这一步是否运行出错，error handle不会exception，只有没找到对应的instruction或者除以0的时候这个会变成true
+    exitingDueToException: false, // 是不是在进行error handle的部分
     flags: {
       z: {
         value: 0,
@@ -883,6 +892,7 @@ export function simulate(
     },
     registers: Array(32).fill(0),
     buffer: new ArrayBuffer(128),
+    programCounter: 0, // 当前的PC，在没有jump和error handle的情况下应该和offsetOfInstruction相同
     mux: {
       pcsel: {
         value: 0,
