@@ -345,7 +345,7 @@ function App() {
                   direction: "row",
                   first: "memory",
                   second: "registers",
-                  splitPercentage: 54,
+                  splitPercentage: 50,
                 },
                 splitPercentage: 70,
               },
