@@ -35,6 +35,7 @@ const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
 SUBC(R31, 18, R2)
 ADD(R1, R2, R3) | write R1+R2 to R3
 HALT() | exit`;
+
 const getItem = (key: string, defaultValue: any = null): any => {
   const value = localStorage.getItem(key);
   if (value === null && defaultValue !== null) {
@@ -191,12 +192,18 @@ const TITLE_MAP: Record<ViewId, string> = {
 function App() {
   const assemblyCodeRef = useRef<string>(DEFAULT_ASSEMBLY_CODE);
   const [buffer, setBuffer] = useState<ArrayBuffer>(new ArrayBuffer(1024));
-  const [frames, setFrames] = useState<any>(null);
+  const [frames, setFrames] = useState<any>([]);
+  const [currentFrame, setCurrentFrame] = useState<number>(0);
 
   const COMPONENT_MAP = {
     processor: () => (
       <div style={{ width: "100%", height: "100%" }}>
-        <BetaVisualization />
+        <textarea style={{ width: "100%", height: "100%" }} readOnly={true}>
+          {frames.length > 0
+            ? JSON.stringify(frames[currentFrame], null, 2)
+            : "点那个蓝色按钮开始模拟,之后用Previous Step和Next Step来切换frame"}
+        </textarea>
+        {/* <BetaVisualization /> */}
       </div>
     ),
     assembly: () => (
@@ -222,9 +229,9 @@ function App() {
           <Navbar.Heading>Beta Playground</Navbar.Heading>
           <Navbar.Divider />
           {/* <Button className="bp5-minimal" icon="home" text="New" />
-          <Button className="bp5-minimal" icon="document-open" text="Open" />
-          <Button className="bp5-minimal" icon="floppy-disk" text="Save" />
-          <Navbar.Divider /> */}
+        <Button className="bp5-minimal" icon="document-open" text="Open" />
+        <Button className="bp5-minimal" icon="floppy-disk" text="Save" />
+        <Navbar.Divider /> */}
           <ButtonGroup large={false}>
             <Button
               icon="manually-entered-data"
@@ -244,6 +251,8 @@ function App() {
                     intent: Intent.SUCCESS,
                   });
                   setBuffer(assembled);
+                  setFrames(simulation);
+                  setCurrentFrame(0);
                   console.log(simulation);
                 } catch (error: any) {
                   console.log(error);
@@ -261,13 +270,46 @@ function App() {
             >
               Write ASM to RAM
             </Button>
-            <Button icon="fast-backward" intent="warning">
+            <Button
+              icon="fast-backward"
+              intent="warning"
+              disabled={
+                frames.length === 0 || frames === null || currentFrame === 0
+              }
+            >
               Previous Instruction
             </Button>
-            <Button icon="play" intent="success">
+            <Button
+              icon="step-backward"
+              intent="warning"
+              disabled={
+                frames.length === 0 || frames === null || currentFrame === 0
+              }
+              onClick={() => setCurrentFrame(currentFrame - 1)}
+            >
+              Previous Step
+            </Button>
+            <Button
+              icon="play"
+              intent="success"
+              disabled={
+                frames.length === 0 ||
+                frames === null ||
+                currentFrame === frames.length - 1
+              }
+              onClick={() => setCurrentFrame(currentFrame + 1)}
+            >
               Next Step
             </Button>
-            <Button icon="fast-forward" intent="success">
+            <Button
+              icon="fast-forward"
+              intent="success"
+              disabled={
+                frames.length === 0 ||
+                frames === null ||
+                currentFrame === frames.length - 1
+              }
+            >
               Next Instruction
             </Button>
             <Button icon="reset" intent="danger">
@@ -285,32 +327,39 @@ function App() {
               path={path}
               createNode={() => "new"}
               title={TITLE_MAP[id]}
+              toolbarControls={[]}
             >
               <Component />
             </MosaicWindow>
           );
         }}
-        initialValue={{
-          direction: "row",
-          first: {
-            direction: "column",
-            first: "processor",
-            second: {
+        initialValue={JSON.parse(
+          getItem(
+            "mosaicLayout",
+            JSON.stringify({
               direction: "row",
-              first: "memory",
-              second: "registers",
-              splitPercentage: 54,
-            },
-            splitPercentage: 70,
-          },
-          second: {
-            direction: "column",
-            first: "assembly",
-            second: "timeline",
-            splitPercentage: 50,
-          },
-          splitPercentage: 65,
-        }}
+              first: {
+                direction: "column",
+                first: "processor",
+                second: {
+                  direction: "row",
+                  first: "memory",
+                  second: "registers",
+                  splitPercentage: 54,
+                },
+                splitPercentage: 70,
+              },
+              second: {
+                direction: "column",
+                first: "assembly",
+                second: "timeline",
+                splitPercentage: 50,
+              },
+              splitPercentage: 65,
+            })
+          )
+        )}
+        onChange={(newNode) => setItem("mosaicLayout", JSON.stringify(newNode))}
         blueprintNamespace="bp5"
       />
     </div>
