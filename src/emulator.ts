@@ -1520,14 +1520,3 @@ export function simulate(
   return frames;
   // todo: XP, Z, WASEL after the exam :(
 }
-
-// let asm = `
-// ADDC(R31, 6, R1) | 6
-// SUBC(R31, 18, R2) | -18
-// ADD(R1, R2, R3) | write R1+R2 to R3
-// HALT()
-// `;
-
-// let asmed = assemble(asm);
-// console.log(asmed);
-// console.log(simulate(asmed, 0));
