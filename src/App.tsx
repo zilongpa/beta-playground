@@ -311,7 +311,7 @@ function App() {
                 second: "timeline",
                 splitPercentage: 50,
               },
-              splitPercentage: 65,
+              splitPercentage: 60,
             })
           )
         )}
