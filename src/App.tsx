@@ -48,9 +48,10 @@ const DEFAULT_FRAME = {
   descriptionOfInstruction: "write R1+R2 to R3",
   iconOfInstruction: "cog", // 暂时都用cog就行
   titleOfStep: "Fetch: Read instruction from memory",
-  descriptionOfStep: "Read the instruction from the memory at the address specified by the program counter at 0x0.",
+  descriptionOfStep:
+    "Read the instruction from the memory at the address specified by the program counter at 0x0.",
   iconOfStep: "cog", // 花里胡哨的图标，从https://blueprintjs.com/docs/#icons/icons-list 里面找你觉得能对应上的
-  exception : false, // 这一步是否运行出错，error handle不会exception，只有没找到对应的instruction或者除以0的时候这个会变成true
+  exception: false, // 这一步是否运行出错，error handle不会exception，只有没找到对应的instruction或者除以0的时候这个会变成true
   exitingDueToException: false, // 是不是在进行error handle的部分
   flags: {
     z: {
@@ -58,7 +59,7 @@ const DEFAULT_FRAME = {
       dirty: true,
       description: null,
       focus: false,
-    }
+    },
   },
   registers: Array(32).fill(0),
   buffer: new ArrayBuffer(128),
@@ -67,45 +68,52 @@ const DEFAULT_FRAME = {
     pcsel: {
       value: 0,
       dirty: true,
-      description: "Usually PCSEL is set to 0, selecting PC + 4, unless a branch or jump occurs.",
+      description:
+        "Usually PCSEL is set to 0, selecting PC + 4, unless a branch or jump occurs.",
       focus: false,
     },
     wdsel: {
       value: 0,
       dirty: true,
-      description: "Usually WDSEL is set to 0 or N/A, unless an exception or special instruction requires writing to PC.",
+      description:
+        "Usually WDSEL is set to 0 or N/A, unless an exception or special instruction requires writing to PC.",
       focus: false,
     },
     wasel: {
       value: 0,
       dirty: true,
-      description: "Usually WASEL is set to 0 or N/A, unless an exception occurs",
+      description:
+        "Usually WASEL is set to 0 or N/A, unless an exception occurs",
       focus: false,
     },
     asel: {
       value: 0,
       dirty: true,
-      description: "Usually ASEL is set to 0, selecting RD1 as the source for A, unless a branch/jump requires using PC + 4 + 4 * SXT(C).",
+      description:
+        "Usually ASEL is set to 0, selecting RD1 as the source for A, unless a branch/jump requires using PC + 4 + 4 * SXT(C).",
       focus: false,
     },
     ra2sel: {
       value: 0,
       dirty: true,
-      description: "Usually RA2SEL is set to 0 or 1, unless an exception occurs",
+      description:
+        "Usually RA2SEL is set to 0 or 1, unless an exception occurs",
       focus: false,
     },
     bsel: {
       value: 0,
       dirty: true,
-      description: "Usually BSEL is set to 0, selecting RD2 as the source for B, unless an immediate value is required (in which case BSEL = 1).",
+      description:
+        "Usually BSEL is set to 0, selecting RD2 as the source for B, unless an immediate value is required (in which case BSEL = 1).",
       focus: false,
     },
     reset: {
       value: 0,
       dirty: true,
-      description: "Usually reset is set to 0, with no reset behavior, unless a reset signal is triggered by an external event.",
+      description:
+        "Usually reset is set to 0, with no reset behavior, unless a reset signal is triggered by an external event.",
       focus: false,
-    }
+    },
   },
   gate: {
     nor: {
@@ -119,49 +127,57 @@ const DEFAULT_FRAME = {
     alufn: {
       value: null,
       dirty: true,
-      description: "Usually ALUFN is set to N/A, unless a specific ALU operation (ADD, SUB, etc.) is required by the instruction.",
+      description:
+        "Usually ALUFN is set to N/A, unless a specific ALU operation (ADD, SUB, etc.) is required by the instruction.",
       focus: false,
     },
     ra2sel: {
       value: 0,
       dirty: true,
-      description: "Usually RA2SEL is set to 0 or 1, unless an exception occurs",
+      description:
+        "Usually RA2SEL is set to 0 or 1, unless an exception occurs",
       focus: false,
     },
     asel: {
       value: 0,
       dirty: true,
-      description: "Usually ASEL is set to 0, selecting RD1 as the source for A, unless a branch/jump requires using PC + 4 + 4 * SXT(C).",
+      description:
+        "Usually ASEL is set to 0, selecting RD1 as the source for A, unless a branch/jump requires using PC + 4 + 4 * SXT(C).",
       focus: false,
     },
     bsel: {
       value: 0,
       dirty: true,
-      description: "Usually BSEL is set to 0, selecting RD2 as the source for B, unless an immediate value is required.",
+      description:
+        "Usually BSEL is set to 0, selecting RD2 as the source for B, unless an immediate value is required.",
       focus: false,
     },
     wdsel: {
       value: 0,
       dirty: true,
-      description: "Usually WDSEL is set to 0 or N/A, unless an exception or special instruction requires writing to PC.",
+      description:
+        "Usually WDSEL is set to 0 or N/A, unless an exception or special instruction requires writing to PC.",
       focus: false,
     },
     mwr: {
       value: 0,
       dirty: true,
-      description: "Usually MWR is set to 0, meaning no memory write occurs, unless the instruction specifies writing data to memory.",
+      description:
+        "Usually MWR is set to 0, meaning no memory write occurs, unless the instruction specifies writing data to memory.",
       focus: false,
     },
     moe: {
       value: 0,
       dirty: true,
-      description: "Usually MOE is set to 0, meaning no memory read occurs, unless the instruction requires reading from memory.",
+      description:
+        "Usually MOE is set to 0, meaning no memory read occurs, unless the instruction requires reading from memory.",
       focus: false,
     },
     werf: {
       value: 0,
       dirty: true,
-      description: "Usually WERF is set to 0, meaning no register write occurs, unless the instruction specifies writing data to a register.",
+      description:
+        "Usually WERF is set to 0, meaning no register write occurs, unless the instruction specifies writing data to a register.",
       focus: false,
     },
     wasel: {
@@ -175,7 +191,7 @@ const DEFAULT_FRAME = {
       dirty: true,
       description: "xxxxxxx",
       focus: false,
-    }
+    },
   },
   path: {
     "alu-to-data-memory": {
@@ -250,6 +266,12 @@ const DEFAULT_FRAME = {
       description: null,
       focus: false,
     },
+    "path-pcsel-to-reset": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },
     "reset-to-pc": {
       value: 0,
       dirty: true,
@@ -267,9 +289,9 @@ const DEFAULT_FRAME = {
       dirty: true,
       description: null,
       focus: false,
-    }
-  }
-}
+    },
+  },
+};
 
 localStorage.setItem("version", "0.0.0");
 
