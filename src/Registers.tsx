@@ -1,3 +1,4 @@
+import { Tooltip } from "@blueprintjs/core";
 import { memo, useMemo } from "react";
 
 interface RegistersProps {
@@ -20,9 +21,9 @@ function Registers({ values }: RegistersProps) {
           }}
         >
           <b>{`R${i}: `}</b>
-          <span>{` 0x${[...crypto.getRandomValues(new Uint8Array(4))]
-            .map((b) => b.toString(16).padStart(2, "0"))
-            .join("")}`}</span>
+          <Tooltip content={`${values[i].toString()} (0b${values[i].toString(2).padStart(16, "0")})`}>
+          <span>{`0x${values[i].toString(16).padStart(4, "0")}`}</span>
+          </Tooltip>
         </div>
       );
     }

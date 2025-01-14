@@ -1,6 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
 import * as React from "react";
-
 import {
   Card,
   Classes,
@@ -8,12 +7,13 @@ import {
   H5,
   Icon,
   Intent,
+  ResizeSensor,
   Switch,
   Tooltip,
   Tree,
   type TreeNodeInfo,
 } from "@blueprintjs/core";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 type NodePath = number[];
 
@@ -23,6 +23,7 @@ type TreeAction =
       payload: { path: NodePath; isExpanded: boolean };
     }
   | { type: "DESELECT_ALL" }
+  | { type: "SET_IS_EXPANDED_ALL"; payload: { isExpanded: boolean } }
   | {
       type: "SET_IS_SELECTED";
       payload: { path: NodePath; isSelected: boolean };
@@ -30,6 +31,7 @@ type TreeAction =
 
 interface TimelineProps {
   frames: Array<any>;
+  currentFrame: number;
 }
 
 function forEachNode(
@@ -54,7 +56,7 @@ function forNodeAtPath(
   callback(Tree.nodeFromPath(path, nodes));
 }
 
-function timelineReducer(state: TreeNodeInfo[], action: TreeAction) {
+function timelineReducer(state: TreeNodeInfo<NodeData>[], action: TreeAction) {
   switch (action.type) {
     case "DESELECT_ALL":
       const newState1 = cloneDeep(state);
@@ -76,14 +78,40 @@ function timelineReducer(state: TreeNodeInfo[], action: TreeAction) {
         (node) => (node.isSelected = action.payload.isSelected)
       );
       return newState3;
+    case "SET_IS_EXPANDED_ALL":
+      const newState4 = cloneDeep(state);
+      forEachNode(newState4, (node) => (node.isExpanded = action.payload.isExpanded));
+      return newState4;
     default:
       return state;
   }
 }
 
-const Timeline = ({ frames }: TimelineProps) => {
-  const [compact, setCompact] = React.useState(false);
-  const [nodes, dispatch] = React.useReducer(timelineReducer, React.useMemo(() => convertToTreeNodes(frames), [frames]));
+const Timeline = ({ frames, currentFrame }: TimelineProps) => {
+  const [nodes, dispatch] = React.useReducer(
+    timelineReducer,
+    React.useMemo(() => convertToTreeNodes(frames, currentFrame), [frames,currentFrame])
+  );
+
+  // // 默认全部折叠
+  // useEffect(() => {
+  //   dispatch({ type: "SET_IS_EXPANDED_ALL", payload: { isExpanded: false } });
+  // }, [currentFrame, nodes]);
+
+  // // 根据 currentFrame 展开对应节点
+  // useEffect(() => {
+  //   if (currentFrame >= 0 && currentFrame < frames.length) {
+  //     // 找到 currentFrame 对应的节点路径
+  //     const path = findNodePathByFrame(nodes, currentFrame);
+  //     if (path) {
+  //       // 展开对应节点
+  //       dispatch({
+  //         type: "SET_IS_EXPANDED",
+  //         payload: { path, isExpanded: true },
+  //       });
+  //     }
+  //   }
+  // }, [currentFrame, nodes]);
 
   const handleNodeClick = React.useCallback(
     (
@@ -129,7 +157,6 @@ const Timeline = ({ frames }: TimelineProps) => {
   return (
     <div style={{ maxHeight: "100%", width: "100%", overflowY: "auto" }}>
       <Tree
-        compact={compact}
         contents={nodes}
         onNodeClick={handleNodeClick}
         onNodeCollapse={handleNodeCollapse}
@@ -139,12 +166,11 @@ const Timeline = ({ frames }: TimelineProps) => {
   );
 };
 
-
 interface NodeData {
-    offsetOfInstruction: number;
+  offsetOfInstruction: number;
 }
 
-const convertToTreeNodes = (data: any[]): TreeNodeInfo<NodeData>[] => {
+const convertToTreeNodes = (data: any[], currentFrame: number): TreeNodeInfo<NodeData>[] => {
   const treeNodes: TreeNodeInfo<NodeData>[] = [];
   let currentParent: TreeNodeInfo<NodeData> | undefined = undefined;
 
@@ -152,45 +178,84 @@ const convertToTreeNodes = (data: any[]): TreeNodeInfo<NodeData>[] => {
     const newNode: TreeNodeInfo<NodeData> = {
       id: index,
       icon: item.iconOfStep,
-      label: item.titleOfStep,
-      nodeData: { offsetOfInstruction: item.offsetOfInstruction},
+      label: <Tooltip content={item.descriptionOfStep}>{item.titleOfStep}</Tooltip>,
+      isExpanded: index === currentFrame,
+      isSelected: index === currentFrame,
+      nodeData: { offsetOfInstruction: item.offsetOfInstruction },
       secondaryLabel: (
-        <Tooltip content={item.descriptionOfStep}>
-          <Icon icon="info-sign" />
-        </Tooltip>
+        <Icon
+          icon={
+            index === currentFrame
+              ? "hand-left"
+              : index < currentFrame
+              ? "tick"
+              : "time"
+          }
+          intent={
+            index === currentFrame
+              ? Intent.PRIMARY
+              : index < currentFrame
+              ? Intent.SUCCESS
+              : Intent.NONE
+          }
+  
+        />
+        // </Tooltip>
       ),
-      childNodes: [{
-        id: index,
-      label: item.descriptionOfStep,
-      nodeData: { offsetOfInstruction: item.offsetOfInstruction},
-      }],
+      childNodes: [
+        {
+          id: index,
+          label: <Tooltip content={item.descriptionOfStep}>{item.titleOfStep}</Tooltip>,
+          nodeData: { offsetOfInstruction: item.offsetOfInstruction },
+        },
+      ],
     };
 
-    if (currentParent && currentParent.nodeData && currentParent.nodeData.offsetOfInstruction === item.offsetOfInstruction) {
-        // console.log('currentParent', currentParent);
+    if (
+      currentParent &&
+      currentParent.nodeData &&
+      currentParent.nodeData.offsetOfInstruction === item.offsetOfInstruction
+    ) {
       currentParent.childNodes?.push(newNode);
     } else {
-        const newParent: TreeNodeInfo<NodeData> = {
-            id: index,
-            icon: item.iconOfInstruction,
-            label: item.titleOfInstruction,
-            nodeData: { offsetOfInstruction: item.offsetOfInstruction},
-            // secondaryLabel: (
-            //   <Tooltip content={item.descriptionOfStep}>
-            //     <Icon icon="info-sign" />
-            //   </Tooltip>
-            // ),
-            childNodes: [],
-          };
-      
+      const newParent: TreeNodeInfo<NodeData> = {
+        id: index,
+        icon: item.iconOfInstruction,
+        label: item.titleOfInstruction,
+        nodeData: { offsetOfInstruction: item.offsetOfInstruction },
+        childNodes: [],
+      };
 
       treeNodes.push(newParent);
       currentParent = newParent;
       currentParent.childNodes?.push(newNode);
     }
+    if (index === currentFrame) {
+      currentParent.isExpanded = true;
+    }
   });
 
   return treeNodes;
+};
+
+// 根据 currentFrame 查找节点路径
+const findNodePathByFrame = (
+  nodes: TreeNodeInfo<NodeData>[],
+  currentFrame: number
+): NodePath | null => {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    if (node.id === currentFrame) {
+      return [i]; // 返回节点路径
+    }
+    if (node.childNodes) {
+      const childPath = findNodePathByFrame(node.childNodes, currentFrame);
+      if (childPath) {
+        return [i, ...childPath]; // 返回子节点路径
+      }
+    }
+  }
+  return null;
 };
 
 export default memo(Timeline);

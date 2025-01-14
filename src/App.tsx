@@ -36,7 +36,13 @@ import Timeline from "./Timeline";
 const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
 SUBC(R31, 18, R2)
 ADD(R1, R2, R3) | write R1+R2 to R3
-HALT() | exit`;
+HALT() | exit
+
+// This is just a poc version of the program so it's not optimized
+// We will fix this after finishing up the transfer applications :(
+`;
+
+localStorage.setItem("version", "0.0.0");
 
 const getItem = (key: string, defaultValue: any = null): any => {
   const value = localStorage.getItem(key);
@@ -73,16 +79,22 @@ const TITLE_MAP: Record<ViewId, string> = {
 
 function App() {
   const assemblyCodeRef = useRef<string>(DEFAULT_ASSEMBLY_CODE);
-  const [buffer, setBuffer] = useState<ArrayBuffer>(new ArrayBuffer(1024));
   const [frames, setFrames] = useState<any>([]);
   const [currentFrame, setCurrentFrame] = useState<number>(0);
+  const [keyFrames, setKeyFrames] = useState<Array<number>>([]);
 
   const COMPONENT_MAP = {
     processor: () => (
       <div style={{ width: "100%", height: "100%" }}>
-        <textarea style={{ width: "100%", height: "100%" }} value={frames.length > 0
-            ? JSON.stringify(frames[currentFrame], null, 2)
-            : "点那个蓝色按钮开始模拟,之后用Previous Step和Next Step来切换frame"} readOnly={true} />
+        <textarea
+          style={{ width: "100%", height: "100%" }}
+          value={
+            frames.length > 0
+              ? JSON.stringify(frames[currentFrame], null, 2)
+              : "点那个蓝色按钮开始模拟,之后用Previous Step和Next Step来切换frame"
+          }
+          readOnly={true}
+        />
         {/* <BetaVisualization /> */}
       </div>
     ),
@@ -95,9 +107,21 @@ function App() {
         }}
       />
     ),
-    registers: () => <Registers values={[1]} />,
-    memory: () => <MemoryViewer buffer={buffer} />,
-    timeline: () => <Timeline frames={frames} />,
+    registers: () => (
+      <Registers
+        values={
+          frames.length > 0 ? frames[currentFrame].registers : Array(32).fill(0)
+        }
+      />
+    ),
+    memory: () => (
+      <MemoryViewer
+        buffer={
+          frames.length > 0 ? frames[currentFrame].buffer : new ArrayBuffer(16)
+        }
+      />
+    ),
+    timeline: () => <Timeline frames={frames} currentFrame={currentFrame} />,
     new: () => <h1>I am an empty window.</h1>,
   };
 
@@ -115,7 +139,7 @@ function App() {
             <Button
               icon="manually-entered-data"
               intent="primary"
-              onClick={async () => {
+              onClick={useCallback(async () => {
                 try {
                   let assembled = assemble(assemblyCodeRef.current);
                   console.log(assemblyCodeRef.current);
@@ -129,10 +153,21 @@ function App() {
                     icon: "tick",
                     intent: Intent.SUCCESS,
                   });
-                  setBuffer(assembled);
                   setFrames(simulation);
                   setCurrentFrame(0);
-                  console.log(simulation);
+
+                  let arr = [0];
+                  simulation.forEach((item, index) => {
+                    if (
+                      index > 0 &&
+                      item.offsetOfInstruction !=
+                        simulation[index - 1].offsetOfInstruction
+                    ) {
+                      arr.push(index);
+                    }
+                  });
+                  setKeyFrames(arr);
+                  // console.log(simulation);
                 } catch (error: any) {
                   console.log(error);
                   (
@@ -145,7 +180,7 @@ function App() {
                     intent: Intent.DANGER,
                   });
                 }
-              }}
+              }, [assemblyCodeRef, setFrames, setCurrentFrame])}
             >
               Write ASM to RAM
             </Button>
@@ -153,8 +188,14 @@ function App() {
               icon="fast-backward"
               intent="warning"
               disabled={
-                frames.length === 0 || frames === null || currentFrame === 0
+                frames.length === 0 || frames === null || currentFrame === 0 || [...keyFrames].reverse().find((kf) => kf < currentFrame) === undefined
               }
+              onClick={() => {
+                const previousKeyFrame = [...keyFrames].reverse().find((kf) => kf < currentFrame);
+                if (previousKeyFrame !== undefined) {
+                  setCurrentFrame(previousKeyFrame);
+                }
+                }}
             >
               Previous Instruction
             </Button>
@@ -184,14 +225,25 @@ function App() {
               icon="fast-forward"
               intent="success"
               disabled={
-                frames.length === 0 ||
-                frames === null ||
-                currentFrame === frames.length - 1
+              frames.length === 0 ||
+              frames === null ||
+              currentFrame === frames.length - 1 || keyFrames.find((kf) => kf > currentFrame) === undefined
               }
+              onClick={() => {
+              const nextKeyFrame = keyFrames.find((kf) => kf > currentFrame);
+              if (nextKeyFrame !== undefined) {
+                setCurrentFrame(nextKeyFrame);
+              }
+              }}
             >
               Next Instruction
             </Button>
-            <Button icon="reset" intent="danger">
+            <Button icon="reset" intent="danger" onClick={
+              () => {
+                setCurrentFrame(0);
+                setFrames([]);
+                setKeyFrames([]);
+            }}>
               Reset
             </Button>
             <Button icon="cog" disabled={true}></Button>
@@ -201,7 +253,7 @@ function App() {
       <Mosaic<ViewId>
         renderTile={(id, path) => {
           const Component = COMPONENT_MAP[id];
-            return (
+          return (
             <MosaicWindow<ViewId>
               path={path}
               createNode={() => "new"}
@@ -210,7 +262,7 @@ function App() {
             >
               <Component key={id} />
             </MosaicWindow>
-            );
+          );
         }}
         initialValue={JSON.parse(
           getItem(

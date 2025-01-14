@@ -1119,12 +1119,12 @@ export function simulate(
   ) {
     const newFrame = { ...currentFrame }; // 复制当前帧
     newFrame.iconOfInstruction = "cog"; // 所有 icon 为 cog
-    newFrame.iconOfStep = "cog"; // 所有 step 的 icon 为 cog
+    newFrame.iconOfStep = "cog"; // 所有 step 的 icon 为 cog ??? // todo: 必须设置成专有的icon！
   
     // 针对指令处理
     const instructionInfo = instructionSet[key] || null;
     if (instructionInfo) {
-      newFrame.titleOfInstruction = `${key} 你别说这个还真的不好还源`;
+      newFrame.titleOfInstruction = `${key}`;
       newFrame.descriptionOfInstruction = instructionInfo.description;
     } else {
       newFrame.titleOfInstruction = "Unknown Instruction";
