@@ -17,7 +17,11 @@ const setItem = (key: string, value: string): void => {
   }
 };
 
-const BetaVisualization = () => {
+interface BetaVisualizationProps {
+  frame: any
+}
+
+const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
   return (
     <TransformWrapper
       limitToBounds={true}
@@ -33,9 +37,7 @@ const BetaVisualization = () => {
         setItem("positionY", ref.state.positionY.toString());
       }}
     >
-      <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
-      <!-- INSERT_SVG_HERE -->
-      </TransformComponent>
+      <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}><!-- INSERT_SVG_HERE --></TransformComponent>
     </TransformWrapper>
   );
 };

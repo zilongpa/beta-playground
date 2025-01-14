@@ -18,7 +18,7 @@ Developers:
 3. reminder for dirty value
 4. setting panel
 5. layout fix
-inf. support macro
+6. support macro
 
 ## For those who are interested in processors
 
