@@ -83,7 +83,7 @@ function timelineReducer(state: TreeNodeInfo[], action: TreeAction) {
 
 const Timeline = ({ frames }: TimelineProps) => {
   const [compact, setCompact] = React.useState(false);
-  const [nodes, dispatch] = React.useReducer(timelineReducer, convertToTreeNodes(frames));
+  const [nodes, dispatch] = React.useReducer(timelineReducer, React.useMemo(() => convertToTreeNodes(frames), [frames]));
 
   const handleNodeClick = React.useCallback(
     (
@@ -139,45 +139,6 @@ const Timeline = ({ frames }: TimelineProps) => {
   );
 };
 
-const contentSizing = {
-  popoverProps: { popoverClassName: Classes.POPOVER_CONTENT_SIZING },
-};
-
-const data = [
-  {
-    offsetOfInstruction: 4,
-    titleOfInstruction: "SUBC",
-    iconOfInstruction: "cog",
-    titleOfStep: "Decode: Decode the instruction",
-    descriptionOfStep:
-      "Decode the fetched instruction and identify operands and operation.",
-    iconOfStep: "cog",
-    exception: false,
-    exitingDueToException: false,
-  },
-  {
-    offsetOfInstruction: 4,
-    titleOfInstruction: "SUBC",
-    iconOfInstruction: "cog",
-    titleOfStep: "Execute: Execute the instruction",
-    descriptionOfStep: "Execute the decoded instruction.",
-    iconOfStep: "cog",
-    exception: false,
-    exitingDueToException: false,
-  },
-  {
-    offsetOfInstruction: 8,
-    titleOfInstruction: "ADD",
-    iconOfInstruction: "plus",
-    titleOfStep: "Decode: Decode the instruction",
-    descriptionOfStep:
-      "Decode the fetched instruction and identify operands and operation.",
-    iconOfStep: "cog",
-    exception: false,
-    exitingDueToException: false,
-  },
-];
-
 
 interface NodeData {
     offsetOfInstruction: number;
@@ -198,7 +159,11 @@ const convertToTreeNodes = (data: any[]): TreeNodeInfo<NodeData>[] => {
           <Icon icon="info-sign" />
         </Tooltip>
       ),
-      childNodes: [],
+      childNodes: [{
+        id: index,
+      label: item.descriptionOfStep,
+      nodeData: { offsetOfInstruction: item.offsetOfInstruction},
+      }],
     };
 
     if (currentParent && currentParent.nodeData && currentParent.nodeData.offsetOfInstruction === item.offsetOfInstruction) {
