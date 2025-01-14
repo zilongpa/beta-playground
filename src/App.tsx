@@ -266,7 +266,7 @@ const DEFAULT_FRAME = {
       description: null,
       focus: false,
     },
-    "path-pcsel-to-reset": {
+    "pcsel-to-reset": {
       value: 0,
       dirty: true,
       description: null,
