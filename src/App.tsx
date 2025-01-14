@@ -31,6 +31,7 @@ import BetaVisualization from "./BetaVisualization";
 import AssemblyEditor from "./AssemblyEditor";
 import MemoryViewer from "./MemoryViewer";
 import Registers from "./Registers";
+import Timeline from "./Timeline";
 
 const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
 SUBC(R31, 18, R2)
@@ -51,82 +52,6 @@ const setItem = (key: string, value: string): void => {
   } else {
     localStorage.setItem(key, value);
   }
-};
-
-const MyTree = () => {
-  return (
-    <div style={{ maxHeight: "100%", width: "100%", overflowY: "auto" }}>
-      <Tree
-        contents={[
-          {
-            id: "reset",
-            label: "Reset",
-            icon: "reset",
-            isExpanded: false,
-            secondaryLabel: <Icon icon="small-tick" intent="success" />,
-            childNodes: [],
-          },
-          {
-            id: "ld",
-            label: "LD(R1,0x0,R3)",
-            icon: "cog",
-            isExpanded: true,
-            secondaryLabel: <Icon icon="hand-left" intent="primary" />,
-            childNodes: [
-              {
-                id: "fetch",
-                label: "Fetch",
-                icon: "compressed",
-                isExpanded: true,
-                childNodes: [
-                  {
-                    id: "read-instruction",
-                    label: "Read instruction from memory",
-                    icon: "archive",
-                    childNodes: [],
-                  },
-                  {
-                    id: "update-pc",
-                    label: "Update the Program Counter",
-                    icon: "automatic-updates",
-                    childNodes: [],
-                  },
-                ],
-              },
-              {
-                id: "decode",
-                label: "Decode",
-                icon: "binary-number",
-                isExpanded: true,
-                childNodes: [
-                  {
-                    id: "decode-instruction",
-                    label: "Decode the instruction",
-                    icon: "git-branch",
-                    childNodes: [],
-                  },
-                  {
-                    id: "identify-datapaths",
-                    label: "Identify registers and data paths",
-                    icon: "switch",
-                    childNodes: [],
-                  },
-                  {
-                    id: "extract-value",
-                    label: "Extract immediate values or memory addresses",
-                    icon: "tag-refresh",
-                    childNodes: [],
-                  },
-                ],
-              },
-            ],
-          },
-        ]}
-        onNodeClick={(node) => console.log(node)}
-        className="bp5-tree bp5-elevation-0"
-      />
-    </div>
-  );
 };
 
 export type ViewId =
@@ -172,7 +97,7 @@ function App() {
     ),
     registers: () => <Registers values={[1]} />,
     memory: () => <MemoryViewer buffer={buffer} />,
-    timeline: () => <MyTree />,
+    timeline: () => <Timeline frames={frames} />,
     new: () => <h1>I am an empty window.</h1>,
   };
 

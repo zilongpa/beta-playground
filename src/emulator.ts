@@ -1089,12 +1089,64 @@ export function simulate(
     }
   }];
 
-  frames[0].path["register-file-to-bsel"]
+  // frames.pop()
+
+  function resetFocus(previousFrame: Record<string, any>): void {
+  // reset上一帧的focus 在每一个mux这种前面使用一次
+    if (!previousFrame) return;
+
+    for (const Key in previousFrame.mux) {
+        if (previousFrame.mux[Key]) {
+            previousFrame.mux[Key].focus = false;
+        }
+    }
+    for (const Key in previousFrame.cl) {
+        if (previousFrame.cl[Key]) {
+            previousFrame.cl[Key].focus = false;
+        }
+    }
+    for (const key in previousFrame.flags) {
+      if (previousFrame.flags[key]) {
+        previousFrame.flags[key].focus = false;
+      }
+    }
+  }
+
+  function updateFrameForInstruction(
+    key: string,
+    instructionSet: Record<string, any>,
+    currentFrame: any
+  ) {
+    const newFrame = { ...currentFrame }; // 复制当前帧
+    newFrame.iconOfInstruction = "cog"; // 所有 icon 为 cog
+    newFrame.iconOfStep = "cog"; // 所有 step 的 icon 为 cog
+  
+    // 针对指令处理
+    const instructionInfo = instructionSet[key] || null;
+    if (instructionInfo) {
+      newFrame.titleOfInstruction = `${key} 你别说这个还真的不好还源`;
+      newFrame.descriptionOfInstruction = instructionInfo.description;
+    } else {
+      newFrame.titleOfInstruction = "Unknown Instruction";
+      newFrame.descriptionOfInstruction = "No description available for this instruction.";
+      newFrame.exception = true; // Instruction not find, set exception to true
+    }
+  } 
 
   for (let step = 0; step <= maximumStep; step += 1) {
     // Fetch
     console.log("\n#Fetch#");
     const newFrame = { ...frames[frames.length - 1] };
+    newFrame.registers = [...newFrame.registers];
+    newFrame.buffer = newFrame.buffer.slice(0);
+    if (frames.length > 0) {
+      resetFocus(frames[frames.length - 1]);
+    }
+    newFrame.offsetOfInstruction = programCounter;
+    newFrame.mux.pcsel.focus = true;
+    
+    newFrame.titleOfStep = "Fetch: Read instruction from memory";
+    newFrame.descriptionOfStep = "Read the instruction from the memory at the address specified by the program counter.";
     console.log(
       "Program Counter:",
       "0x" + programCounter.toString(16),
@@ -1111,10 +1163,15 @@ export function simulate(
     const opcode = instruction >>> 26;
     console.log("Opcode:", opcode.toString(2).padStart(6, "0"));
 
-    
     let pcselDescription = "PCSEL default value is 0 (PC + 4)."
-
+    let instructionFound = false;
     for (const [key, value] of Object.entries(instructionSet)) {
+      if (value.opcode === opcode) {
+        newFrame.titleOfInstruction = `${key}`;
+        newFrame.descriptionOfInstruction = value.description;
+        instructionFound = true;
+        break;
+      }
       if (value.PCSEL === null) {
         newFrame.mux.pcsel.value = 0;
       } else if (Array.isArray(value.PCSEL)) {
@@ -1140,6 +1197,13 @@ export function simulate(
         }
       }
     }
+
+    if (!instructionFound) {
+      newFrame.titleOfInstruction = "Unknown Instruction";
+      newFrame.descriptionOfInstruction = "No description available for this instruction.";
+      newFrame.exception = true; // error
+    }
+
     if (opcode === HALT_OPCODE) {
       console.log("Halt opcode detected, stopping simulation");
       break;
@@ -1148,6 +1212,7 @@ export function simulate(
     newFrame.mux.pcsel.description = pcselDescription;
     frames.push(newFrame);
     programCounter = pcpf;
+
     // Decode
     console.log("\n#Decode#");
     for (const [key, value] of Object.entries(instructionSet)) {
@@ -1158,6 +1223,15 @@ export function simulate(
         );
 
         const newFrame_dec = { ...frames[frames.length - 1] };
+        resetFocus(frames[frames.length - 1]);
+
+        newFrame_dec.registers = [...newFrame_dec.registers];
+        newFrame_dec.buffer = newFrame_dec.buffer.slice(0);
+
+        newFrame_dec.mux.ra2sel.focus = true;
+        newFrame_dec.mux.ra2sel.description = "RA2SEL is active, selecting the second operand from the register.";
+        newFrame_dec.titleOfStep = "Decode: Decode the instruction";
+        newFrame_dec.descriptionOfStep = "Decode the fetched instruction and identify operands and operation.";
         let params = [0, 0, 0, 0]; // [literal, Ra, Rb, Rc]
         let decodeDescription = `Decoding instruction ${key}:\n`;
         if (value.mf != null) {
@@ -1275,7 +1349,14 @@ export function simulate(
         // Execute
         console.log("\n#Execute#");
         const newFrame_exe = { ...frames[frames.length - 1] };
+        resetFocus(frames[frames.length - 1]); 
+
+        newFrame_exe.titleOfStep = "Execute: Perform the operation";
+        newFrame_exe.descriptionOfStep = "Perform the operation specified by the decoded instruction.";
+
+        newFrame_exe.cl.alufn.focus = true
         console.log("[CU signal]", "ASEL:", value.ASEL);
+
         let aselDescription = "";
         const aselValue = value.ASEL !== null ? value.ASEL : 0; 
         switch (aselValue) {
@@ -1302,8 +1383,10 @@ export function simulate(
         newFrame_exe.mux.asel.value = aselValue;
         newFrame_exe.mux.asel.dirty = true;
         newFrame_exe.mux.asel.description = aselDescription;
+        newFrame_exe.mux.asel.focus = true;
 
         console.log("[CU signal]", "BSEL:", value.BSEL);
+
         let bselDescription = "";
         const bselValue = value.BSEL !== null ? value.BSEL : 0;
         switch (bselValue) {
@@ -1330,6 +1413,7 @@ export function simulate(
         newFrame_exe.mux.bsel.value = bselValue;
         newFrame_exe.mux.bsel.dirty = true;
         newFrame_exe.mux.bsel.description = bselDescription;
+        newFrame_exe.mux.bsel.focus = true;
 
         let alufnDescription = "ALUFN default value is null.";
 
@@ -1352,12 +1436,21 @@ export function simulate(
 
         aluo = executeALUFN(A, B, ALUFN); //todo: ensure the output is two complement
         console.log("ALU output:", aluo);
+        frames.push(newFrame_exe);
 
+        //Memory
         console.log("\n#Memory#");
+        const newFrame_mem = { ...frames[frames.length - 1] };
+        resetFocus(frames[frames.length - 1]);
+
+        newFrame_mem.titleOfStep = "Memory: Access memory";
+        newFrame_mem.descriptionOfStep = "Access memory for load/store instructions.";
+
         let mwrDescription = "";
         const mwrValue = value.MWR !== null ? value.MWR : 0; 
         mWD = RD2;
         Adr = aluo;
+
         switch (mwrValue) {
           case 0:
             MWR = 0;
@@ -1381,6 +1474,7 @@ export function simulate(
         newFrame_exe.cl.mwr.value = mwrValue;
         newFrame_exe.cl.mwr.dirty = true;
         newFrame_exe.cl.mwr.description = mwrDescription;
+        newFrame_mem.cl.mwr.focus = true;
 
         if (MWR == 1) {
           console.log("Write data", mWD, " to memory address:", Adr);
@@ -1397,7 +1491,7 @@ export function simulate(
             break;
           case 1:
             MOE = 1;
-            moeDescription = "MOE is set to 1, memory read enabled. This occurs in load instructions, such as LD. Data from memory needs to be read and loaded into a register.";
+            moeDescription = "MOE is set to 1, memory read enabled. This occurs in load instructions, Like LD. Data from memory needs to be read and loaded into a register.";
             console.log("MWR==1, memory read");
             break;
           default:
@@ -1412,13 +1506,22 @@ export function simulate(
         newFrame_exe.cl.moe.value = moeValue;
         newFrame_exe.cl.moe.dirty = true;
         newFrame_exe.cl.moe.description = moeDescription;
+        newFrame_mem.cl.moe.focus = true;
 
         if (MOE == 1) {
           RD = uint16ToTwosComplement(memory.getUint32(Adr, littleEndian));
           console.log("Read data", RD, " from memory address:", Adr);
         }
 
+        frames.push(newFrame_mem)
+
+        //Write Back
         console.log("\n#Write Back#");
+        const newFrame_wb = { ...frames[frames.length - 1] };
+        resetFocus(frames[frames.length - 1]);
+
+        newFrame_wb.titleOfStep = "Write Back: Write results to register";
+        newFrame_wb.descriptionOfStep = "Write the results of the operation back to the register.";
         console.log("[CU signal]", "WDSEL:", value.WDSEL);
         let wdselDescription = "";
         if (value.WDSEL != null) {
@@ -1460,13 +1563,15 @@ export function simulate(
             );
             break;
         }
-        newFrame_exe.mux.wdsel.value = value.WDSEL;
-        newFrame_exe.mux.wdsel.dirty = true;
-        newFrame_exe.mux.wdsel.description = wdselDescription;
+        newFrame_wb.mux.wdsel.value = value.WDSEL;
+        newFrame_wb.mux.wdsel.dirty = true;
+        newFrame_wb.mux.wdsel.description = wdselDescription;
+        newFrame_wb.mux.wdsel.focus = true;
 
-        newFrame_exe.cl.wdsel.value = value.WDSEL;
-        newFrame_exe.cl.wdsel.dirty = true;
-        newFrame_exe.cl.wdsel.description = wdselDescription;
+        newFrame_wb.cl.wdsel.value = value.WDSEL;
+        newFrame_wb.cl.wdsel.dirty = true;
+        newFrame_wb.cl.wdsel.description = wdselDescription;
+        newFrame_wb.cl.wdsel.focus = true;
 
         let werfDescription = "";
 
@@ -1504,10 +1609,12 @@ export function simulate(
               break;
           }
           console.log("\n\n");
-          newFrame_exe.cl.werf.value = WERF;
-          newFrame_exe.cl.werf.dirty = true;
-          newFrame_exe.cl.werf.description = werfDescription;
+          newFrame_wb.cl.werf.value = WERF;
+          newFrame_wb.cl.werf.dirty = true;
+          newFrame_wb.cl.werf.description = werfDescription;
+          newFrame_wb.cl.werf.focus = true;
 
+          frames.push(newFrame_wb);
         programCounter = pcpf;
         break;
       } else {
@@ -1517,6 +1624,18 @@ export function simulate(
       }
     }
   }
+  frames.shift(); // todo: 用这个移除example frame，直接删除会跑不了？
   return frames;
   // todo: XP, Z, WASEL after the exam :(
 }
+
+// let asm = `
+// ADDC(R31, 6, R1) | 6
+// SUBC(R31, 18, R2) | -18
+// ADD(R1, R2, R3) | write R1+R2 to R3
+// HALT()
+// `;
+
+// let asmed = assemble(asm);
+// console.log(asmed);
+// console.log(simulate(asmed, 0));
