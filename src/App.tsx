@@ -152,8 +152,7 @@ const DEFAULT_FRAME = {
       dirty: true,
       description: "xxxxxxx",
       focus: false,
-    }
-
+    },
   },
   path: {
     "alu-to-data-memory": {
@@ -263,27 +262,32 @@ const DEFAULT_FRAME = {
       dirty: true,
       description: null,
       focus: false,
-    },"instruction-memory-to-bsel": {
+    },
+    "instruction-memory-to-bsel": {
       value: 0,
       dirty: true,
       description: null,
       focus: false,
-    },"plus-four-to-pcsel": {
+    },
+    "plus-four-to-pcsel": {
       value: 0,
       dirty: true,
       description: null,
       focus: false,
-    },"plus-to-pcsel": {
+    },
+    "plus-to-pcsel": {
       value: 0,
       dirty: true,
       description: null,
       focus: false,
-    },"instruction-memory-to-ra2sel-as-rc": {
+    },
+    "instruction-memory-to-ra2sel-as-rc": {
       value: 0,
       dirty: true,
       description: null,
       focus: false,
-    },"instruction-memory-to-ra2sel-as-rb": {
+    },
+    "instruction-memory-to-ra2sel-as-rb": {
       value: 0,
       dirty: true,
       description: null,
@@ -294,7 +298,8 @@ const DEFAULT_FRAME = {
       dirty: true,
       description: null,
       focus: false,
-    },"plus-to-asel": {
+    },
+    "plus-to-asel": {
       value: 0,
       dirty: true,
       description: null,
@@ -422,7 +427,7 @@ function App() {
                   setCurrentFrame(0);
 
                   let arr = [0];
-                  simulation.forEach((item, index) => {
+                  simulation.forEach((item: any, index: number) => {
                     if (
                       index > 0 &&
                       item.offsetOfInstruction !=

@@ -994,6 +994,18 @@ export function simulate(
         description: "Usually WERF is set to 0, meaning no register write occurs, unless the instruction specifies writing data to a register.",
         focus: false,
       },
+      wasel: {
+        value: 0,
+        dirty: true,
+        description: "Usually WASEL is set to 0 or N/A, unless an exception occurs",
+        focus: false,
+      },
+      pcsel: {
+        value: 0,
+        dirty: true,
+        description: "Usually PCSEL is set to 0, selecting PC + 4, unless a branch or jump occurs.",
+        focus: false,
+      }
     },
     path: {
       "alu-to-data-memory": {
@@ -1119,7 +1131,6 @@ export function simulate(
   ) {
     const newFrame = { ...currentFrame }; // 复制当前帧
     newFrame.iconOfInstruction = "cog"; // 所有 icon 为 cog
-    newFrame.iconOfStep = "cog"; // 所有 step 的 icon 为 cog ??? // todo: 必须设置成专有的icon！
   
     // 针对指令处理
     const instructionInfo = instructionSet[key] || null;
@@ -1137,6 +1148,137 @@ export function simulate(
     // Fetch
     console.log("\n#Fetch#");
     const newFrame = { ...frames[frames.length - 1] };
+
+    newFrame.offsetOfInstruction = 0x33, 
+    newFrame.titleOfInstruction = "SUB(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "write R1 - R2 to R3";
+    newFrame.iconOfInstruction = "cog"; 
+
+    newFrame.offsetOfInstruction = 0x34, 
+    newFrame.titleOfInstruction = "MUL(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "write R1 * R2 to R3";
+    newFrame.iconOfInstruction = "cog"; 
+
+    newFrame.offsetOfInstruction = 0x33,
+    newFrame.titleOfInstruction = "SUB(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "write R1 - R2 to R3";
+    newFrame.iconOfInstruction = "cog"; 
+
+    newFrame.offsetOfInstruction = 0x35,
+    newFrame.titleOfInstruction = "DIV(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "write R1 / R2 to R3";
+    newFrame.iconOfInstruction = "cog";
+
+    newFrame.offsetOfInstruction = 0x36,
+    newFrame.titleOfInstruction = "CMPEQ(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "write R1 - R2 to R3";
+    newFrame.iconOfInstruction = "cog"; 
+    
+    newFrame.offsetOfInstruction = 0x37;
+    newFrame.titleOfInstruction = "CMPLT(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Write 1 to R3 if R1 is less than R2, otherwise write 0 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x38;
+    newFrame.titleOfInstruction = "CMPLE(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Write 1 to R3 if R1 is less than or equal to R2, otherwise write 0 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x40;
+    newFrame.titleOfInstruction = "AND(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Write the bitwise AND of R1 and R2 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x41;
+    newFrame.titleOfInstruction = "OR(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Write the bitwise OR of R1 and R2 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x42;
+    newFrame.titleOfInstruction = "XOR(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Write the bitwise XOR of R1 and R2 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x44;
+    newFrame.titleOfInstruction = "SHL(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Shift R1 left by the number of bits specified in R2 and write to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x45;
+    newFrame.titleOfInstruction = "SHR(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Shift R1 right logically by the number of bits specified in R2 and write to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x46;
+    newFrame.titleOfInstruction = "SRA(R1, R2, R3)";
+    newFrame.descriptionOfInstruction = "Shift R1 right arithmetically by the number of bits specified in R2 and write to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x48;
+    newFrame.titleOfInstruction = "ADDC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write the sum of R1 and Immediate to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x49;
+    newFrame.titleOfInstruction = "SUBC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write the difference of R1 and Immediate to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x50;
+    newFrame.titleOfInstruction = "MULC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write the product of R1 and Immediate to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x51;
+    newFrame.titleOfInstruction = "DIVC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write the quotient of R1 divided by Immediate to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x52;
+    newFrame.titleOfInstruction = "CMPEQC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write 1 to R3 if R1 equals Immediate, otherwise write 0 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x53;
+    newFrame.titleOfInstruction = "CMPLTC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write 1 to R3 if R1 is less than Immediate, otherwise write 0 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x54;
+    newFrame.titleOfInstruction = "CMPLEC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write 1 to R3 if R1 is less than or equal to Immediate, otherwise write 0 to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x56;
+    newFrame.titleOfInstruction = "ANDC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write the bitwise AND of R1 and Immediate to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x57;
+    newFrame.titleOfInstruction = "ORC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write the bitwise OR of R1 and Immediate to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x58;
+    newFrame.titleOfInstruction = "XORC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Write the bitwise XOR of R1 and Immediate to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x60;
+    newFrame.titleOfInstruction = "SHLC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Shift R1 left by the number of bits specified in Immediate and write to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x61;
+    newFrame.titleOfInstruction = "SHRC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Shift R1 right logically by the number of bits specified in Immediate and write to R3";
+    newFrame.iconOfInstruction = "cog";
+    
+    newFrame.offsetOfInstruction = 0x62;
+    newFrame.titleOfInstruction = "SRAC(R1, Immediate, R3)";
+    newFrame.descriptionOfInstruction = "Shift R1 right arithmetically by the number of bits specified in Immediate and write to R3";
+    newFrame.iconOfInstruction = "cog";
+
     newFrame.registers = [...newFrame.registers];
     newFrame.buffer = newFrame.buffer.slice(0);
     if (frames.length > 0) {
@@ -1144,9 +1286,10 @@ export function simulate(
     }
     newFrame.offsetOfInstruction = programCounter;
     newFrame.mux.pcsel.focus = true;
-    
+
     newFrame.titleOfStep = "Fetch: Read instruction from memory";
     newFrame.descriptionOfStep = "Read the instruction from the memory at the address specified by the program counter.";
+    newFrame.iconOfStep = "Archive"
     console.log(
       "Program Counter:",
       "0x" + programCounter.toString(16),
@@ -1208,8 +1351,11 @@ export function simulate(
       console.log("Halt opcode detected, stopping simulation");
       break;
     }
+    newFrame.cl.pcsel.value = newFrame.mux.pcsel.value || 0; //default 0
+    newFrame.cl.pcsel.dirty = true; 
+    newFrame.cl.pcsel.description = pcselDescription;
+    newFrame.cl.pcsel.focus = true;
     newFrame.mux.pcsel.dirty = true;
-    newFrame.mux.pcsel.description = pcselDescription;
     frames.push(newFrame);
     programCounter = pcpf;
 
@@ -1231,7 +1377,13 @@ export function simulate(
         newFrame_dec.mux.ra2sel.focus = true;
         newFrame_dec.mux.ra2sel.description = "RA2SEL is active, selecting the second operand from the register.";
         newFrame_dec.titleOfStep = "Decode: Decode the instruction";
-        newFrame_dec.descriptionOfStep = "Decode the fetched instruction and identify operands and operation.";
+        newFrame.iconOfStep = "Unlock"
+
+        newFrame_dec.cl.ra2sel.value = value.RA2SEL || 0;
+        newFrame_dec.cl.ra2sel.dirty = true;
+        newFrame_dec.cl.ra2sel.description = "RA2SEL is active, selecting the second operand from the register.";
+        newFrame_dec.cl.ra2sel.focus = true;
+
         let params = [0, 0, 0, 0]; // [literal, Ra, Rb, Rc]
         let decodeDescription = `Decoding instruction ${key}:\n`;
         if (value.mf != null) {
@@ -1304,6 +1456,7 @@ export function simulate(
             RA2SEL = 0;
             RD2 = getRegisterValue(params[2]);
             ra2selDescription = `RA2SEL = 0: Select Rb as the second operand (RD2 = R${params[2]}), selecting the second operand from register RD2`;
+            decodeDescription += ra2selDescription + "\n";
             console.log(
               "[MUX]",
               "RD2=Rb=R" + params[2],
@@ -1315,6 +1468,7 @@ export function simulate(
             RA2SEL = 1;
             RD2 = getRegisterValue(params[3]);
             ra2selDescription = `RA2SEL is set to 1: Select Rc as the second operand (RD2 = R${params[3]}), selecting an immediate value (literal) for the second operand.`;
+            decodeDescription += ra2selDescription + "\n";
             console.log(
               "[MUX]",
               "RD2=Rc=R" + params[3],
@@ -1324,6 +1478,7 @@ export function simulate(
             break;
           default:
             ra2selDescription = `RA2SEL has an unknown value: ${value.RA2SEL}. Using dirty value from the previous instruction.`;
+            decodeDescription += ra2selDescription + "\n";
             console.log(
               "[MUX]",
               "RD2 not selected, use dirty value",
@@ -1331,6 +1486,17 @@ export function simulate(
               "from previous instruction"
             );
             break;
+        }
+        if (value.WASEL === 1) {
+          newFrame_dec.cl.wasel.value = 1;
+          newFrame_dec.cl.wasel.description = "WASEL is set to 1 because the operation has triggered an Exception. The PC is stored in XP.";
+          newFrame_dec.cl.wasel.focus = true;
+          decodeDescription += `WASEL = 1: Store Program Counter (PC) to XP due to an exception.\n`;
+        } else {
+          newFrame_dec.cl.wasel.value = 0;
+          newFrame_dec.cl.wasel.description = "WASEL is set to 0: The result is written to the target register Rc.";
+          newFrame_dec.cl.wasel.focus = false;
+          decodeDescription += `WASEL = 0: Write the result to the target register Rc.\n`;
         }
         
         if (value.WASEL === 1) {
@@ -1340,8 +1506,11 @@ export function simulate(
           newFrame_dec.mux.wasel.description = "WASEL is set to 0 to write the result to the target register Rc. The result of the ALU or memory operation is written to a specific register."
         }
 
+        newFrame_dec.descriptionOfStep = decodeDescription.trim();
+
+        newFrame_dec.cl.wasel.dirty = true;
         newFrame_dec.mux.wasel.dirty = true;
-        newFrame_dec.mux.ra2sel.value = value.RA2SEL;
+        newFrame_dec.mux.ra2sel.value = RA2SEL;
         newFrame_dec.mux.ra2sel.dirty = true;
         newFrame_dec.mux.ra2sel.description = ra2selDescription;
         frames.push(newFrame_dec);
@@ -1352,7 +1521,8 @@ export function simulate(
         resetFocus(frames[frames.length - 1]); 
 
         newFrame_exe.titleOfStep = "Execute: Perform the operation";
-        newFrame_exe.descriptionOfStep = "Perform the operation specified by the decoded instruction.";
+        newFrame.iconOfStep = "social-media";
+        newFrame_exe.descriptionOfStep = "";
 
         newFrame_exe.cl.alufn.focus = true
         console.log("[CU signal]", "ASEL:", value.ASEL);
@@ -1384,6 +1554,7 @@ export function simulate(
         newFrame_exe.mux.asel.dirty = true;
         newFrame_exe.mux.asel.description = aselDescription;
         newFrame_exe.mux.asel.focus = true;
+        newFrame_exe.descriptionOfStep += `${aselDescription}\n`;
 
         console.log("[CU signal]", "BSEL:", value.BSEL);
 
@@ -1414,6 +1585,7 @@ export function simulate(
         newFrame_exe.mux.bsel.dirty = true;
         newFrame_exe.mux.bsel.description = bselDescription;
         newFrame_exe.mux.bsel.focus = true;
+        newFrame_exe.descriptionOfStep += `${bselDescription}\n`;
 
         let alufnDescription = "ALUFN default value is null.";
 
@@ -1430,9 +1602,24 @@ export function simulate(
             "from previous instruction"
           );
         }
-        newFrame_exe.cl.alufn.value = value.ALUFN;
+        
+        newFrame_exe.cl.asel.value = aselValue;
+        newFrame_exe.cl.asel.dirty = true;
+        newFrame_exe.cl.asel.description = aselDescription;
+        newFrame_exe.cl.asel.focus = true;
+
+        newFrame_exe.cl.bsel.value = bselValue;
+        newFrame_exe.cl.bsel.dirty = true;
+        newFrame_exe.cl.bsel.description = bselDescription;
+        newFrame_exe.cl.bsel.focus = true;
+
+        // Update ALUFN
+        newFrame_exe.cl.alufn.value = value.ALUFN || 0; // 默认值为 0
         newFrame_exe.cl.alufn.dirty = true;
         newFrame_exe.cl.alufn.description = alufnDescription;
+        newFrame_exe.cl.alufn.focus = true;
+        newFrame_exe.descriptionOfStep += `${alufnDescription}\n`;
+        newFrame_exe.descriptionOfStep += `ALU output: ${aluo}\n`;
 
         aluo = executeALUFN(A, B, ALUFN); //todo: ensure the output is two complement
         console.log("ALU output:", aluo);
@@ -1445,7 +1632,9 @@ export function simulate(
 
         newFrame_mem.titleOfStep = "Memory: Access memory";
         newFrame_mem.descriptionOfStep = "Access memory for load/store instructions.";
-
+        newFrame.iconOfStep = "Box"
+        let memoryDescription = "";
+        
         let mwrDescription = "";
         const mwrValue = value.MWR !== null ? value.MWR : 0; 
         mWD = RD2;
@@ -1475,6 +1664,12 @@ export function simulate(
         newFrame_exe.cl.mwr.dirty = true;
         newFrame_exe.cl.mwr.description = mwrDescription;
         newFrame_mem.cl.mwr.focus = true;
+
+        newFrame_mem.cl.mwr.value = mwrValue;
+        newFrame_mem.cl.mwr.dirty = true;
+        newFrame_mem.cl.mwr.description = mwrDescription;
+        newFrame_mem.cl.mwr.focus = true;
+        memoryDescription += `${mwrDescription}\n`;
 
         if (MWR == 1) {
           console.log("Write data", mWD, " to memory address:", Adr);
@@ -1508,11 +1703,18 @@ export function simulate(
         newFrame_exe.cl.moe.description = moeDescription;
         newFrame_mem.cl.moe.focus = true;
 
+        newFrame_mem.cl.moe.value = moeValue;
+        newFrame_mem.cl.moe.dirty = true;
+        newFrame_mem.cl.moe.description = moeDescription;
+        newFrame_mem.cl.moe.focus = true;
+        memoryDescription += `${moeDescription}\n`;
+
         if (MOE == 1) {
           RD = uint16ToTwosComplement(memory.getUint32(Adr, littleEndian));
           console.log("Read data", RD, " from memory address:", Adr);
         }
 
+        newFrame_mem.descriptionOfStep = memoryDescription.trim();
         frames.push(newFrame_mem)
 
         //Write Back
@@ -1522,6 +1724,8 @@ export function simulate(
 
         newFrame_wb.titleOfStep = "Write Back: Write results to register";
         newFrame_wb.descriptionOfStep = "Write the results of the operation back to the register.";
+        newFrame.iconOfStep = "unarchive"
+
         console.log("[CU signal]", "WDSEL:", value.WDSEL);
         let wdselDescription = "";
         if (value.WDSEL != null) {
@@ -1563,12 +1767,13 @@ export function simulate(
             );
             break;
         }
-        newFrame_wb.mux.wdsel.value = value.WDSEL;
+        newFrame_wb.mux.wdsel.value = WDSEL;
         newFrame_wb.mux.wdsel.dirty = true;
         newFrame_wb.mux.wdsel.description = wdselDescription;
         newFrame_wb.mux.wdsel.focus = true;
+        newFrame_wb.descriptionOfStep += `${wdselDescription}\n`;
 
-        newFrame_wb.cl.wdsel.value = value.WDSEL;
+        newFrame_wb.cl.wdsel.value = WDSEL;
         newFrame_wb.cl.wdsel.dirty = true;
         newFrame_wb.cl.wdsel.description = wdselDescription;
         newFrame_wb.cl.wdsel.focus = true;
@@ -1613,6 +1818,7 @@ export function simulate(
           newFrame_wb.cl.werf.dirty = true;
           newFrame_wb.cl.werf.description = werfDescription;
           newFrame_wb.cl.werf.focus = true;
+          newFrame_wb.descriptionOfStep += `${werfDescription}\n`;
 
           frames.push(newFrame_wb);
         programCounter = pcpf;
