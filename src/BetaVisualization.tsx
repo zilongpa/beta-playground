@@ -1,4 +1,8 @@
-import { TransformWrapper, TransformComponent, getCenterPosition } from "react-zoom-pan-pinch";
+import {
+  TransformWrapper,
+  TransformComponent,
+  getCenterPosition,
+} from "react-zoom-pan-pinch";
 import { motion } from "framer-motion";
 
 const getItem = (key: string, defaultValue: any = null): any => {
@@ -19,9 +23,13 @@ const setItem = (key: string, value: string): void => {
 
 interface BetaVisualizationProps {
   frame: any;
+  previousFrame: any;
 }
 
-const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
+const BetaVisualization = ({
+  frame,
+  previousFrame,
+}: BetaVisualizationProps) => {
   return (
     <TransformWrapper
       limitToBounds={true}
@@ -348,73 +356,96 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["wdsel-to-register-file"]}
+                custom={{
+                  v: frame.path["wdsel-to-register-file"],
+                  p: previousFrame.cl["wdsel-to-register-file"],
+                }}
                 d="M3120.83,1383.33l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
                 id="path-wdsel-to-register-file"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["wdsel-to-register-file"]}
+                custom={{
+                  v: frame.path["wdsel-to-register-file"],
+                  p: previousFrame.cl["wdsel-to-register-file"],
+                }}
                 d="M2495.83,2950l0,100l1258.33,-0l-0,-1679.17l-638.334,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(45.8333,0,0,45.8333,3081.61,1387.24)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["wdsel-to-register-file"]}
+                custom={{
+                  v: frame.path["wdsel-to-register-file"],
+                  p: previousFrame.cl["wdsel-to-register-file"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="3005.25px"
@@ -422,93 +453,434 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 WD
               </motion.text>
-            </g>
-            <path
-              d="M793.75,850l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
-              id="path-pc-to-plus-four"
-            />
-            <path
-              d="M781.25,666.667l0,188.333"
-              style={{ fill: "none", stroke: "#000", strokeWidth: "4.17px" }}
-            />
-            <path
-              d="M1412.5,741.667l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
-              id="path-pc-to-instruction-memory"
-            />
-            <path
-              d="M781.25,666.667l0,87.5l636.25,-0"
-              style={{ fill: "none", stroke: "#000", strokeWidth: "4.17px" }}
-            />
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["asel-to-alu"]}
-                d="M2237.5,2120.83l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
-                id="path-asel-to-alu"
+                custom={{
+                  v: frame.path["wdsel-to-register-file"],
+                  p: previousFrame.cl["wdsel-to-register-file"],
+                }}
+                d="M3120.83,1383.33l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
+                id="foreground-path-wdsel-to-register-file"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["asel-to-alu"]}
-                d="M2225,1854.17l0,271.666"
+                custom={{
+                  v: frame.path["wdsel-to-register-file"],
+                  p: previousFrame.cl["wdsel-to-register-file"],
+                }}
+                d="M2495.83,2950l0,100l1258.33,-0l-0,-1679.17l-638.334,0"
+                id="foreground-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
-              <g transform="matrix(45.8333,0,0,45.8333,2240.29,2195.31)" />
+            </g>
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M793.75,850l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="path-pc-to-plus-four"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M781.25,666.667l0,188.333"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M1412.5,741.667l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
+                id="path-pc-to-instruction-memory"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M781.25,666.667l0,87.5l636.25,-0"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(45.8333,0,0,45.8333,1484.8,770.571)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["asel-to-alu"]}
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="1454.23px"
+                y="770.571px"
+              >
+                A
+              </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M793.75,850l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="foreground-path-pc-to-plus-four"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M781.25,666.667l0,188.333"
+                id="foreground-1"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M1412.5,741.667l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
+                id="foreground-path-pc-to-instruction-memory"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pc-to-plus-four"],
+                  p: previousFrame.cl["pc-to-plus-four"],
+                }}
+                d="M781.25,666.667l0,87.5l636.25,-0"
+                id="foreground-2"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+            </g>
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["asel-to-alu"],
+                  p: previousFrame.cl["asel-to-alu"],
+                }}
+                d="M2237.5,2120.83l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="path-asel-to-alu"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["asel-to-alu"],
+                  p: previousFrame.cl["asel-to-alu"],
+                }}
+                d="M2225,1854.17l0,271.666"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(45.8333,0,0,45.8333,2240.29,2195.31)" />
+              <motion.text
+                animate="positive"
+                custom={{
+                  v: frame.path["asel-to-alu"],
+                  p: previousFrame.cl["asel-to-alu"],
+                }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "45.833px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2209.72px"
@@ -516,77 +888,155 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 A
               </motion.text>
-            </g>
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["bsel-to-alu"]}
-                d="M2775,2120.83l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
-                id="path-bsel-to-alu"
+                custom={{
+                  v: frame.path["asel-to-alu"],
+                  p: previousFrame.cl["asel-to-alu"],
+                }}
+                d="M2237.5,2120.83l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="foreground-path-asel-to-alu"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["bsel-to-alu"]}
-                d="M2762.5,1854.17l0,271.666"
+                custom={{
+                  v: frame.path["asel-to-alu"],
+                  p: previousFrame.cl["asel-to-alu"],
+                }}
+                d="M2225,1854.17l0,271.666"
+                id="foreground-3"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+            </g>
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["bsel-to-alu"],
+                  p: previousFrame.cl["bsel-to-alu"],
+                }}
+                d="M2775,2120.83l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="path-bsel-to-alu"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["bsel-to-alu"],
+                  p: previousFrame.cl["bsel-to-alu"],
+                }}
+                d="M2762.5,1854.17l0,271.666"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(45.8333,0,0,45.8333,2777.33,2195.57)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["bsel-to-alu"]}
+                custom={{
+                  v: frame.path["bsel-to-alu"],
+                  p: previousFrame.cl["bsel-to-alu"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2746.76px"
@@ -594,77 +1044,155 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 B
               </motion.text>
-            </g>
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["data-memory-to-wdsel"]}
-                d="M2587.5,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
-                id="path-data-memory-to-wdsel"
+                custom={{
+                  v: frame.path["bsel-to-alu"],
+                  p: previousFrame.cl["bsel-to-alu"],
+                }}
+                d="M2775,2120.83l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="foreground-path-bsel-to-alu"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["data-memory-to-wdsel"]}
-                d="M3275,2541.67l0,133.333l-700,-0l-0,192.5"
+                custom={{
+                  v: frame.path["bsel-to-alu"],
+                  p: previousFrame.cl["bsel-to-alu"],
+                }}
+                d="M2762.5,1854.17l0,271.666"
+                id="foreground-4"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+            </g>
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["data-memory-to-wdsel"],
+                  p: previousFrame.cl["data-memory-to-wdsel"],
+                }}
+                d="M2587.5,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="path-data-memory-to-wdsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["data-memory-to-wdsel"],
+                  p: previousFrame.cl["data-memory-to-wdsel"],
+                }}
+                d="M3275,2541.67l0,133.333l-700,-0l-0,192.5"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2587.06,2925.39)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["data-memory-to-wdsel"]}
+                custom={{
+                  v: frame.path["data-memory-to-wdsel"],
+                  p: previousFrame.cl["data-memory-to-wdsel"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2563.88px"
@@ -675,26 +1203,27 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3307.52,2525)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["data-memory-to-wdsel"]}
+                custom={{
+                  v: frame.path["data-memory-to-wdsel"],
+                  p: previousFrame.cl["data-memory-to-wdsel"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="3241.32px"
@@ -702,77 +1231,155 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 RD
               </motion.text>
-            </g>
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["plus-four-to-wdsel"]}
-                d="M2429.17,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
-                id="path-plus-four-to-wdsel"
+                custom={{
+                  v: frame.path["data-memory-to-wdsel"],
+                  p: previousFrame.cl["data-memory-to-wdsel"],
+                }}
+                d="M2587.5,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-data-memory-to-wdsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["plus-four-to-wdsel"]}
-                d="M781.25,962.5l0,1833.33l1635.42,0l-0,71.667"
+                custom={{
+                  v: frame.path["data-memory-to-wdsel"],
+                  p: previousFrame.cl["data-memory-to-wdsel"],
+                }}
+                d="M3275,2541.67l0,133.333l-700,-0l-0,192.5"
+                id="foreground-5"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+            </g>
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M2429.17,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="path-plus-four-to-wdsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M781.25,962.5l0,1833.33l1635.42,0l-0,71.667"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2428.25,2925.14)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["plus-four-to-wdsel"]}
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2405.08px"
@@ -780,6 +1387,338 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 0
               </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M1003.46,245.833l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="path-plus-four-to-pcsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M781.25,962.5l0,37.5l302.083,0l0,-820.833l-92.372,-0l-0,71.666"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(41.6667,0,0,41.6667,1002.68,306.514)" />
+              <motion.text
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "41.667px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="979.506px"
+                y="306.514px"
+              >
+                0
+              </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M1429.17,1204.17l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
+                id="path-plus-four-to-plus"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M781.25,962.5l0,154.167l714.583,-0l0,75l-71.666,-0"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M2429.17,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-plus-four-to-wdsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M781.25,962.5l0,1833.33l1635.42,0l-0,71.667"
+                id="foreground-6"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M1003.46,245.833l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="foreground-path-plus-four-to-pcsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M781.25,962.5l0,37.5l302.083,0l0,-820.833l-92.372,-0l-0,71.666"
+                id="foreground-7"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M1429.17,1204.17l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
+                id="foreground-path-plus-four-to-plus"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-four-to-wdsel"],
+                  p: previousFrame.cl["plus-four-to-wdsel"],
+                }}
+                d="M781.25,962.5l0,154.167l714.583,-0l0,75l-71.666,-0"
+                id="foreground-8"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
             </g>
             <path
               d="M793.75,566.667l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
@@ -792,73 +1731,96 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["ra2sel-to-register-file"]}
+                custom={{
+                  v: frame.path["ra2sel-to-register-file"],
+                  p: previousFrame.cl["ra2sel-to-register-file"],
+                }}
                 d="M2837.5,1225l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
                 id="path-ra2sel-to-register-file"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["ra2sel-to-register-file"]}
+                custom={{
+                  v: frame.path["ra2sel-to-register-file"],
+                  p: previousFrame.cl["ra2sel-to-register-file"],
+                }}
                 d="M2825,1191.67l0,38.333"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(45.8333,0,0,45.8333,2868.99,1299.61)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["ra2sel-to-register-file"]}
+                custom={{
+                  v: frame.path["ra2sel-to-register-file"],
+                  p: previousFrame.cl["ra2sel-to-register-file"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2779.83px"
@@ -866,77 +1828,155 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 RA2
               </motion.text>
-            </g>
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["wasel-to-register-file"]}
-                d="M2166.67,1358.33l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
-                id="path-wasel-to-register-file"
+                custom={{
+                  v: frame.path["ra2sel-to-register-file"],
+                  p: previousFrame.cl["ra2sel-to-register-file"],
+                }}
+                d="M2837.5,1225l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-ra2sel-to-register-file"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["wasel-to-register-file"]}
-                d="M2087.5,1370.83l84.167,0"
+                custom={{
+                  v: frame.path["ra2sel-to-register-file"],
+                  p: previousFrame.cl["ra2sel-to-register-file"],
+                }}
+                d="M2825,1191.67l0,38.333"
+                id="foreground-9"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+            </g>
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["wasel-to-register-file"],
+                  p: previousFrame.cl["wasel-to-register-file"],
+                }}
+                d="M2166.67,1358.33l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
+                id="path-wasel-to-register-file"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["wasel-to-register-file"],
+                  p: previousFrame.cl["wasel-to-register-file"],
+                }}
+                d="M2087.5,1370.83l84.167,0"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(45.8333,0,0,45.8333,2279.9,1387.24)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["wasel-to-register-file"]}
+                custom={{
+                  v: frame.path["wasel-to-register-file"],
+                  p: previousFrame.cl["wasel-to-register-file"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2207.77px"
@@ -947,101 +1987,190 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
                   A
                 </tspan>
               </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["wasel-to-register-file"],
+                  p: previousFrame.cl["wasel-to-register-file"],
+                }}
+                d="M2166.67,1358.33l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
+                id="foreground-path-wasel-to-register-file"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["wasel-to-register-file"],
+                  p: previousFrame.cl["wasel-to-register-file"],
+                }}
+                d="M2087.5,1370.83l84.167,0"
+                id="foreground-10"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
             </g>
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["register-file-to-asel"]}
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
                 d="M2300,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
                 id="path-register-file-to-asel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["register-file-to-asel"]}
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
                 d="M2287.5,1491.67l0,280"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["register-file-to-asel"]}
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
                 d="M2287.5,1520.83l-150,0"
                 id="path-register-file-to-nor"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2298.07,1829.44)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["register-file-to-asel"]}
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2274.9px"
@@ -1052,26 +2181,27 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,2335.75,1475)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["register-file-to-asel"]}
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2244.06px"
@@ -1079,46 +2209,129 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 RD1
               </motion.text>
-            </g>
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.cl.jt}
-                d="M2347.92,1538.44l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
-                id="in-jt"
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
+                d="M2300,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-register-file-to-asel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.jt}
-                d="M2289.58,1550.94l63.334,0"
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
+                d="M2287.5,1491.67l0,280"
+                id="foreground-11"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["register-file-to-asel"],
+                  p: previousFrame.cl["register-file-to-asel"],
+                }}
+                d="M2287.5,1520.83l-150,0"
+                id="foreground-path-register-file-to-nor"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+            </g>
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{ v: frame.cl.jt, p: previousFrame.cl.jt }}
+                d="M2347.92,1538.44l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
+                id="in-jt"
+                initial="negative"
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{ v: frame.cl.jt, p: previousFrame.cl.jt }}
+                d="M2289.58,1550.94l63.334,0"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1126,23 +2339,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,2430.85,1567.07)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.jt}
+                custom={{ v: frame.cl.jt, p: previousFrame.cl.jt }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1154,23 +2367,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(41.6667,0,0,41.6667,793.601,306.769)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.jt}
+                custom={{ v: frame.cl.jt, p: previousFrame.cl.jt }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1181,42 +2394,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.jt}
+                custom={{ v: frame.cl.jt, p: previousFrame.cl.jt }}
                 d="M794.045,245.833l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
                 id="out-jt"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.jt}
+                custom={{ v: frame.cl.jt, p: previousFrame.cl.jt }}
                 d="M781.545,187.5l0,63.333"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1224,23 +2437,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,806.802,178.607)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.jt}
+                custom={{ v: frame.cl.jt, p: previousFrame.cl.jt }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1250,84 +2463,167 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
                 JT
               </motion.text>
             </g>
-            <path
-              d="M1693.75,1808.33l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
-              id="path-instruction-memory-to-control-logic"
-            />
-            <path
-              d="M1681.25,933.333l0,880"
-              style={{ fill: "none", stroke: "#000", strokeWidth: "4.17px" }}
-            />
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["instruction-memory-to-wasel"]}
-                d="M2000,1400l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 0,-25Z"
-                id="path-instruction-memory-to-wasel"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1693.75,1808.33l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="path-instruction-memory-to-control-logic"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["instruction-memory-to-wasel"]}
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,933.333l0,880"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2000,1400l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 0,-25Z"
+                id="path-instruction-memory-to-wasel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
                 d="M1681.25,933.333l0,450l29.167,29.167l294.583,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2055.47,1427.22)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["instruction-memory-to-wasel"]}
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2032.3px"
@@ -1335,77 +2631,98 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 0
               </motion.text>
-            </g>
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["instruction-memory-to-bsel"]}
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
                 d="M2712.5,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
                 id="path-instruction-memory-to-bsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["instruction-memory-to-bsel"]}
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
                 d="M1681.25,933.333l0,662.917l29.167,29.167l989.583,0l-0,146.25"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2710.06,1829.44)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["instruction-memory-to-bsel"]}
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2686.89px"
@@ -1413,97 +2730,1012 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 1
               </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2898.85,1104.17l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="path-instruction-memory-to-ra2sel-as-rc"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,1037.5l1171.77,-0l33.334,33.333l-0,38.334"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(41.6667,0,0,41.6667,2898.07,1164.07)" />
+              <motion.text
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "41.667px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="2874.9px"
+                y="1164.08px"
+              >
+                0
+              </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2777.41,1104.17l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="path-instruction-memory-to-ra2sel-as-rb"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,1037.5l1050.33,-0l33.333,33.333l-0,38.334"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(41.6667,0,0,41.6667,2772.56,1164.33)" />
+              <motion.text
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "41.667px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="2749.39px"
+                y="1164.33px"
+              >
+                1
+              </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2300,1225l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="path-instruction-memory-to-register-file"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,1037.5l572.917,-0l33.333,33.333l-0,159.167"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(45.8333,0,0,45.8333,2334.49,1299.61)" />
+              <motion.text
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "45.833px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="2245.33px"
+                y="1299.61px"
+              >
+                RA1
+              </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1429.17,1254.17l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
+                id="path-instruction-memory-to-plus"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,933.333l0,275l-33.333,33.334l-223.75,-0"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(45.8333,0,0,45.8333,1699.06,916.667)" />
+              <motion.text
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "45.833px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="1665.97px"
+                y="916.667px"
+              >
+                D
+              </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1693.75,1808.33l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="foreground-path-instruction-memory-to-control-logic"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,933.333l0,880"
+                id="foreground-12"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2000,1400l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 0,-25Z"
+                id="foreground-path-instruction-memory-to-wasel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,933.333l0,450l29.167,29.167l294.583,-0"
+                id="foreground-13"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2712.5,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-instruction-memory-to-bsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,933.333l0,662.917l29.167,29.167l989.583,0l-0,146.25"
+                id="foreground-14"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2898.85,1104.17l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-instruction-memory-to-ra2sel-as-rc"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,1037.5l1171.77,-0l33.334,33.333l-0,38.334"
+                id="foreground-15"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2777.41,1104.17l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-instruction-memory-to-ra2sel-as-rb"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,1037.5l1050.33,-0l33.333,33.333l-0,38.334"
+                id="foreground-16"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M2300,1225l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-instruction-memory-to-register-file"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,1037.5l572.917,-0l33.333,33.333l-0,159.167"
+                id="foreground-17"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1429.17,1254.17l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
+                id="foreground-path-instruction-memory-to-plus"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["instruction-memory-to-control-logic"],
+                  p: previousFrame.cl["instruction-memory-to-control-logic"],
+                }}
+                d="M1681.25,933.333l0,275l-33.333,33.334l-223.75,-0"
+                id="foreground-18"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
             </g>
-            <path
-              d="M1983.33,1533.33l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
-              id="in-z"
-            />
-            <path
-              d="M2056.25,1520.83l-77.917,0"
-              style={{ fill: "none", stroke: "#000", strokeWidth: "4.17px" }}
-            />
+            <g>
+              <motion.path
+                animate="positive"
+                custom={{ v: frame.flags.z, p: previousFrame.flags.z }}
+                d="M1983.33,1533.33l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
+                id="in-z"
+                initial="negative"
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{ v: frame.flags.z, p: previousFrame.flags.z }}
+                d="M2056.25,1520.83l-77.917,0"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{ v: frame.flags.z, p: previousFrame.flags.z }}
+                d="M1516.67,1808.33l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="out-z"
+                initial="negative"
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{ v: frame.flags.z, p: previousFrame.flags.z }}
+                d="M1504.17,1750l-0,63.333"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <g transform="matrix(45.8333,0,0,45.8333,1518.28,1741.67)" />
+              <motion.text
+                animate="positive"
+                custom={{ v: frame.flags.z, p: previousFrame.flags.z }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "45.833px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="1490.28px"
+                y="1741.67px"
+              >
+                Z
+              </motion.text>
+              <g transform="matrix(45.8333,0,0,45.8333,1951.14,1537.24)" />
+              <motion.text
+                animate="positive"
+                custom={{ v: frame.flags.z, p: previousFrame.flags.z }}
+                initial="negative"
+                style={{
+                  fontFamily: "'ArialMT', 'Arial'",
+                  fontSize: "45.833px",
+                }}
+                variants={{
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+                x="1923.14px"
+                y="1537.24px"
+              >
+                Z
+              </motion.text>
+            </g>
             <g>
               <g>
                 <motion.path
                   animate="positive"
-                  custom={frame.cl.werf}
+                  custom={{ v: frame.cl.werf, p: previousFrame.cl.werf }}
                   d="M1425,2729.17l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                   id="in-werf"
                   initial="negative"
                   variants={{
-                    negative: (v: any) => ({
-                      fill: v.value ? "black" : "red",
-                      stroke: v.value ? "black" : "red",
-                      opacity: v.dirty ? 1 : 0.4,
+                    negative: (p: any) => ({
+                      fill: p.value ? "red" : "black",
+                      stroke: p.value ? "red" : "black",
+                      opacity: p.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                     positive: (v: any) => ({
                       fill: v.value ? "red" : "black",
                       stroke: v.value ? "red" : "black",
-                      opacity: v.dirty ? 0.4 : 1,
+                      opacity: v.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                   }}
                 />
                 <motion.path
                   animate="positive"
-                  custom={frame.cl.werf}
+                  custom={{ v: frame.cl.werf, p: previousFrame.cl.werf }}
                   d="M1337.5,1983.33l-0,733.334l25,25l67.5,-0"
                   initial="negative"
                   style={{ fill: "none", strokeWidth: "4.17px" }}
                   variants={{
-                    negative: (v: any) => ({
-                      fill: v.value ? "black" : "red",
-                      stroke: v.value ? "black" : "red",
-                      opacity: v.dirty ? 1 : 0.4,
+                    negative: (p: any) => ({
+                      fill: p.value ? "red" : "black",
+                      stroke: p.value ? "red" : "black",
+                      opacity: p.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                     positive: (v: any) => ({
                       fill: v.value ? "red" : "black",
                       stroke: v.value ? "red" : "black",
-                      opacity: v.dirty ? 0.4 : 1,
+                      opacity: v.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                   }}
                 />
                 <motion.path
                   animate="positive"
-                  custom={frame.cl.werf}
+                  custom={{ v: frame.cl.werf, p: previousFrame.cl.werf }}
                   d="M3120.83,1462.5l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
                   id="out-werf"
                   initial="negative"
                   variants={{
-                    negative: (v: any) => ({
-                      fill: v.value ? "black" : "red",
-                      stroke: v.value ? "black" : "red",
-                      opacity: v.dirty ? 1 : 0.4,
+                    negative: (p: any) => ({
+                      fill: p.value ? "red" : "black",
+                      stroke: p.value ? "red" : "black",
+                      opacity: p.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                     positive: (v: any) => ({
                       fill: v.value ? "red" : "black",
                       stroke: v.value ? "red" : "black",
-                      opacity: v.dirty ? 0.4 : 1,
+                      opacity: v.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                   }}
                 />
                 <motion.path
                   animate="positive"
-                  custom={frame.cl.werf}
+                  custom={{ v: frame.cl.werf, p: previousFrame.cl.werf }}
                   d="M3179.17,1450l-63.334,-0"
                   initial="negative"
                   style={{ fill: "none", strokeWidth: "4.17px" }}
                   variants={{
-                    negative: (v: any) => ({
-                      fill: v.value ? "black" : "red",
-                      stroke: v.value ? "black" : "red",
-                      opacity: v.dirty ? 1 : 0.4,
+                    negative: (p: any) => ({
+                      fill: p.value ? "red" : "black",
+                      stroke: p.value ? "red" : "black",
+                      opacity: p.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                     positive: (v: any) => ({
                       fill: v.value ? "red" : "black",
                       stroke: v.value ? "red" : "black",
-                      opacity: v.dirty ? 0.4 : 1,
+                      opacity: v.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -1511,23 +3743,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
                 <g transform="matrix(45.8333,0,0,45.8333,1592.7,2758.07)" />
                 <motion.text
                   animate="positive"
-                  custom={frame.cl.werf}
+                  custom={{ v: frame.cl.werf, p: previousFrame.cl.werf }}
                   initial="negative"
                   style={{
                     fontFamily: "'ArialMT', 'Arial'",
                     fontSize: "45.833px",
                   }}
                   variants={{
-                    negative: (v: any) => ({
-                      fill: v.value ? "black" : "red",
-                      stroke: v.value ? "black" : "red",
-                      opacity: v.dirty ? 1 : 0.4,
+                    negative: (p: any) => ({
+                      fill: p.value ? "red" : "black",
+                      stroke: p.value ? "red" : "black",
+                      opacity: p.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                     positive: (v: any) => ({
                       fill: v.value ? "red" : "black",
                       stroke: v.value ? "red" : "black",
-                      opacity: v.dirty ? 0.4 : 1,
+                      opacity: v.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -1539,23 +3771,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
                 <g transform="matrix(45.8333,0,0,45.8333,3321.87,1466.4)" />
                 <motion.text
                   animate="positive"
-                  custom={frame.cl.werf}
+                  custom={{ v: frame.cl.werf, p: previousFrame.cl.werf }}
                   initial="negative"
                   style={{
                     fontFamily: "'ArialMT', 'Arial'",
                     fontSize: "45.833px",
                   }}
                   variants={{
-                    negative: (v: any) => ({
-                      fill: v.value ? "black" : "red",
-                      stroke: v.value ? "black" : "red",
-                      opacity: v.dirty ? 1 : 0.4,
+                    negative: (p: any) => ({
+                      fill: p.value ? "red" : "black",
+                      stroke: p.value ? "red" : "black",
+                      opacity: p.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                     positive: (v: any) => ({
                       fill: v.value ? "red" : "black",
                       stroke: v.value ? "red" : "black",
-                      opacity: v.dirty ? 0.4 : 1,
+                      opacity: v.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -1567,23 +3799,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
                 <g transform="matrix(45.8333,0,0,45.8333,3081.63,1466.4)" />
                 <motion.text
                   animate="positive"
-                  custom={frame.cl.werf}
+                  custom={{ v: frame.cl.werf, p: previousFrame.cl.werf }}
                   initial="negative"
                   style={{
                     fontFamily: "'ArialMT', 'Arial'",
                     fontSize: "45.833px",
                   }}
                   variants={{
-                    negative: (v: any) => ({
-                      fill: v.value ? "black" : "red",
-                      stroke: v.value ? "black" : "red",
-                      opacity: v.dirty ? 1 : 0.4,
+                    negative: (p: any) => ({
+                      fill: p.value ? "red" : "black",
+                      stroke: p.value ? "red" : "black",
+                      opacity: p.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                     positive: (v: any) => ({
                       fill: v.value ? "red" : "black",
                       stroke: v.value ? "red" : "black",
-                      opacity: v.dirty ? 0.4 : 1,
+                      opacity: v.dirty ? 1 : 0.3,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -1597,42 +3829,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.cl.wdsel}
+                custom={{ v: frame.cl.wdsel, p: previousFrame.cl.wdsel }}
                 d="M1425,2652.78l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-wdsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.wdsel}
+                custom={{ v: frame.cl.wdsel, p: previousFrame.cl.wdsel }}
                 d="M1337.5,1983.33l-0,656.945l25,25l67.5,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1640,23 +3872,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1620.76,2681.68)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.wdsel}
+                custom={{ v: frame.cl.wdsel, p: previousFrame.cl.wdsel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1667,42 +3899,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.wdsel}
+                custom={{ v: frame.cl.wdsel, p: previousFrame.cl.wdsel }}
                 d="M2643.33,2933.33l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
                 id="out-wdsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.wdsel}
+                custom={{ v: frame.cl.wdsel, p: previousFrame.cl.wdsel }}
                 d="M2701.67,2920.83l-63.334,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1710,23 +3942,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,2872.43,2937.24)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.wdsel}
+                custom={{ v: frame.cl.wdsel, p: previousFrame.cl.wdsel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1739,42 +3971,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.cl.wasel}
+                custom={{ v: frame.cl.wasel, p: previousFrame.cl.wasel }}
                 d="M1425,2576.39l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-wasel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.wasel}
+                custom={{ v: frame.cl.wasel, p: previousFrame.cl.wasel }}
                 d="M1337.5,1983.33l-0,580.556l25,25l67.5,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1782,23 +4014,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1616.53,2605.29)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.wasel}
+                custom={{ v: frame.cl.wasel, p: previousFrame.cl.wasel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1813,42 +4045,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.wasel}
+                custom={{ v: frame.cl.wasel, p: previousFrame.cl.wasel }}
                 d="M2068.75,1275l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
                 id="out-wasel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.wasel}
+                custom={{ v: frame.cl.wasel, p: previousFrame.cl.wasel }}
                 d="M2056.25,1216.67l-0,63.333"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1856,23 +4088,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,2136.17,1207.77)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.wasel}
+                custom={{ v: frame.cl.wasel, p: previousFrame.cl.wasel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1889,42 +4121,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.cl.ra2sel}
+                custom={{ v: frame.cl.ra2sel, p: previousFrame.cl.ra2sel }}
                 d="M1425,2500l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-ra2sel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.ra2sel}
+                custom={{ v: frame.cl.ra2sel, p: previousFrame.cl.ra2sel }}
                 d="M1337.5,1983.33l-0,504.167l25,25l67.5,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1932,23 +4164,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1630.52,2528.9)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.ra2sel}
+                custom={{ v: frame.cl.ra2sel, p: previousFrame.cl.ra2sel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1959,42 +4191,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.ra2sel}
+                custom={{ v: frame.cl.ra2sel, p: previousFrame.cl.ra2sel }}
                 d="M2956.25,1174.7l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
                 id="out-ra2sel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.ra2sel}
+                custom={{ v: frame.cl.ra2sel, p: previousFrame.cl.ra2sel }}
                 d="M3014.58,1162.2l-63.333,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2002,23 +4234,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3195.1,1178.61)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.ra2sel}
+                custom={{ v: frame.cl.ra2sel, p: previousFrame.cl.ra2sel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2031,42 +4263,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.cl.pcsel}
+                custom={{ v: frame.cl.pcsel, p: previousFrame.cl.pcsel }}
                 d="M1425,2423.61l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-pcsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.pcsel}
+                custom={{ v: frame.cl.pcsel, p: previousFrame.cl.pcsel }}
                 d="M1337.5,1983.33l-0,427.778l25,25l67.5,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2074,23 +4306,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1605.1,2452.52)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.pcsel}
+                custom={{ v: frame.cl.pcsel, p: previousFrame.cl.pcsel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2101,42 +4333,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.pcsel}
+                custom={{ v: frame.cl.pcsel, p: previousFrame.cl.pcsel }}
                 d="M502.917,289.583l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="out-pcsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.pcsel}
+                custom={{ v: frame.cl.pcsel, p: previousFrame.cl.pcsel }}
                 d="M444.583,302.083l63.334,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2144,23 +4376,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,437.884,318.488)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.pcsel}
+                custom={{ v: frame.cl.pcsel, p: previousFrame.cl.pcsel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2173,151 +4405,96 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["plus-four-to-pcsel"]}
-                d="M1003.46,245.833l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
-                id="path-plus-four-to-pcsel"
-                initial="negative"
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
+                custom={{
+                  v: frame.path["plus-to-pcsel"],
+                  p: previousFrame.cl["plus-to-pcsel"],
                 }}
-              />
-              <motion.path
-                animate="positive"
-                custom={frame.path["plus-four-to-pcsel"]}
-                d="M781.25,962.5l0,37.5l302.083,0l0,-820.833l-92.372,-0l-0,71.666"
-                initial="negative"
-                style={{ fill: "none", strokeWidth: "4.17px" }}
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-              />
-              <g transform="matrix(41.6667,0,0,41.6667,1002.68,306.514)" />
-              <motion.text
-                animate="positive"
-                custom={frame.path["plus-four-to-pcsel"]}
-                initial="negative"
-                style={{
-                  fontFamily: "'ArialMT', 'Arial'",
-                  fontSize: "41.667px",
-                }}
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-                x="979.506px"
-                y="306.514px"
-              >
-                0
-              </motion.text>
-            </g>
-            <g>
-              <motion.path
-                animate="positive"
-                custom={frame.path["plus-to-pcsel"]}
                 d="M902.92,245.833l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
                 id="path-plus-to-pcsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["plus-to-pcsel"]}
+                custom={{
+                  v: frame.path["plus-to-pcsel"],
+                  p: previousFrame.cl["plus-to-pcsel"],
+                }}
                 d="M1283.33,1216.67l-133.333,-0l-0,-1125l-259.58,-0l-0,159.166"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,899.396,306.769)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["plus-to-pcsel"]}
+                custom={{
+                  v: frame.path["plus-to-pcsel"],
+                  p: previousFrame.cl["plus-to-pcsel"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="876.223px"
@@ -2325,327 +4502,155 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 1
               </motion.text>
-            </g>
-            <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["instruction-memory-to-ra2sel-as-rc"]}
-                d="M2898.85,1104.17l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
-                id="path-instruction-memory-to-ra2sel-as-rc"
+                custom={{
+                  v: frame.path["plus-to-pcsel"],
+                  p: previousFrame.cl["plus-to-pcsel"],
+                }}
+                d="M902.92,245.833l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="foreground-path-plus-to-pcsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["instruction-memory-to-ra2sel-as-rc"]}
-                d="M1681.25,1037.5l1171.77,-0l33.334,33.333l-0,38.334"
+                custom={{
+                  v: frame.path["plus-to-pcsel"],
+                  p: previousFrame.cl["plus-to-pcsel"],
+                }}
+                d="M1283.33,1216.67l-133.333,-0l-0,-1125l-259.58,-0l-0,159.166"
+                id="foreground-19"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
                   }),
                 }}
               />
-              <g transform="matrix(41.6667,0,0,41.6667,2898.07,1164.07)" />
-              <motion.text
-                animate="positive"
-                custom={frame.path["instruction-memory-to-ra2sel-as-rc"]}
-                initial="negative"
-                style={{
-                  fontFamily: "'ArialMT', 'Arial'",
-                  fontSize: "41.667px",
-                }}
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-                x="2874.9px"
-                y="1164.08px"
-              >
-                0
-              </motion.text>
             </g>
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["instruction-memory-to-ra2sel-as-rb"]}
-                d="M2777.41,1104.17l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
-                id="path-instruction-memory-to-ra2sel-as-rb"
-                initial="negative"
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
+                custom={{
+                  v: frame.path["plus-to-asel"],
+                  p: previousFrame.cl["plus-to-asel"],
                 }}
-              />
-              <motion.path
-                animate="positive"
-                custom={frame.path["instruction-memory-to-ra2sel-as-rb"]}
-                d="M1681.25,1037.5l1050.33,-0l33.333,33.333l-0,38.334"
-                initial="negative"
-                style={{ fill: "none", strokeWidth: "4.17px" }}
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-              />
-              <g transform="matrix(41.6667,0,0,41.6667,2772.56,1164.33)" />
-              <motion.text
-                animate="positive"
-                custom={frame.path["instruction-memory-to-ra2sel-as-rb"]}
-                initial="negative"
-                style={{
-                  fontFamily: "'ArialMT', 'Arial'",
-                  fontSize: "41.667px",
-                }}
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-                x="2749.39px"
-                y="1164.33px"
-              >
-                1
-              </motion.text>
-            </g>
-            <g>
-              <motion.path
-                animate="positive"
-                custom={frame.path["instruction-memory-to-register-file"]}
-                d="M2300,1225l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
-                id="path-instruction-memory-to-register-file"
-                initial="negative"
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-              />
-              <motion.path
-                animate="positive"
-                custom={frame.path["instruction-memory-to-register-file"]}
-                d="M1681.25,1037.5l572.917,-0l33.333,33.333l-0,159.167"
-                initial="negative"
-                style={{ fill: "none", strokeWidth: "4.17px" }}
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-              />
-              <g transform="matrix(45.8333,0,0,45.8333,2334.49,1299.61)" />
-              <motion.text
-                animate="positive"
-                custom={frame.path["instruction-memory-to-register-file"]}
-                initial="negative"
-                style={{
-                  fontFamily: "'ArialMT', 'Arial'",
-                  fontSize: "45.833px",
-                }}
-                variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
-                  }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
-                  }),
-                }}
-                x="2245.33px"
-                y="1299.61px"
-              >
-                RA1
-              </motion.text>
-            </g>
-            <path
-              d="M1429.17,1254.17l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
-              id="path-instruction-memory-to-plus"
-            />
-            <path
-              d="M1681.25,933.333l0,275l-33.333,33.334l-223.75,-0"
-              style={{ fill: "none", stroke: "#000", strokeWidth: "4.17px" }}
-            />
-            <path
-              d="M1429.17,1204.17l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
-              id="path-plus-four-to-plus"
-            />
-            <path
-              d="M781.25,962.5l0,154.167l714.583,-0l0,75l-71.666,-0"
-              style={{ fill: "none", stroke: "#000", strokeWidth: "4.17px" }}
-            />
-            <g>
-              <motion.path
-                animate="positive"
-                custom={frame.path["plus-to-asel"]}
                 d="M2175,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
                 id="path-plus-to-asel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["plus-to-asel"]}
+                custom={{
+                  v: frame.path["plus-to-asel"],
+                  p: previousFrame.cl["plus-to-asel"],
+                }}
                 d="M1283.33,1216.67l-133.333,-0l-0,450l1012.5,-0l-0,105"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2172.56,1829.69)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["plus-to-asel"]}
+                custom={{
+                  v: frame.path["plus-to-asel"],
+                  p: previousFrame.cl["plus-to-asel"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2149.39px"
@@ -2653,6 +4658,61 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 1
               </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-to-asel"],
+                  p: previousFrame.cl["plus-to-asel"],
+                }}
+                d="M2175,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-plus-to-asel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["plus-to-asel"],
+                  p: previousFrame.cl["plus-to-asel"],
+                }}
+                d="M1283.33,1216.67l-133.333,-0l-0,450l1012.5,-0l-0,105"
+                id="foreground-20"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
             </g>
             <g transform="matrix(62.5,0,0,62.5,2302.1,2775)" />
             <text
@@ -2674,23 +4734,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1569.47,2376.13)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.mwr}
+                custom={{ v: frame.cl.mwr, p: previousFrame.cl.mwr }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2701,84 +4761,84 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.mwr}
+                custom={{ v: frame.cl.mwr, p: previousFrame.cl.mwr }}
                 d="M1425,2347.22l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-mwr"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.mwr}
+                custom={{ v: frame.cl.mwr, p: previousFrame.cl.mwr }}
                 d="M1337.5,1983.33l-0,351.389l25,25l67.5,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.mwr}
+                custom={{ v: frame.cl.mwr, p: previousFrame.cl.mwr }}
                 d="M3554.17,2287.24l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
                 id="out-mwr"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.mwr}
+                custom={{ v: frame.cl.mwr, p: previousFrame.cl.mwr }}
                 d="M3612.5,2274.74l-63.333,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2786,23 +4846,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3731.97,2291.14)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.mwr}
+                custom={{ v: frame.cl.mwr, p: previousFrame.cl.mwr }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2814,23 +4874,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3514.96,2291.14)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.mwr}
+                custom={{ v: frame.cl.mwr, p: previousFrame.cl.mwr }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2844,23 +4904,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1559.33,2299.74)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.moe}
+                custom={{ v: frame.cl.moe, p: previousFrame.cl.moe }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2871,84 +4931,84 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.moe}
+                custom={{ v: frame.cl.moe, p: previousFrame.cl.moe }}
                 d="M1425,2270.83l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-moe"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.moe}
+                custom={{ v: frame.cl.moe, p: previousFrame.cl.moe }}
                 d="M1337.5,1983.33l-0,275l25,25l67.5,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.moe}
+                custom={{ v: frame.cl.moe, p: previousFrame.cl.moe }}
                 d="M3554.17,2370.57l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 -0,25Z"
                 id="out-moe"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.moe}
+                custom={{ v: frame.cl.moe, p: previousFrame.cl.moe }}
                 d="M3612.5,2358.07l-63.333,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2956,23 +5016,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3721.83,2374.49)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.moe}
+                custom={{ v: frame.cl.moe, p: previousFrame.cl.moe }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2984,23 +5044,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3514.96,2374.49)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.moe}
+                custom={{ v: frame.cl.moe, p: previousFrame.cl.moe }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3014,23 +5074,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1572.18,2223.35)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.bsel}
+                custom={{ v: frame.cl.bsel, p: previousFrame.cl.bsel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3041,84 +5101,84 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.bsel}
+                custom={{ v: frame.cl.bsel, p: previousFrame.cl.bsel }}
                 d="M1425,2194.44l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-bsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.bsel}
+                custom={{ v: frame.cl.bsel, p: previousFrame.cl.bsel }}
                 d="M1337.5,1983.33l-0,198.611l25,25l67.5,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.bsel}
+                custom={{ v: frame.cl.bsel, p: previousFrame.cl.bsel }}
                 d="M2893.75,1835.42l-25,-12.5l25,-12.5c-6.25,6.25 -6.25,18.75 0,25Z"
                 id="out-bsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.bsel}
+                custom={{ v: frame.cl.bsel, p: previousFrame.cl.bsel }}
                 d="M2952.08,1822.92l-63.333,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3126,23 +5186,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3077.06,1839.32)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.bsel}
+                custom={{ v: frame.cl.bsel, p: previousFrame.cl.bsel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3156,23 +5216,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1575.6,2146.96)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.asel}
+                custom={{ v: frame.cl.asel, p: previousFrame.cl.asel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3183,84 +5243,84 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.asel}
+                custom={{ v: frame.cl.asel, p: previousFrame.cl.asel }}
                 d="M1425,2118.06l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-asel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.asel}
+                custom={{ v: frame.cl.asel, p: previousFrame.cl.asel }}
                 d="M1337.5,1983.33l-0,122.223l25,25l67.5,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.asel}
+                custom={{ v: frame.cl.asel, p: previousFrame.cl.asel }}
                 d="M2093.75,1810.14l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="out-asel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.asel}
+                custom={{ v: frame.cl.asel, p: previousFrame.cl.asel }}
                 d="M2035.42,1822.64l63.333,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3268,23 +5328,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,2028.72,1839.04)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.asel}
+                custom={{ v: frame.cl.asel, p: previousFrame.cl.asel }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3298,23 +5358,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1608.66,2070.57)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.alufn}
+                custom={{ v: frame.cl.alufn, p: previousFrame.cl.alufn }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3325,84 +5385,84 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.alufn}
+                custom={{ v: frame.cl.alufn, p: previousFrame.cl.alufn }}
                 d="M1425,2041.67l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="in-alufn"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.alufn}
+                custom={{ v: frame.cl.alufn, p: previousFrame.cl.alufn }}
                 d="M1337.5,1983.33l-0,45.834l25,25l67.5,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.alufn}
+                custom={{ v: frame.cl.alufn, p: previousFrame.cl.alufn }}
                 d="M2147.92,2254.17l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="out-alufn"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.alufn}
+                custom={{ v: frame.cl.alufn, p: previousFrame.cl.alufn }}
                 d="M2089.58,2266.67l63.334,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3410,23 +5470,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,2085.01,2282.79)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.alufn}
+                custom={{ v: frame.cl.alufn, p: previousFrame.cl.alufn }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3464,26 +5524,27 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(41.6667,0,0,41.6667,851.835,470.97)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["pcsel-to-reset"]}
+                custom={{
+                  v: frame.path["pcsel-to-reset"],
+                  p: previousFrame.cl["pcsel-to-reset"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="828.662px"
@@ -3493,47 +5554,124 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.path["pcsel-to-reset"]}
+                custom={{
+                  v: frame.path["pcsel-to-reset"],
+                  p: previousFrame.cl["pcsel-to-reset"],
+                }}
                 d="M852.616,408.333l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
                 id="path-pcsel-to-reset"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["pcsel-to-reset"]}
+                custom={{
+                  v: frame.path["pcsel-to-reset"],
+                  p: previousFrame.cl["pcsel-to-reset"],
+                }}
                 d="M840.116,333.333l0,80"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pcsel-to-reset"],
+                  p: previousFrame.cl["pcsel-to-reset"],
+                }}
+                d="M852.616,408.333l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
+                id="foreground-path-pcsel-to-reset"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     pathLength: 1,
-                    transition: { duration: 0.5 },
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["pcsel-to-reset"],
+                  p: previousFrame.cl["pcsel-to-reset"],
+                }}
+                d="M840.116,333.333l0,80"
+                id="foreground-21"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
@@ -3542,23 +5680,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(41.6667,0,0,41.6667,2056.89,1343.89)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.xp}
+                custom={{ v: frame.cl.xp, p: previousFrame.cl.xp }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3569,42 +5707,42 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               </motion.text>
               <motion.path
                 animate="positive"
-                custom={frame.cl.xp}
+                custom={{ v: frame.cl.xp, p: previousFrame.cl.xp }}
                 d="M2000,1316.41l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 -0,-25Z"
                 id="out-xp"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.cl.xp}
+                custom={{ v: frame.cl.xp, p: previousFrame.cl.xp }}
                 d="M1941.67,1328.91l63.333,0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3612,23 +5750,23 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,1935.33,1345.32)" />
               <motion.text
                 animate="positive"
-                custom={frame.cl.xp}
+                custom={{ v: frame.cl.xp, p: previousFrame.cl.xp }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
+                    opacity: v.dirty ? 1 : 0.3,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3697,22 +5835,6 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             >
               Rc: ID[25:21]
             </text>
-            <g transform="matrix(45.8333,0,0,45.8333,1484.8,770.571)" />
-            <text
-              style={{ fontFamily: "'ArialMT', 'Arial'", fontSize: "45.833px" }}
-              x="1454.23px"
-              y="770.571px"
-            >
-              A
-            </text>
-            <g transform="matrix(45.8333,0,0,45.8333,1699.06,916.667)" />
-            <text
-              style={{ fontFamily: "'ArialMT', 'Arial'", fontSize: "45.833px" }}
-              x="1665.97px"
-              y="916.667px"
-            >
-              D
-            </text>
             <path
               d="M614.583,452.083l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 0,-25Z"
               id="out-reset"
@@ -3744,30 +5866,6 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               y="391.136px"
             >
               Reset
-            </text>
-            <path
-              d="M1516.67,1808.33l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
-              id="out-wasel1"
-            />
-            <path
-              d="M1504.17,1750l-0,63.333"
-              style={{ fill: "none", stroke: "#000", strokeWidth: "4.17px" }}
-            />
-            <g transform="matrix(45.8333,0,0,45.8333,1518.28,1741.67)" />
-            <text
-              style={{ fontFamily: "'ArialMT', 'Arial'", fontSize: "45.833px" }}
-              x="1490.28px"
-              y="1741.67px"
-            >
-              Z
-            </text>
-            <g transform="matrix(45.8333,0,0,45.8333,1951.14,1537.24)" />
-            <text
-              style={{ fontFamily: "'ArialMT', 'Arial'", fontSize: "45.833px" }}
-              x="1923.14px"
-              y="1537.24px"
-            >
-              Z
             </text>
             <path
               d="M584.629,245.833l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,0Z"
@@ -3813,119 +5911,164 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["register-file-to-data-memory"]}
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
                 d="M3287.5,2216.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
                 id="path-register-file-to-data-memory"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["register-file-to-data-memory"]}
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
                 d="M2825,1491.67l-0,179.166l450,0l0,550.834"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["register-file-to-data-memory"]}
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
                 d="M2837.5,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
                 id="path-register-file-to-bsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["register-file-to-data-memory"]}
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
                 d="M2825,1491.67l-0,280"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2835.57,1829.18)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["register-file-to-data-memory"]}
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2812.4px"
@@ -3936,26 +6079,27 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3314.12,2291.14)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["register-file-to-data-memory"]}
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="3237.76px"
@@ -3966,26 +6110,27 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,2870.25,1475)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["register-file-to-data-memory"]}
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2778.56px"
@@ -3993,123 +6138,278 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 RD2
               </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
+                d="M3287.5,2216.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-register-file-to-data-memory"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
+                d="M2825,1491.67l-0,179.166l450,0l0,550.834"
+                id="foreground-22"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
+                d="M2837.5,1766.67l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-register-file-to-bsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["register-file-to-data-memory"],
+                  p: previousFrame.cl["register-file-to-data-memory"],
+                }}
+                d="M2825,1491.67l-0,280"
+                id="foreground-23"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
             </g>
             <g>
               <motion.path
                 animate="positive"
-                custom={frame.path["alu-to-data-memory"]}
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
                 d="M2995.83,2466.67l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 0,-25Z"
                 id="path-alu-to-data-memory"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["alu-to-data-memory"]}
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
                 d="M2495.83,2387.5l0,91.667l505,-0"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["alu-to-data-memory"]}
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
                 d="M2508.33,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
                 id="path-alu-to-wdsel"
                 initial="negative"
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <motion.path
                 animate="positive"
-                custom={frame.path["alu-to-data-memory"]}
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
                 d="M2495.83,2387.5l0,480"
                 initial="negative"
                 style={{ fill: "none", strokeWidth: "4.17px" }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
-                  positive: (v: any) => ({
-                    fill: v.value ? "red" : "black",
-                    stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                  positive: (p: any, v: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity:
+                      p.value == v.value && p.dirty == v.dirty
+                        ? 0
+                        : v.dirty
+                        ? 1
+                        : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
               />
               <g transform="matrix(41.6667,0,0,41.6667,2508.84,2925.39)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["alu-to-data-memory"]}
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "41.667px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="2485.67px"
@@ -4120,26 +6420,27 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               <g transform="matrix(45.8333,0,0,45.8333,3108.89,2495.3)" />
               <motion.text
                 animate="positive"
-                custom={frame.path["alu-to-data-memory"]}
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
                 initial="negative"
                 style={{
                   fontFamily: "'ArialMT', 'Arial'",
                   fontSize: "45.833px",
                 }}
                 variants={{
-                  negative: (v: any) => ({
-                    fill: v.value ? "black" : "red",
-                    stroke: v.value ? "black" : "red",
-                    opacity: v.dirty ? 1 : 0.4,
-                    pathLength: 0,
-                    transition: { duration: 0.5 },
+                  negative: (p: any) => ({
+                    fill: p.value ? "red" : "black",
+                    stroke: p.value ? "red" : "black",
+                    opacity: p.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                   positive: (v: any) => ({
                     fill: v.value ? "red" : "black",
                     stroke: v.value ? "red" : "black",
-                    opacity: v.dirty ? 0.4 : 1,
-                    pathLength: 1,
-                    transition: { duration: 0.5 },
+                    opacity: v.dirty ? 1 : 0.3,
+                    transition: { duration: 1 },
                   }),
                 }}
                 x="3037.57px"
@@ -4147,6 +6448,116 @@ const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
               >
                 Adr
               </motion.text>
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
+                d="M2995.83,2466.67l25,12.5l-25,12.5c6.25,-6.25 6.25,-18.75 0,-25Z"
+                id="foreground-path-alu-to-data-memory"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
+                d="M2495.83,2387.5l0,91.667l505,-0"
+                id="foreground-24"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
+                d="M2508.33,2862.5l-12.5,25l-12.5,-25c6.25,6.25 18.75,6.25 25,-0Z"
+                id="foreground-path-alu-to-wdsel"
+                initial="negative"
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
+              <motion.path
+                animate="positive"
+                custom={{
+                  v: frame.path["alu-to-data-memory"],
+                  p: previousFrame.cl["alu-to-data-memory"],
+                }}
+                d="M2495.83,2387.5l0,480"
+                id="foreground-25"
+                initial="negative"
+                style={{ fill: "none", strokeWidth: "4.17px" }}
+                variants={{
+                  negative: (p: any, v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength:
+                      p.value == v.value && p.dirty == v.dirty ? 1 : 0,
+                    transition: { duration: 1 },
+                  }),
+                  positive: (v: any) => ({
+                    fill: v.value ? "red" : "black",
+                    stroke: v.value ? "red" : "black",
+                    opacity: v.dirty ? 1 : 0.3,
+                    pathLength: 1,
+                    transition: { duration: 1 },
+                  }),
+                }}
+              />
             </g>
           </g>
         </svg>

@@ -362,7 +362,7 @@ function App() {
           readOnly={true}
         /> */}
         <BetaVisualization
-          frame={frames.length > 0 ? frames[currentFrame] : DEFAULT_FRAME}
+          frame={frames.length > 0 ? frames[currentFrame] : DEFAULT_FRAME} previousFrame={frames.length > 0 ? frames[currentFrame - 1] : DEFAULT_FRAME}
         />
       </div>
     ),

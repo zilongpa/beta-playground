@@ -19,9 +19,10 @@ const setItem = (key: string, value: string): void => {
 
 interface BetaVisualizationProps {
   frame: any
+  previousFrame: any
 }
 
-const BetaVisualization = ({ frame }: BetaVisualizationProps) => {
+const BetaVisualization = ({ frame, previousFrame }: BetaVisualizationProps) => {
   return (
     <TransformWrapper
       limitToBounds={true}
