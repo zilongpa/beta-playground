@@ -993,7 +993,7 @@ export function simulate(
         dirty: true,
         description: "Usually WERF is set to 0, meaning no register write occurs, unless the instruction specifies writing data to a register.",
         focus: false,
-      }
+      },
     },
     path: {
       "alu-to-data-memory": {

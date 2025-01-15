@@ -50,20 +50,46 @@ def process(input_svg, template_file, output_file):
                         style = child['style']
                         style = re.sub(r'stroke:[^;]+;', '', style)
                         child['style'] = style
-                    child['variants'] = '{{visible: (v: any) => ({ fill: v.value ? "red" : "black", stroke: v.value ? "red" : "black", opacity: v.dirty ? 0.4 : 1, transition: { duration: 1 }})}}'
-                    child['custom'] = '{' + f"frame.cl.{path.get('id').split('-')[1]}" + '}'
-                    child["initial"]= "visible"
+                    child['variants'] = '{{negative: (v: any) => ({ fill: v.value ? "black" : "red" , stroke: v.value ? "black" : "red", opacity: v.dirty ? 1 : 0.4, transition: { duration: 1 }}), positive: (v: any) => ({ fill: v.value ? "red" : "black", stroke: v.value ? "red" : "black", opacity: v.dirty ? 0.4 : 1, transition: { duration: 1 }})}}'
+                    child['custom'] = '{' + f"frame.cl.{path.get('id').split('-', 1)[1]}" + '}'
+                    child["animate"]= "positive"
+                    child["initial"]= "negative"
                 for child in parent.find_all('text'):
                     child.name = 'motion.text'
                     if 'style' in child.attrs:
                         style = child['style']
                         style = re.sub(r'fill:[^;]+;', '', style)
                         child['style'] = style
-                    child['variants'] = '{{visible: (v: any) => ({ fill: v.value ? "red" : "black", stroke: v.value ? "red" : "black", opacity: v.dirty ? 0.4 : 1, transition: { duration: 1 }})}}'
-                    child['custom'] = '{' + f"frame.cl.{path.get('id').split('-')[1]}" + '}'
-                    child["initial"]= "visible"
-                    # child['animate'] = '{{ fill: "red" }}'
-                    # child['custom'] = '{ 1 }'
+                    child['variants'] = '{{negative: (v: any) => ({ fill: v.value ? "black" : "red" , stroke: v.value ? "black" : "red", opacity: v.dirty ? 1 : 0.4, transition: { duration: 1 }}), positive: (v: any) => ({ fill: v.value ? "red" : "black", stroke: v.value ? "red" : "black", opacity: v.dirty ? 0.4 : 1, transition: { duration: 1 }})}}'
+                    child['custom'] = '{' + f"frame.cl.{path.get('id').split('-', 1)[1]}" + '}'
+                    child["animate"]= "positive"
+                    child["initial"]= "negative"
+    
+    
+    for path in soup.find_all('path'):
+        if path.get('id') and 'path-' in path.get('id'):
+            parent = path.find_parent()
+            if parent and len(parent.find_all()) <= 10:
+                for child in parent.find_all('path'):
+                    child.name = 'motion.path'
+                    if 'style' in child.attrs:
+                        style = child['style']
+                        style = re.sub(r'stroke:[^;]+;', '', style)
+                        child['style'] = style
+                    child['variants'] = '{{negative: (v: any) => ({ fill: v.value ? "black" : "red" , stroke: v.value ? "black" : "red", opacity: v.dirty ? 1 : 0.4, pathLength: 0, transition: { duration: 0.5 }}), positive: (v: any) => ({ fill: v.value ? "red" : "black", stroke: v.value ? "red" : "black", opacity: v.dirty ? 0.4 : 1, pathLength: 1, transition: { duration: 0.5 }})}}'
+                    child['custom'] = '{' + f"frame.path['{path.get('id').split('-', 1)[1]}']" + '}'
+                    child["animate"]= "positive"
+                    child["initial"]= "negative"
+                for child in parent.find_all('text'):
+                    child.name = 'motion.text'
+                    if 'style' in child.attrs:
+                        style = child['style']
+                        style = re.sub(r'fill:[^;]+;', '', style)
+                        child['style'] = style
+                    child['variants'] = '{{negative: (v: any) => ({ fill: v.value ? "black" : "red" , stroke: v.value ? "black" : "red", opacity: v.dirty ? 1 : 0.4, pathLength: 0, transition: { duration: 0.5 }}), positive: (v: any) => ({ fill: v.value ? "red" : "black", stroke: v.value ? "red" : "black", opacity: v.dirty ? 0.4 : 1, pathLength: 1, transition: { duration: 0.5 }})}}'
+                    child['custom'] = '{' + f"frame.path['{path.get('id').split('-', 1)[1]}']" + '}'
+                    child["animate"]= "positive"
+                    child["initial"]= "negative"
 
     # 替换形如 style="..." 的属性为 style={{...}}
     def camel_case(match):

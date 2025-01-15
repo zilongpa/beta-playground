@@ -192,6 +192,19 @@ const DEFAULT_FRAME = {
       description: "xxxxxxx",
       focus: false,
     },
+    xp: {
+      value: 0,
+      dirty: false,
+      description: "xxxxxxx",
+      focus: false,
+    },
+    jt: {
+      value: 0,
+      dirty: true,
+      description: "xxxxxxx",
+      focus: false,
+    }
+
   },
   path: {
     "alu-to-data-memory": {
@@ -285,6 +298,54 @@ const DEFAULT_FRAME = {
       focus: false,
     },
     "wdsel-to-register-file": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },
+    "register-file-to-asel": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },
+    "instruction-memory-to-wasel": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },"instruction-memory-to-bsel": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },"plus-four-to-pcsel": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },"plus-to-pcsel": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },"instruction-memory-to-ra2sel-as-rc": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },"instruction-memory-to-ra2sel-as-rb": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },
+    "instruction-memory-to-register-file": {
+      value: 0,
+      dirty: true,
+      description: null,
+      focus: false,
+    },"plus-to-asel": {
       value: 0,
       dirty: true,
       description: null,
