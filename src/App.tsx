@@ -64,57 +64,6 @@ const DEFAULT_FRAME = {
   registers: Array(32).fill(0),
   buffer: new ArrayBuffer(128),
   programCounter: 0, // 当前的PC，在没有jump和error handle的情况下应该和offsetOfInstruction相同
-  mux: {
-    pcsel: {
-      value: 0,
-      dirty: true,
-      description:
-        "Usually PCSEL is set to 0, selecting PC + 4, unless a branch or jump occurs.",
-      focus: false,
-    },
-    wdsel: {
-      value: 0,
-      dirty: true,
-      description:
-        "Usually WDSEL is set to 0 or N/A, unless an exception or special instruction requires writing to PC.",
-      focus: false,
-    },
-    wasel: {
-      value: 0,
-      dirty: true,
-      description:
-        "Usually WASEL is set to 0 or N/A, unless an exception occurs",
-      focus: false,
-    },
-    asel: {
-      value: 0,
-      dirty: true,
-      description:
-        "Usually ASEL is set to 0, selecting RD1 as the source for A, unless a branch/jump requires using PC + 4 + 4 * SXT(C).",
-      focus: false,
-    },
-    ra2sel: {
-      value: 0,
-      dirty: true,
-      description:
-        "Usually RA2SEL is set to 0 or 1, unless an exception occurs",
-      focus: false,
-    },
-    bsel: {
-      value: 0,
-      dirty: true,
-      description:
-        "Usually BSEL is set to 0, selecting RD2 as the source for B, unless an immediate value is required (in which case BSEL = 1).",
-      focus: false,
-    },
-    reset: {
-      value: 0,
-      dirty: true,
-      description:
-        "Usually reset is set to 0, with no reset behavior, unless a reset signal is triggered by an external event.",
-      focus: false,
-    },
-  },
   gate: {
     nor: {
       value: 0,
