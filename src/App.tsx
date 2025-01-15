@@ -44,20 +44,20 @@ HALT() | exit
 
 const DEFAULT_FRAME = {
   offsetOfInstruction: 0x00, // 目前正在运行的这条指令本身的位置
-  titleOfInstruction: "ADD(R1, R2, R3)",
-  descriptionOfInstruction: "write R1+R2 to R3",
+  titleOfInstruction: "Reset",
+  descriptionOfInstruction: "initial state of processor",
   iconOfInstruction: "cog", // 暂时都用cog就行
-  titleOfStep: "Fetch: Read instruction from memory",
+  titleOfStep: "Press ASM to RAM to assemble your code",
   descriptionOfStep:
-    "Read the instruction from the memory at the address specified by the program counter at 0x0.",
-  iconOfStep: "cog", // 花里胡哨的图标，从https://blueprintjs.com/docs/#icons/icons-list 里面找你觉得能对应上的
+    "Reminder: This version of processer is still in development, some bugs or issues may occur.",
+  iconOfStep: "reset", // 花里胡哨的图标，从https://blueprintjs.com/docs/#icons/icons-list 里面找你觉得能对应上的
   exception: false, // 这一步是否运行出错，error handle不会exception，只有没找到对应的instruction或者除以0的时候这个会变成true
   exitingDueToException: false, // 是不是在进行error handle的部分
   flags: {
     z: {
       value: 0,
       dirty: true,
-      description: null,
+      description: "Z is used for comparison instruction and it would be on if all digits are zero.",
       focus: false,
     },
   },
