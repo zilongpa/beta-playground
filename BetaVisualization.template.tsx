@@ -1,4 +1,4 @@
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent, getCenterPosition } from "react-zoom-pan-pinch";
 import { motion } from "framer-motion";
 
 const getItem = (key: string, defaultValue: any = null): any => {
