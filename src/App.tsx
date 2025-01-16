@@ -344,7 +344,10 @@ const TITLE_MAP: Record<ViewId, string> = {
 };
 
 function App() {
-  const assemblyCodeRef = useRef<string>(DEFAULT_ASSEMBLY_CODE);
+  const assemblyCodeRef = useRef<string>(getItem("assemblyCode", DEFAULT_ASSEMBLY_CODE));
+  if (assemblyCodeRef.current === "") {
+    assemblyCodeRef.current = DEFAULT_ASSEMBLY_CODE
+  }
   const [frames, setFrames] = useState<any>([]);
   const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [keyFrames, setKeyFrames] = useState<Array<number>>([]);
