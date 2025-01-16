@@ -352,17 +352,8 @@ function App() {
   const COMPONENT_MAP = {
     processor: () => (
       <div style={{ width: "100%", height: "100%" }}>
-        {/* <textarea
-          style={{ width: "100%", height: "100%" }}
-          value={
-            frames.length > 0
-              ? JSON.stringify(frames[currentFrame], null, 2)
-              : "点那个蓝色按钮开始模拟,之后用Previous Step和Next Step来切换frame"
-          }
-          readOnly={true}
-        /> */}
         <BetaVisualization
-          frame={frames.length > 0 ? frames[currentFrame] : DEFAULT_FRAME} previousFrame={frames.length > 0 ? frames[currentFrame - 1] : DEFAULT_FRAME}
+          frame={frames.length > 0 ? frames[currentFrame] : DEFAULT_FRAME} previousFrame={frames.length == 0 || currentFrame==0 ? DEFAULT_FRAME : frames[currentFrame - 1]}
         />
       </div>
     ),
@@ -416,7 +407,7 @@ function App() {
                   let simulation = simulate(assembled);
                   (
                     await OverlayToaster.createAsync({
-                      position: "top",
+                      position: "bottom",
                     })
                   ).show({
                     message: "Successfully assembled the code",
@@ -441,7 +432,7 @@ function App() {
                   console.log(error);
                   (
                     await OverlayToaster.createAsync({
-                      position: "top",
+                      position: "bottom",
                     })
                   ).show({
                     message: `An error occurred during the assembly process: ${error.message}`,
