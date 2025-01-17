@@ -10,6 +10,10 @@ def process(input_svg, template_file, output_file):
     :param template_file: 输入的模板文件路径，例如 "beta.fragment.tsx"
     :param output_file: 输出的文件路径，例如 "output.tsx"
     """
+    delay_dict = {
+        "all +4"
+    }
+    
     # 读入SVG文件
     with open(input_svg, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -118,7 +122,7 @@ def process(input_svg, template_file, output_file):
                         style = re.sub(r'stroke:[^;]+;', '', style)
                         child['style'] = style
 
-                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: (custom.previous.value==custom.current.value && custom.previous.dirty==custom.current.dirty) ? 0 : (custom.current.dirty ? 1 : 0.3), transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: (custom.previous.value==custom.current.value && custom.previous.dirty==custom.current.dirty) ? 0 : (custom.current.dirty ? 1 : 0.3), transition: { duration: 1 }})}}'
+                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: (custom.previous.value==custom.current.value && custom.previous.dirty==custom.current.dirty) ? 0 : (custom.current.dirty ? 1 : 0.3), transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: 0, transition: { duration: 1 }})}}'
                     child['custom'] = '{{' + f"current: frame.path['{path.get('id').split('-', 1)[1]}'], previous: previousFrame.path['{path.get('id').split('-', 1)[1]}']" + '}}'
                     child["animate"] = "positive"
                     child["initial"] = "negative"
