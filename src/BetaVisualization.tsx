@@ -372,8 +372,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -402,8 +402,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -430,13 +430,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -458,18 +458,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -489,18 +489,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -526,8 +526,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -556,8 +556,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -586,8 +586,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -616,8 +616,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -644,13 +644,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -672,18 +672,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -703,18 +703,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -733,18 +733,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -764,18 +764,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -801,8 +801,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -831,8 +831,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -859,13 +859,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -887,18 +887,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -918,18 +918,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -955,8 +955,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -985,8 +985,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1013,13 +1013,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1041,18 +1041,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1072,18 +1072,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1109,8 +1109,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1139,8 +1139,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1167,13 +1167,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1198,13 +1198,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1226,18 +1226,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1257,18 +1257,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1294,8 +1294,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1324,8 +1324,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1352,13 +1352,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1385,8 +1385,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1415,8 +1415,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1443,13 +1443,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1476,8 +1476,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1506,8 +1506,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1531,18 +1531,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1562,18 +1562,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1592,18 +1592,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1623,18 +1623,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1653,18 +1653,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1684,18 +1684,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1729,8 +1729,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1759,8 +1759,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1787,13 +1787,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1815,18 +1815,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1846,18 +1846,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -1883,8 +1883,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1913,8 +1913,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -1941,13 +1941,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -1972,18 +1972,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -2003,18 +2003,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -2040,8 +2040,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2070,8 +2070,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2101,8 +2101,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2129,13 +2129,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2160,13 +2160,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2188,18 +2188,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -2219,18 +2219,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -2250,18 +2250,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -2279,13 +2279,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2300,13 +2300,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2324,13 +2324,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2352,13 +2352,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2377,13 +2377,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2398,13 +2398,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2422,13 +2422,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2458,8 +2458,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2489,8 +2489,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2520,8 +2520,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2551,8 +2551,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2580,13 +2580,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2614,8 +2614,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2645,8 +2645,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2674,13 +2674,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2708,8 +2708,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2739,8 +2739,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2768,13 +2768,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2802,8 +2802,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2833,8 +2833,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2862,13 +2862,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2896,8 +2896,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2927,8 +2927,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -2956,13 +2956,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -2990,8 +2990,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -3021,8 +3021,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -3050,13 +3050,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3079,18 +3079,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3111,18 +3111,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3142,18 +3142,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3174,18 +3174,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3205,18 +3205,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3237,18 +3237,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3268,18 +3268,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3300,18 +3300,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3331,18 +3331,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3363,18 +3363,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3394,18 +3394,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3426,18 +3426,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3457,18 +3457,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3489,18 +3489,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -3521,13 +3521,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3545,13 +3545,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3569,13 +3569,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3593,13 +3593,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3620,13 +3620,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3651,13 +3651,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3682,13 +3682,13 @@ const BetaVisualization = ({
                     negative: (custom: any) => ({
                       fill: custom.previous.value ? "red" : "black",
                       stroke: custom.previous.value ? "red" : "black",
-                      opacity: custom.previous.dirty ? 1 : 0.3,
+                      opacity: custom.previous.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                     positive: (custom: any) => ({
                       fill: custom.current.value ? "red" : "black",
                       stroke: custom.current.value ? "red" : "black",
-                      opacity: custom.current.dirty ? 1 : 0.3,
+                      opacity: custom.current.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -3706,13 +3706,13 @@ const BetaVisualization = ({
                     negative: (custom: any) => ({
                       fill: custom.previous.value ? "red" : "black",
                       stroke: custom.previous.value ? "red" : "black",
-                      opacity: custom.previous.dirty ? 1 : 0.3,
+                      opacity: custom.previous.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                     positive: (custom: any) => ({
                       fill: custom.current.value ? "red" : "black",
                       stroke: custom.current.value ? "red" : "black",
-                      opacity: custom.current.dirty ? 1 : 0.3,
+                      opacity: custom.current.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -3730,13 +3730,13 @@ const BetaVisualization = ({
                     negative: (custom: any) => ({
                       fill: custom.previous.value ? "red" : "black",
                       stroke: custom.previous.value ? "red" : "black",
-                      opacity: custom.previous.dirty ? 1 : 0.3,
+                      opacity: custom.previous.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                     positive: (custom: any) => ({
                       fill: custom.current.value ? "red" : "black",
                       stroke: custom.current.value ? "red" : "black",
-                      opacity: custom.current.dirty ? 1 : 0.3,
+                      opacity: custom.current.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -3754,13 +3754,13 @@ const BetaVisualization = ({
                     negative: (custom: any) => ({
                       fill: custom.previous.value ? "red" : "black",
                       stroke: custom.previous.value ? "red" : "black",
-                      opacity: custom.previous.dirty ? 1 : 0.3,
+                      opacity: custom.previous.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                     positive: (custom: any) => ({
                       fill: custom.current.value ? "red" : "black",
                       stroke: custom.current.value ? "red" : "black",
-                      opacity: custom.current.dirty ? 1 : 0.3,
+                      opacity: custom.current.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -3781,13 +3781,13 @@ const BetaVisualization = ({
                     negative: (custom: any) => ({
                       fill: custom.previous.value ? "red" : "black",
                       stroke: custom.previous.value ? "red" : "black",
-                      opacity: custom.previous.dirty ? 1 : 0.3,
+                      opacity: custom.previous.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                     positive: (custom: any) => ({
                       fill: custom.current.value ? "red" : "black",
                       stroke: custom.current.value ? "red" : "black",
-                      opacity: custom.current.dirty ? 1 : 0.3,
+                      opacity: custom.current.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -3812,13 +3812,13 @@ const BetaVisualization = ({
                     negative: (custom: any) => ({
                       fill: custom.previous.value ? "red" : "black",
                       stroke: custom.previous.value ? "red" : "black",
-                      opacity: custom.previous.dirty ? 1 : 0.3,
+                      opacity: custom.previous.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                     positive: (custom: any) => ({
                       fill: custom.current.value ? "red" : "black",
                       stroke: custom.current.value ? "red" : "black",
-                      opacity: custom.current.dirty ? 1 : 0.3,
+                      opacity: custom.current.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -3843,13 +3843,13 @@ const BetaVisualization = ({
                     negative: (custom: any) => ({
                       fill: custom.previous.value ? "red" : "black",
                       stroke: custom.previous.value ? "red" : "black",
-                      opacity: custom.previous.dirty ? 1 : 0.3,
+                      opacity: custom.previous.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                     positive: (custom: any) => ({
                       fill: custom.current.value ? "red" : "black",
                       stroke: custom.current.value ? "red" : "black",
-                      opacity: custom.current.dirty ? 1 : 0.3,
+                      opacity: custom.current.dirty ? 0.3 : 1,
                       transition: { duration: 1 },
                     }),
                   }}
@@ -3874,13 +3874,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3898,13 +3898,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3925,13 +3925,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3953,13 +3953,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -3977,13 +3977,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4004,13 +4004,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4034,13 +4034,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4058,13 +4058,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4085,13 +4085,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4117,13 +4117,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4141,13 +4141,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4168,13 +4168,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4202,13 +4202,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4226,13 +4226,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4253,13 +4253,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4281,13 +4281,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4305,13 +4305,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4332,13 +4332,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4362,13 +4362,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4386,13 +4386,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4413,13 +4413,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4441,13 +4441,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4465,13 +4465,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4492,13 +4492,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4527,8 +4527,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -4557,8 +4557,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -4585,13 +4585,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4613,18 +4613,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -4644,18 +4644,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -4681,8 +4681,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -4711,8 +4711,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -4739,13 +4739,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4767,18 +4767,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -4798,18 +4798,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -4849,13 +4849,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4877,13 +4877,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4901,13 +4901,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4925,13 +4925,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4949,13 +4949,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -4976,13 +4976,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5007,13 +5007,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5040,13 +5040,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5068,13 +5068,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5092,13 +5092,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5116,13 +5116,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5140,13 +5140,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5167,13 +5167,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5198,13 +5198,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5231,13 +5231,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5259,13 +5259,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5283,13 +5283,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5307,13 +5307,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5331,13 +5331,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5358,13 +5358,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5391,13 +5391,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5419,13 +5419,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5443,13 +5443,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5467,13 +5467,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5491,13 +5491,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5518,13 +5518,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5551,13 +5551,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5579,13 +5579,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5603,13 +5603,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5627,13 +5627,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5651,13 +5651,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5678,13 +5678,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5735,13 +5735,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5768,8 +5768,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -5798,8 +5798,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -5823,18 +5823,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -5854,18 +5854,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -5886,13 +5886,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5911,13 +5911,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5932,13 +5932,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -5956,13 +5956,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -6123,8 +6123,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6153,8 +6153,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6183,8 +6183,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6213,8 +6213,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6241,13 +6241,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -6272,13 +6272,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -6303,13 +6303,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -6331,18 +6331,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -6362,18 +6362,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -6392,18 +6392,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -6423,18 +6423,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -6460,8 +6460,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6490,8 +6490,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6520,8 +6520,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6550,8 +6550,8 @@ const BetaVisualization = ({
                       custom.previous.dirty == custom.current.dirty
                         ? 0
                         : custom.current.dirty
-                        ? 1
-                        : 0.3,
+                        ? 0.3
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
@@ -6578,13 +6578,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -6609,13 +6609,13 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     transition: { duration: 1 },
                   }),
                 }}
@@ -6637,18 +6637,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -6668,18 +6668,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -6698,18 +6698,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),
@@ -6729,18 +6729,18 @@ const BetaVisualization = ({
                   negative: (custom: any) => ({
                     fill: custom.previous.value ? "red" : "black",
                     stroke: custom.previous.value ? "red" : "black",
-                    opacity: custom.previous.dirty ? 1 : 0.3,
+                    opacity: custom.previous.dirty ? 0.3 : 1,
                     pathLength:
                       custom.previous.value == custom.current.value &&
                       custom.previous.dirty == custom.current.dirty
-                        ? 1
-                        : 0,
+                        ? 0
+                        : 1,
                     transition: { duration: 1 },
                   }),
                   positive: (custom: any) => ({
                     fill: custom.current.value ? "red" : "black",
                     stroke: custom.current.value ? "red" : "black",
-                    opacity: custom.current.dirty ? 1 : 0.3,
+                    opacity: custom.current.dirty ? 0.3 : 1,
                     pathLength: 1,
                     transition: { duration: 1 },
                   }),

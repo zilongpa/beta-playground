@@ -54,7 +54,7 @@ def process(input_svg, template_file, output_file):
                         style = child['style']
                         style = re.sub(r'stroke:[^;]+;', '', style)
                         child['style'] = style
-                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 1 : 0.3, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 1 : 0.3, transition: { duration: 1 }})}}'
+                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 0.3 : 1, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 0.3 : 1, transition: { duration: 1 }})}}'
                     child['custom'] = '{{' + f"current: frame.cl.{path.get('id').split('-', 1)[1]}, previous: previousFrame.cl.{path.get('id').split('-', 1)[1]}" + '}}'
                     child["animate"] = "positive"
                     child["initial"] = "negative"
@@ -64,7 +64,7 @@ def process(input_svg, template_file, output_file):
                         style = child['style']
                         style = re.sub(r'fill:[^;]+;', '', style)
                         child['style'] = style
-                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 1 : 0.3, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 1 : 0.3 , transition: { duration: 1 }})}}'
+                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 0.3 : 1, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 0.3 : 1 , transition: { duration: 1 }})}}'
                     child['custom'] = '{{' + f"current: frame.cl.{path.get('id').split('-', 1)[1]}, previous: previousFrame.cl.{path.get('id').split('-', 1)[1]}" + '}}'
                     child["animate"] = "positive"
                     child["initial"] = "negative"
@@ -79,7 +79,7 @@ def process(input_svg, template_file, output_file):
                         style = child['style']
                         style = re.sub(r'stroke:[^;]+;', '', style)
                         child['style'] = style
-                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 1 : 0.3, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 1 : 0.3, transition: { duration: 1 }})}}'
+                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 0.3 : 1, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 0.3 : 1, transition: { duration: 1 }})}}'
                     child['custom'] = '{{' + f"current: frame.flags.{path.get('id').split('-', 1)[1]}, previous: previousFrame.flags.{path.get('id').split('-', 1)[1]}" + '}}'
                     child["animate"] = "positive"
                     child["initial"] = "negative"
@@ -89,7 +89,7 @@ def process(input_svg, template_file, output_file):
                         style = child['style']
                         style = re.sub(r'fill:[^;]+;', '', style)
                         child['style'] = style
-                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 1 : 0.3, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 1 : 0.3 , transition: { duration: 1 }})}}'
+                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 0.3 : 1, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 0.3 : 1, transition: { duration: 1 }})}}'
                     child['custom'] = '{{' + f"current: frame.flags.{path.get('id').split('-', 1)[1]}, previous: previousFrame.flags.{path.get('id').split('-', 1)[1]}" + '}}'
                     child["animate"] = "positive"
                     child["initial"] = "negative"
@@ -110,7 +110,7 @@ def process(input_svg, template_file, output_file):
                         style = new_child['style']
                         style = re.sub(r'stroke:[^;]+;', '', style)
                         new_child['style'] = style
-                    new_child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 1 : 0.3, pathLength: (custom.previous.value==custom.current.value && custom.previous.dirty==custom.current.dirty) ? 1 : 0, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 1 : 0.3, pathLength: 1 , transition: { duration: 1 }})}}'
+                    new_child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 0.3 : 1, pathLength: (custom.previous.value==custom.current.value && custom.previous.dirty==custom.current.dirty) ? 0 : 1, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 0.3 : 1, pathLength: 1 , transition: { duration: 1 }})}}'
                     new_child['custom'] = '{{' + f"current: frame.path['{path.get('id').split('-', 1)[1]}'], previous: previousFrame.path['{path.get('id').split('-', 1)[1]}']" + '}}'
                     new_child["animate"] = "positive"
                     new_child["initial"] = "negative"
@@ -122,7 +122,7 @@ def process(input_svg, template_file, output_file):
                         style = re.sub(r'stroke:[^;]+;', '', style)
                         child['style'] = style
 
-                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: (custom.previous.value==custom.current.value && custom.previous.dirty==custom.current.dirty) ? 0 : (custom.current.dirty ? 1 : 0.3), transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: 0, transition: { duration: 1 }})}}'
+                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: (custom.previous.value==custom.current.value && custom.previous.dirty==custom.current.dirty) ? 0 : (custom.current.dirty ? 0.3 : 1), transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: 0, transition: { duration: 1 }})}}'
                     child['custom'] = '{{' + f"current: frame.path['{path.get('id').split('-', 1)[1]}'], previous: previousFrame.path['{path.get('id').split('-', 1)[1]}']" + '}}'
                     child["animate"] = "positive"
                     child["initial"] = "negative"
@@ -134,7 +134,7 @@ def process(input_svg, template_file, output_file):
                         style = child['style']
                         style = re.sub(r'fill:[^;]+;', '', style)
                         child['style'] = style
-                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 1 : 0.3, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 1 : 0.3 , transition: { duration: 1 }})}}'
+                    child['variants'] = '{{negative: (custom: any) => ({ fill: custom.previous.value ? "red" : "black", stroke: custom.previous.value ? "red" : "black", opacity: custom.previous.dirty ? 0.3 : 1, transition: { duration: 1 }}), positive: (custom: any) => ({ fill: custom.current.value ? "red" : "black", stroke: custom.current.value ? "red" : "black", opacity: custom.current.dirty ? 0.3 : 1 , transition: { duration: 1 }})}}'
                     child['custom'] = '{{' + f"current: frame.path['{path.get('id').split('-', 1)[1]}'], previous: previousFrame.path['{path.get('id').split('-', 1)[1]}']" + '}}'
                     child["animate"] = "positive"
                     child["initial"] = "negative"
