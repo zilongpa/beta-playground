@@ -1263,7 +1263,9 @@ export function simulate(
     console.log("\n#Fetch#");
     const newFrame = structuredClone(initialFrame);
 
-    newFrame.registers = [...newFrame.registers];
+    if (frames.length > 0) {
+      newFrame.registers = structuredClone(frames[frames.length - 1].registers);
+    }
     newFrame.buffer = newFrame.buffer.slice(0);
     
     if (frames.length > 0) {
@@ -1289,7 +1291,7 @@ export function simulate(
       instruction.toString(2).padStart(32, "0")
     );
     const opcode = instruction >>> 26;
-    const instructionDetails = Object.values(instructionSet).find(
+    let instructionDetails = Object.values(instructionSet).find(
       (inst) => inst.opcode === opcode
     );
     console.log("Opcode:", opcode.toString(2).padStart(6, "0"));
@@ -1310,7 +1312,7 @@ export function simulate(
                 break;
               case "plus-four-to-wdsel":
                 frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = true; // 逻辑参与但不确定
+                frame.path[pathKey].dirty = false; // 逻辑参与但不确定
                 frame.path[pathKey].focus = false;
                 break;
               default:
@@ -1502,6 +1504,7 @@ export function simulate(
     console.log("\n#Decode#");
     for (const [key, value] of Object.entries(instructionSet)) {
       if (value.opcode === opcode) {
+        instructionDetails = value; // 找到匹配的指令
         console.log(
           "Instruction found for opcode " + opcode.toString(2) + ":",
           key
@@ -1509,8 +1512,9 @@ export function simulate(
 
         const newFrame_dec = structuredClone(initialFrame); 
         resetFocus(frames[frames.length - 1]);
-
-        newFrame_dec.registers = [...newFrame_dec.registers];
+        if (frames.length > 0) {
+          newFrame_dec.registers = structuredClone(frames[frames.length - 1].registers);
+        }
         newFrame_dec.buffer = newFrame_dec.buffer.slice(0);
 
         updatePathsBasedOnInstruction(newFrame_dec, instructionDetails, "decode");
@@ -1544,8 +1548,14 @@ export function simulate(
                 decodeDescription += `Parameter ${index} Literal: ${params[0]}\n`;
                 console.log("Parameter", index, "Literal:", params[0]);
               } else {
-                params[parseInt(bit)] =
-                  (instruction >>> (cursor -= 5)) & 0b11111;
+              if (parseInt(bit) !== 0) { // 避免覆盖 params[0]
+                params[parseInt(bit)] = (instruction >>> (cursor -= 5)) & 0b11111;
+            }
+              if (parseInt(bit) === 31) {
+                console.log(`Parameter ${index} (R${parseInt(bit)}) is R31 (always 0). Skipping this instruction.`);
+                decodeDescription += `Parameter ${index} (R${parseInt(bit)}) is R31. Ignoring.\n`;
+                params[parseInt(bit)] = 0; 
+              }
                 switch (bit) {
                   case "1":
                     decodeDescription += `Parameter ${index} Ra: R${params[parseInt(bit)]}\n`;
@@ -1582,12 +1592,17 @@ export function simulate(
             });
         }
 
+        console.log(params[0]);
         RD1 = getRegisterValue(params[1]);
+        RD2 = getRegisterValue(params[2]);
         console.log(
           "[MUX]",
           "RD1=Ra=R" + params[1],
           "with current value",
-          getRegisterValue(params[1])
+          getRegisterValue(params[1]),
+          "RD2=Rb=R" + params[2],
+          "with current value",
+          getRegisterValue(params[2])
         );
         console.log("[CU signal]", "RA2SEL:", RA2SEL);
         let ra2selDescription = "";
@@ -1657,36 +1672,14 @@ export function simulate(
         console.log("\n#Execute#");
         const newFrame_exe = structuredClone(initialFrame); 
         resetFocus(frames[frames.length - 1]); 
+        if (frames.length > 0) {
+          newFrame_exe.registers = structuredClone(frames[frames.length - 1].registers);
+        }
         updatePathsBasedOnInstruction(newFrame_exe, instructionDetails, "execute");
 
         newFrame_exe.titleOfStep = "Execute: Perform the operation";
         newFrame_exe.iconOfStep = "social-media";
         newFrame_exe.descriptionOfStep = "";
-
-        newFrame_exe.path["asel-to-alu"].value = 1;
-        newFrame_exe.path["asel-to-alu"].dirty = false;
-        newFrame_exe.path["asel-to-alu"].description = "ASEL selects the first operand for the ALU during execution.";
-        newFrame_exe.path["asel-to-alu"].focus = true;
-
-        newFrame_exe.path["bsel-to-alu"].value = 1;
-        newFrame_exe.path["bsel-to-alu"].dirty = false;
-        newFrame_exe.path["bsel-to-alu"].description = "BSEL selects the second operand for the ALU during execution.";
-        newFrame_exe.path["bsel-to-alu"].focus = true;
-        
-        newFrame_exe.path["alu-to-data-memory"].value = 1;
-        newFrame_exe.path["alu-to-data-memory"].dirty = false;
-        newFrame_exe.path["alu-to-data-memory"].description = "ALU output is passed to the data memory, if required.";
-        newFrame_exe.path["alu-to-data-memory"].focus = true;
-        
-        newFrame_exe.path["alu-to-wdsel"].value = 1;
-        newFrame_exe.path["alu-to-wdsel"].dirty = false;
-        newFrame_exe.path["alu-to-wdsel"].description = "ALU output is passed to the wdsel signal for writing to the register.";
-        newFrame_exe.path["alu-to-wdsel"].focus = true;
-        
-        newFrame_exe.path["plus-to-pcsel"].value = 1;
-        newFrame_exe.path["plus-to-pcsel"].dirty = false;
-        newFrame_exe.path["plus-to-pcsel"].description = "PCSEL is updated with the jump or branch target address.";
-        newFrame_exe.path["plus-to-pcsel"].focus = true;
 
         newFrame_exe.cl.alufn.focus = true
         console.log("[CU signal]", "ASEL:", value.ASEL);
@@ -1752,11 +1745,12 @@ export function simulate(
         newFrame_exe.descriptionOfStep += `${bselDescription}\n`;
 
         let alufnDescription = "ALUFN default value is null.";
-
+        
         if (value.ALUFN != null) {
           ALUFN = value.ALUFN;
+          aluo = executeALUFN(A, B, ALUFN); //todo: ensure the output is two complement
           alufnDescription = `ALUFN is set to ${ALUFN}, performing ALU operation.`;
-          console.log("Excute ALUFN:", ALUFN);
+          console.log("ALU Operation:", ALUFN, "ALU Output:", aluo);
         } else {
           alufnDescription = "ALUFN not selected, using dirty value for ALU operation.";
           console.log(
@@ -1778,7 +1772,7 @@ export function simulate(
         newFrame_exe.cl.bsel.focus = true;
 
         // Update ALUFN
-        newFrame_exe.cl.alufn.value = value.ALUFN || 0; // 默认值为 0
+        newFrame_exe.cl.alufn.value = ALUFN || 0; // 默认值为 0
         newFrame_exe.cl.alufn.dirty = false;
         newFrame_exe.cl.alufn.description = alufnDescription;
         newFrame_exe.cl.alufn.focus = true;
@@ -1789,17 +1783,37 @@ export function simulate(
         if (opcode === 0x27) {
             // 计算跳转目标地址
             JT = pcpf + params[0] * 4;
-            let jtDescription = `Jump target set to address ${JT}.`;
+            let jtDescription = `Jump Target (JT) is set to address 0x${JT.toString(16)}.`;
+            if (instructionDetails.WERF === 1 && params[3] !== 31) {
+              newFrame_exe.registers[params[3]] = JT;
+            }
         
             // 更新 cl.jt
             newFrame_exe.cl.jt.value = JT;
             newFrame_exe.cl.jt.dirty = false;
             newFrame_exe.cl.jt.description = jtDescription;
+            newFrame_exe.cl.jt.focus = true;
         
-            console.log(jtDescription);
-        }
+            newFrame_exe.descriptionOfStep += `${jtDescription}\n`;
+            programCounter = JT;
+        } else if (opcode === 0x28 || opcode === 0x29) {
+          JT = pcpf + params[0] * 4;
+          if ((opcode === 0x28 && RD1 === RD2) || (opcode === 0x29 && RD1 !== RD2)) {
+            programCounter = JT; 
+            if (instructionDetails.WERF === 1 && params[3] !== 31) {
+            newFrame_exe.registers[params[3]] = JT;
+            }
+            newFrame_exe.descriptionOfStep += `Branch taken to address 0x${JT.toString(16)}.\n`;
 
-        aluo = executeALUFN(A, B, ALUFN); //todo: ensure the output is two complement
+            newFrame_exe.cl.jt.value = JT;
+            newFrame_exe.cl.jt.dirty = false;
+            newFrame_exe.cl.jt.description = `Branch taken to address 0x${JT.toString(16)}.\n`;
+            newFrame_exe.cl.jt.focus = true;
+        } else {
+            programCounter = pcpf; // 条件不满足，继续执行下一条指令
+        }
+      }
+
         console.log("ALU output:", aluo);
         frames.push(newFrame_exe);
 
@@ -1807,28 +1821,16 @@ export function simulate(
         console.log("\n#Memory#");
         const newFrame_mem = structuredClone(initialFrame); 
         resetFocus(frames[frames.length - 1]);
+        if (frames.length > 0) {
+          newFrame_mem.registers = structuredClone(frames[frames.length - 1].registers);
+        }
+        newFrame_mem.buffer = structuredClone(buffer); 
         updatePathsBasedOnInstruction(newFrame_mem, instructionDetails, "memory");
 
         newFrame_mem.titleOfStep = "Memory: Access memory";
         newFrame_mem.descriptionOfStep = "Access memory for load/store instructions.";
         newFrame_mem.iconOfStep = "box"
         let memoryDescription = "";
-
-        newFrame_mem.path["register-file-to-data-memory"].value = 1;
-        newFrame_mem.path["register-file-to-data-memory"].dirty = false;
-        newFrame_mem.path["register-file-to-data-memory"].description = "Data is passed from the register file to the data memory for store instructions.";
-        newFrame_mem.path["register-file-to-data-memory"].focus = true;
-
-        newFrame_mem.path["data-memory-to-wdsel"].value = 1;
-        newFrame_mem.path["data-memory-to-wdsel"].dirty = false;
-        newFrame_mem.path["data-memory-to-wdsel"].description = "Data is passed from the data memory to the wdsel signal for load instructions.";
-        newFrame_mem.path["data-memory-to-wdsel"].focus = true;
-
-        newFrame_mem.path["alu-to-data-memory"].value = 1;
-        newFrame_mem.path["alu-to-data-memory"].dirty = false;
-        newFrame_mem.path["alu-to-data-memory"].description = "ALU result is used as the memory address for load/store instructions.";
-        newFrame_mem.path["alu-to-data-memory"].focus = true;
-        
         let mwrDescription = "";
         const mwrValue = value.MWR !== null ? value.MWR : 0; 
         mWD = RD2;
@@ -1854,15 +1856,6 @@ export function simulate(
             );
             break;
         }
-        newFrame_exe.cl.mwr.value = mwrValue;
-        newFrame_exe.cl.mwr.dirty = false;
-        newFrame_exe.cl.mwr.description = mwrDescription;
-        newFrame_mem.cl.mwr.focus = true;
-
-        newFrame_mem.cl.mwr.value = mwrValue;
-        newFrame_mem.cl.mwr.dirty = false;
-        newFrame_mem.cl.mwr.description = mwrDescription;
-        newFrame_mem.cl.mwr.focus = true;
         memoryDescription += `${mwrDescription}\n`;
 
         if (MWR == 1) {
@@ -1876,12 +1869,12 @@ export function simulate(
           case 0:
             MOE = 0;
             moeDescription = "MOE is set to 0, no memory read. This indicates the instruction do not require reading from memory, ensuring that memory is not accessed unless necessary.";
-            console.log("MWR==0, no memory read");
+            console.log("MOE==0, no memory read");
             break;
           case 1:
             MOE = 1;
             moeDescription = "MOE is set to 1, memory read enabled. This occurs in load instructions, Like LD. Data from memory needs to be read and loaded into a register.";
-            console.log("MWR==1, memory read");
+            console.log("MOE==1, memory read");
             break;
           default:
             moeDescription = "MOE not selected, using dirty value for memory read.";
@@ -1897,7 +1890,7 @@ export function simulate(
         newFrame_exe.cl.moe.description = moeDescription;
         newFrame_mem.cl.moe.focus = true;
 
-        newFrame_exe.cl.mwr.value = moeValue;
+        newFrame_exe.cl.mwr.value = mwrValue;
         newFrame_exe.cl.mwr.dirty = false;
         newFrame_exe.cl.mwr.description = mwrDescription;
         newFrame_mem.cl.mwr.focus = true;
@@ -1906,6 +1899,10 @@ export function simulate(
         if (MOE == 1) {
           RD = uint16ToTwosComplement(memory.getUint32(Adr, littleEndian));
           console.log("Read data", RD, " from memory address:", Adr);
+          if (instructionDetails.WERF === 1 && params[3] !== 31) {
+            newFrame_mem.registers[params[3]] = RD;
+            memoryDescription += `Register R${params[3]} is updated with value 0x${RD.toString(16)} from memory.\n`;
+          }
         }
 
         newFrame_mem.descriptionOfStep = memoryDescription.trim();
@@ -1915,17 +1912,15 @@ export function simulate(
         console.log("\n#Write Back#");
         const newFrame_wb = structuredClone(initialFrame); 
         resetFocus(frames[frames.length - 1]);
+        if (frames.length > 0) {
+          newFrame_wb.registers = structuredClone(frames[frames.length - 1].registers);
+        }
         updatePathsBasedOnInstruction(newFrame_wb, instructionDetails, "writeBack");
 
         newFrame_wb.titleOfStep = "Write Back: Write results to register";
         newFrame_wb.descriptionOfStep = "Write the results of the operation back to the register.";
         newFrame_wb.iconOfStep = "unarchive"
-
-        newFrame_wb.path["wdsel-to-register-file"].value = 1;
-        newFrame_wb.path["wdsel-to-register-file"].dirty = false;
-        newFrame_wb.path["wdsel-to-register-file"].description = "WDSEL determines the data source for the write-back operation to the register file.";
-        newFrame_wb.path["wdsel-to-register-file"].focus = true;
-
+        
         console.log("[CU signal]", "WDSEL:", value.WDSEL);
         let wdselDescription = "";
         if (value.WDSEL != null) {
@@ -1999,10 +1994,10 @@ export function simulate(
               break;
             case 1:
             // Currently, ignore XP
-              console.log("Write value",rWD,"to register","R"+params[3]);
-              setRegisterValue(params[3], rWD);
-              werfDescription = "WERF is set to 1, writing back to register. This occurs when an instruction requires the result to be written back into a register, such as in arithmetic, logical instructions.";
-              break;
+            console.log("Write value",rWD,"to register","R"+params[3]);
+            newFrame_wb.registers[params[3]] = rWD;
+            werfDescription = "WERF is set to 1, writing back to register. This occurs when an instruction requires the result to be written back into a register, such as in arithmetic, logical instructions.";
+            break;
 
             default:
               werfDescription = "WERF not selected, using dirty value for register write.";
@@ -2032,7 +2027,6 @@ export function simulate(
   }
   frames.shift(); // todo: 用这个移除example frame，直接删除会跑不了？
   console.log(frames);
-  console.log(frames[1]==frames[2]);
   return frames;
   // todo: XP, Z, WASEL after the exam :(
 
