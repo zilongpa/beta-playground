@@ -4,7 +4,6 @@ import {
   getCenterPosition,
 } from "react-zoom-pan-pinch";
 import { motion } from "framer-motion";
-import { Tooltip } from "@blueprintjs/core";
 
 const getItem = (key: string, defaultValue: any = null): any => {
   const value = localStorage.getItem(key);
@@ -102,8 +101,6 @@ const BetaVisualization = ({
             <path
               d="M2025,1454.17l0,-166.667l62.5,25l0,116.667l-62.5,25Z"
               id="mux-wasel"
-              onMouseEnter={(_)=>{alert(1)}}
-              onMouseLeave={(_)=>{alert(2)}}
               style={{ fill: "#ebebeb", stroke: "#000", strokeWidth: "4.17px" }}
             />
             <path
