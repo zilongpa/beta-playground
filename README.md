@@ -14,7 +14,7 @@ Developers:
 ## Todo
 0. Support negative constants
 1. Replace JS language support with custom language support
-2. Allow RAM edit
+2. Allow RAM and register edit
 3. Reminder for dirty values
 4. Settings panel
 5. Layout fix

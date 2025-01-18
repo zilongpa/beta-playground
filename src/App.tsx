@@ -3,9 +3,6 @@ import {
   Alignment,
   Button,
   ButtonGroup,
-  HTMLTable,
-  Tree,
-  Icon,
   OverlayToaster,
   Intent,
 } from "@blueprintjs/core";
@@ -33,7 +30,8 @@ import MemoryViewer from "./MemoryViewer";
 import Registers from "./Registers";
 import Timeline from "./Timeline";
 
-const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
+const DEFAULT_ASSEMBLY_CODE = 
+`ADDC(R31, 6, R1)
 SUBC(R31, 18, R2)
 ADD(R1, R2, R3) | write R1+R2 to R3
 HALT() | exit
@@ -344,7 +342,10 @@ const TITLE_MAP: Record<ViewId, string> = {
 };
 
 function App() {
-  const assemblyCodeRef = useRef<string>(DEFAULT_ASSEMBLY_CODE);
+  const assemblyCodeRef = useRef<string>(getItem("assemblyCode", DEFAULT_ASSEMBLY_CODE));
+  if (assemblyCodeRef.current === "") {
+    assemblyCodeRef.current = DEFAULT_ASSEMBLY_CODE
+  }
   const [frames, setFrames] = useState<any>([]);
   const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [keyFrames, setKeyFrames] = useState<Array<number>>([]);
