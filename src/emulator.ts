@@ -1857,10 +1857,11 @@ export function simulate(
             break;
         }
         memoryDescription += `${mwrDescription}\n`;
-
+        
+        const memoryDataView = new DataView(newFrame_mem.buffer);
         if (MWR == 1) {
           console.log("Write data", mWD, " to memory address:", Adr);
-          memory.setUint32(Adr, mWD, littleEndian); // todo: ensure the output is two complement
+          memoryDataView.setUint32(Adr, mWD, littleEndian);  
         }
 
         let moeDescription = "MOE default value is 0 (no memory read).";
@@ -1897,7 +1898,7 @@ export function simulate(
         memoryDescription += `${moeDescription}\n`;
 
         if (MOE == 1) {
-          RD = uint16ToTwosComplement(memory.getUint32(Adr, littleEndian));
+          RD = uint16ToTwosComplement(memoryDataView.getUint32(Adr, littleEndian));
           console.log("Read data", RD, " from memory address:", Adr);
           if (instructionDetails.WERF === 1 && params[3] !== 31) {
             newFrame_mem.registers[params[3]] = RD;
