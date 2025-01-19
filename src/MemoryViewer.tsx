@@ -1,12 +1,10 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { HexEditor } from "hex-editor-react";
 import "hex-editor-react/dist/hex-editor.css";
+import { EmulatorContext } from "./emulatorContext";
 
-interface MemoryViewerProps {
-  buffer: ArrayBuffer;
-}
-
-function MemoryViewer({ buffer }: MemoryViewerProps) {
+function MemoryViewer() {
+  const { frames, currentFrame } = useContext(EmulatorContext);
   return (
     <div
       style={{
@@ -16,10 +14,11 @@ function MemoryViewer({ buffer }: MemoryViewerProps) {
         overflowX: "hidden",
       }}
     >
+      {frames[currentFrame].buffer.length}
       <HexEditor
         height="100%"
         width="calc(100%)"
-        data={buffer}
+        data={frames[currentFrame].buffer}
         showFooter={false}
         readonly={false}
         dataBase={2}
@@ -29,4 +28,4 @@ function MemoryViewer({ buffer }: MemoryViewerProps) {
   );
 }
 
-export default memo(MemoryViewer);
+export default MemoryViewer;

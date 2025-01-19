@@ -13,7 +13,8 @@ import {
   Tree,
   type TreeNodeInfo,
 } from "@blueprintjs/core";
-import { memo, useEffect } from "react";
+import { memo, useContext, useEffect } from "react";
+import { EmulatorContext } from "./emulatorContext";
 
 type NodePath = number[];
 
@@ -23,6 +24,7 @@ type TreeAction =
       payload: { path: NodePath; isExpanded: boolean };
     }
   | { type: "DESELECT_ALL" }
+  | { type: "RESET_TREE"; payload: { newNodes: any } }
   | { type: "SET_IS_EXPANDED_ALL"; payload: { isExpanded: boolean } }
   | {
       type: "SET_IS_SELECTED";
@@ -82,36 +84,31 @@ function timelineReducer(state: TreeNodeInfo<NodeData>[], action: TreeAction) {
       const newState4 = cloneDeep(state);
       forEachNode(newState4, (node) => (node.isExpanded = action.payload.isExpanded));
       return newState4;
-    default:
-      return state;
+    case "RESET_TREE":
+        return action.payload.newNodes; 
+      default:
+        return state;
   }
 }
 
-const Timeline = ({ frames, currentFrame }: TimelineProps) => {
+
+const Timeline = () => {
+  const { frames, currentFrame } = useContext(EmulatorContext);
+
   const [nodes, dispatch] = React.useReducer(
     timelineReducer,
-    React.useMemo(() => convertToTreeNodes(frames, currentFrame), [frames,currentFrame])
+    convertToTreeNodes(frames, currentFrame)
   );
 
-  // // 默认全部折叠
-  // useEffect(() => {
-  //   dispatch({ type: "SET_IS_EXPANDED_ALL", payload: { isExpanded: false } });
-  // }, [currentFrame, nodes]);
-
-  // // 根据 currentFrame 展开对应节点
-  // useEffect(() => {
-  //   if (currentFrame >= 0 && currentFrame < frames.length) {
-  //     // 找到 currentFrame 对应的节点路径
-  //     const path = findNodePathByFrame(nodes, currentFrame);
-  //     if (path) {
-  //       // 展开对应节点
-  //       dispatch({
-  //         type: "SET_IS_EXPANDED",
-  //         payload: { path, isExpanded: true },
-  //       });
-  //     }
-  //   }
-  // }, [currentFrame, nodes]);
+  useEffect(() => {
+    const newNodes = convertToTreeNodes(frames, currentFrame);
+    dispatch({
+      type: "RESET_TREE",
+      payload: {
+        newNodes,
+      },
+    });
+  }, [frames, currentFrame]);
 
   const handleNodeClick = React.useCallback(
     (
@@ -156,6 +153,7 @@ const Timeline = ({ frames, currentFrame }: TimelineProps) => {
 
   return (
     <div style={{ maxHeight: "100%", width: "100%", overflowY: "auto" }}>
+      {/* {JSON.stringify(frames[currentFrame])} */}
       <Tree
         contents={nodes}
         onNodeClick={handleNodeClick}
@@ -238,7 +236,6 @@ const convertToTreeNodes = (data: any[], currentFrame: number): TreeNodeInfo<Nod
   return treeNodes;
 };
 
-// 根据 currentFrame 查找节点路径
 const findNodePathByFrame = (
   nodes: TreeNodeInfo<NodeData>[],
   currentFrame: number
@@ -246,16 +243,16 @@ const findNodePathByFrame = (
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
     if (node.id === currentFrame) {
-      return [i]; // 返回节点路径
+      return [i];
     }
     if (node.childNodes) {
       const childPath = findNodePathByFrame(node.childNodes, currentFrame);
       if (childPath) {
-        return [i, ...childPath]; // 返回子节点路径
+        return [i, ...childPath];
       }
     }
   }
   return null;
 };
 
-export default memo(Timeline);
+export default Timeline;

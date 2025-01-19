@@ -1,5 +1,11 @@
-import { TransformWrapper, TransformComponent, getCenterPosition } from "react-zoom-pan-pinch";
+import {
+  TransformWrapper,
+  TransformComponent,
+  getCenterPosition,
+} from "react-zoom-pan-pinch";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { EmulatorContext } from "./emulatorContext";
 
 const getItem = (key: string, defaultValue: any = null): any => {
   const value = localStorage.getItem(key);
@@ -17,12 +23,15 @@ const setItem = (key: string, value: string): void => {
   }
 };
 
-interface BetaVisualizationProps {
-  frame: any
-  previousFrame: any
-}
-
-const BetaVisualization = ({ frame, previousFrame }: BetaVisualizationProps) => {
+const BetaVisualization = () => {
+  const { frames, currentFrame } = useContext(EmulatorContext);
+  const DEFAULT_FRAME = {}; // Define a default frame object as needed
+  let frame = frames.length > 0 ? frames[currentFrame] : DEFAULT_FRAME;
+  let previousFrame =
+    frames.length === 0 || currentFrame === 0
+      ? frames[0]
+      : frames[currentFrame - 1];
+  console.log(frame, previousFrame);
   return (
     <TransformWrapper
       limitToBounds={true}
@@ -38,7 +47,9 @@ const BetaVisualization = ({ frame, previousFrame }: BetaVisualizationProps) => 
         setItem("positionY", ref.state.positionY.toString());
       }}
     >
-      <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}><!-- INSERT_SVG_HERE --></TransformComponent>
+      <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
+        <!-- INSERT_SVG_HERE -->
+      </TransformComponent>
     </TransformWrapper>
   );
 };

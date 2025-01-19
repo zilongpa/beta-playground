@@ -29,9 +29,11 @@ import AssemblyEditor from "./AssemblyEditor";
 import MemoryViewer from "./MemoryViewer";
 import Registers from "./Registers";
 import Timeline from "./Timeline";
+import { EmulatorContext } from "./emulatorContext";
 
-const DEFAULT_ASSEMBLY_CODE = 
-`ADDC(R31, 6, R1)
+localStorage.setItem("version", "0.0.0");
+
+const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
 SUBC(R31, 18, R2)
 ADD(R1, R2, R3) | write R1+R2 to R3
 HALT() | exit
@@ -55,7 +57,8 @@ const DEFAULT_FRAME = {
     z: {
       value: 0,
       dirty: true,
-      description: "Z is used for comparison instruction and it would be on if all digits are zero.",
+      description:
+        "Z is used for comparison instruction and it would be on if all digits are zero.",
       focus: false,
     },
   },
@@ -306,7 +309,6 @@ const DEFAULT_FRAME = {
   },
 };
 
-localStorage.setItem("version", "0.0.0");
 
 const getItem = (key: string, defaultValue: any = null): any => {
   const value = localStorage.getItem(key);
@@ -342,11 +344,13 @@ const TITLE_MAP: Record<ViewId, string> = {
 };
 
 function App() {
-  const assemblyCodeRef = useRef<string>(getItem("assemblyCode", DEFAULT_ASSEMBLY_CODE));
+  const assemblyCodeRef = useRef<string>(
+    getItem("assemblyCode", DEFAULT_ASSEMBLY_CODE)
+  );
   if (assemblyCodeRef.current === "") {
-    assemblyCodeRef.current = DEFAULT_ASSEMBLY_CODE
+    assemblyCodeRef.current = DEFAULT_ASSEMBLY_CODE;
   }
-  const [frames, setFrames] = useState<any>([]);
+  const [frames, setFrames] = useState<any>([DEFAULT_FRAME]);
   const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [keyFrames, setKeyFrames] = useState<Array<number>>([]);
 
@@ -354,217 +358,228 @@ function App() {
     processor: () => (
       <div style={{ width: "100%", height: "100%" }}>
         <BetaVisualization
-          frame={frames.length > 0 ? frames[currentFrame] : DEFAULT_FRAME} previousFrame={frames.length == 0 || currentFrame==0 ? DEFAULT_FRAME : frames[currentFrame - 1]}
         />
       </div>
     ),
     assembly: () => (
       <AssemblyEditor
         defaultValue={getItem("assemblyCode", DEFAULT_ASSEMBLY_CODE)}
-        onChange={(val, viewUpdate) => {
-          assemblyCodeRef.current = val;
-          setItem("assemblyCode", val);
-        }}
+        onChange={useCallback((val, viewUpdate) => {
+          if (assemblyCodeRef.current !== val) {
+            assemblyCodeRef.current = val;
+            setItem("assemblyCode", val);
+          }
+        }, [])}
       />
     ),
     registers: () => (
       <Registers
-        values={
-          frames.length > 0
-            ? frames[currentFrame].registers
-            : Array(32).fill(15)
-        }
+       
       />
     ),
     memory: () => (
-      <MemoryViewer
-        buffer={
-          frames.length > 0 ? frames[currentFrame].buffer : new ArrayBuffer(16)
-        }
-      />
+      <MemoryViewer />
     ),
-    timeline: () => <Timeline frames={frames} currentFrame={currentFrame} />,
+    timeline: () => <Timeline/>,
     new: () => <h1>I am an empty window.</h1>,
   };
 
   return (
-    <div id="app">
-      <Navbar>
-        <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>Beta Playground</Navbar.Heading>
-          <Navbar.Divider />
-          {/* <Button className="bp5-minimal" icon="home" text="New" />
-        <Button className="bp5-minimal" icon="document-open" text="Open" />
-        <Button className="bp5-minimal" icon="floppy-disk" text="Save" />
-        <Navbar.Divider /> */}
-          <ButtonGroup large={false}>
-            <Button
-              icon="manually-entered-data"
-              intent="primary"
-              onClick={useCallback(async () => {
-                try {
-                  let assembled = assemble(assemblyCodeRef.current);
-                  console.log(assemblyCodeRef.current);
-                  let simulation = simulate(assembled);
-                  (
-                    await OverlayToaster.createAsync({
-                      position: "bottom",
-                    })
-                  ).show({
-                    message: "Successfully assembled the code",
-                    icon: "tick",
-                    intent: Intent.SUCCESS,
-                  });
-                  setFrames(simulation);
-                  setCurrentFrame(0);
+    <EmulatorContext.Provider
+      value={{ frames, currentFrame, setFrames, setCurrentFrame }}
+    >
+      <div id="app">
+        <Navbar>
+          <Navbar.Group align={Alignment.LEFT}>
+            <Navbar.Heading>Beta Playground</Navbar.Heading>
+            <Navbar.Divider />
+            <ButtonGroup large={false}>
+              <Button
+                icon="manually-entered-data"
+                intent="primary"
+                onClick={useCallback(async () => {
+                  try {
+                    let assembled = assemble(assemblyCodeRef.current);
+                    console.log(assemblyCodeRef.current);
+                    let simulation = simulate(assembled);
+                    (
+                      await OverlayToaster.createAsync({
+                        position: "bottom",
+                      })
+                    ).show({
+                      message: "Successfully assembled the code",
+                      icon: "tick",
+                      intent: Intent.SUCCESS,
+                    });
+                    setFrames(simulation);
+                    setCurrentFrame(0);
 
-                  let arr = [0];
-                  simulation.forEach((item: any, index: number) => {
-                    if (
-                      index > 0 &&
-                      item.offsetOfInstruction !=
-                        simulation[index - 1].offsetOfInstruction
-                    ) {
-                      arr.push(index);
-                    }
-                  });
-                  setKeyFrames(arr);
-                } catch (error: any) {
-                  console.log(error);
-                  (
-                    await OverlayToaster.createAsync({
-                      position: "bottom",
-                    })
-                  ).show({
-                    message: `An error occurred during the assembly process: ${error.message}`,
-                    icon: "warning-sign",
-                    intent: Intent.DANGER,
-                  });
+                    let arr = [0];
+                    simulation.forEach((item: any, index: number) => {
+                      if (
+                        index > 0 &&
+                        item.offsetOfInstruction !=
+                          simulation[index - 1].offsetOfInstruction
+                      ) {
+                        arr.push(index);
+                      }
+                    });
+                    setKeyFrames(arr);
+                  } catch (error: any) {
+                    console.log(error);
+                    (
+                      await OverlayToaster.createAsync({
+                        position: "bottom",
+                      })
+                    ).show({
+                      message: `An error occurred during the assembly process: ${error.message}`,
+                      icon: "warning-sign",
+                      intent: Intent.DANGER,
+                    });
+                  }
+                }, [assemblyCodeRef, setFrames, setCurrentFrame, setKeyFrames])}
+              >
+                Write ASM to RAM
+              </Button>
+              <Button
+                icon="fast-backward"
+                intent="warning"
+                disabled={
+                  frames.length === 0 ||
+                  frames === null ||
+                  currentFrame === 0 ||
+                  [...keyFrames].reverse().find((kf) => kf < currentFrame) ===
+                    undefined
                 }
-              }, [assemblyCodeRef, setFrames, setCurrentFrame])}
-            >
-              Write ASM to RAM
-            </Button>
-            <Button
-              icon="fast-backward"
-              intent="warning"
-              disabled={
-                frames.length === 0 ||
-                frames === null ||
-                currentFrame === 0 ||
-                [...keyFrames].reverse().find((kf) => kf < currentFrame) ===
-                  undefined
-              }
-              onClick={() => {
-                const previousKeyFrame = [...keyFrames]
-                  .reverse()
-                  .find((kf) => kf < currentFrame);
-                if (previousKeyFrame !== undefined) {
-                  setCurrentFrame(previousKeyFrame);
+                onClick={useCallback(() => {
+                  const previousKeyFrame = [...keyFrames]
+                    .reverse()
+                    .find((kf) => kf < currentFrame);
+                  if (previousKeyFrame !== undefined) {
+                    setCurrentFrame(previousKeyFrame);
+                  }
+                }, [currentFrame, keyFrames])}
+              >
+                Previous Instruction
+              </Button>
+              <Button
+                icon="step-backward"
+                intent="warning"
+                disabled={
+                  frames.length === 0 || frames === null || currentFrame === 0
                 }
-              }}
-            >
-              Previous Instruction
-            </Button>
-            <Button
-              icon="step-backward"
-              intent="warning"
-              disabled={
-                frames.length === 0 || frames === null || currentFrame === 0
-              }
-              onClick={() => setCurrentFrame(currentFrame - 1)}
-            >
-              Previous Step
-            </Button>
-            <Button
-              icon="play"
-              intent="success"
-              disabled={
-                frames.length === 0 ||
-                frames === null ||
-                currentFrame === frames.length - 1
-              }
-              onClick={() => setCurrentFrame(currentFrame + 1)}
-            >
-              Next Step
-            </Button>
-            <Button
-              icon="fast-forward"
-              intent="success"
-              disabled={
-                frames.length === 0 ||
-                frames === null ||
-                currentFrame === frames.length - 1 ||
-                keyFrames.find((kf) => kf > currentFrame) === undefined
-              }
-              onClick={() => {
-                const nextKeyFrame = keyFrames.find((kf) => kf > currentFrame);
-                if (nextKeyFrame !== undefined) {
-                  setCurrentFrame(nextKeyFrame);
+                onClick={useCallback(
+                  () => setCurrentFrame(currentFrame - 1),
+                  [currentFrame]
+                )}
+              >
+                Previous Step
+              </Button>
+              <Button
+                icon="play"
+                intent="success"
+                disabled={
+                  frames.length === 0 ||
+                  frames === null ||
+                  currentFrame === frames.length - 1
                 }
-              }}
-            >
-              Next Instruction
-            </Button>
-            <Button
-              icon="reset"
-              intent="danger"
-              onClick={() => {
-                setCurrentFrame(0);
-                setFrames([]);
-                setKeyFrames([]);
-              }}
-            >
-              Reset
-            </Button>
-            <Button icon="cog" disabled={true}></Button>
-          </ButtonGroup>
-        </Navbar.Group>
-      </Navbar>
-      <Mosaic<ViewId>
-        renderTile={(id, path) => {
-          const Component = COMPONENT_MAP[id];
-          return (
-            <MosaicWindow<ViewId>
-              path={path}
-              createNode={() => "new"}
-              title={TITLE_MAP[id]}
-              toolbarControls={[]}
-            >
-              <Component key={id} />
-            </MosaicWindow>
-          );
-        }}
-        initialValue={JSON.parse(
-          getItem(
-            "mosaicLayout",
-            JSON.stringify({
-              direction: "row",
-              first: {
-                direction: "column",
-                first: "processor",
-                second: {
-                  direction: "row",
-                  first: "memory",
-                  second: "registers",
-                  splitPercentage: 50,
-                },
-                splitPercentage: 70,
-              },
-              second: {
-                direction: "column",
-                first: "assembly",
-                second: "timeline",
-                splitPercentage: 50,
-              },
-              splitPercentage: 60,
-            })
-          )
-        )}
-        onChange={(newNode) => setItem("mosaicLayout", JSON.stringify(newNode))}
-        blueprintNamespace="bp5"
-      />
-    </div>
+                onClick={useCallback(
+                  () => setCurrentFrame(currentFrame + 1),
+                  [currentFrame, frames]
+                )}
+              >
+                Next Step
+              </Button>
+              <Button
+                icon="fast-forward"
+                intent="success"
+                disabled={
+                  frames.length === 0 ||
+                  frames === null ||
+                  currentFrame === frames.length - 1 ||
+                  keyFrames.find((kf) => kf > currentFrame) === undefined
+                }
+                onClick={useCallback(() => {
+                  const nextKeyFrame = keyFrames.find(
+                    (kf) => kf > currentFrame
+                  );
+                  if (nextKeyFrame !== undefined) {
+                    setCurrentFrame(nextKeyFrame);
+                  }
+                }, [currentFrame, keyFrames])}
+              >
+                Next Instruction
+              </Button>
+              <Button
+                icon="reset"
+                intent="danger"
+                onClick={useCallback(() => {
+                  setCurrentFrame(0);
+                  setFrames([DEFAULT_FRAME]);
+                  setKeyFrames([]);
+                }, [])}
+              >
+                Reset
+              </Button>
+              <Button icon="cog" disabled={true}></Button>
+            </ButtonGroup>
+          </Navbar.Group>
+        </Navbar>
+        <Mosaic<ViewId>
+          renderTile={useCallback(
+            (id, path) => {
+              const Component = COMPONENT_MAP[id];
+              return (
+                <MosaicWindow<ViewId>
+                  path={path}
+                  createNode={() => "new"}
+                  title={TITLE_MAP[id]}
+                  toolbarControls={[]}
+                >
+                  <Component key={id} />
+                </MosaicWindow>
+              );
+            },
+            []
+          )}
+          initialValue={useMemo(
+            () =>
+              JSON.parse(
+                getItem(
+                  "mosaicLayout",
+                  JSON.stringify({
+                    direction: "row",
+                    first: {
+                      direction: "column",
+                      first: "processor",
+                      second: {
+                        direction: "row",
+                        first: "memory",
+                        second: "registers",
+                        splitPercentage: 50,
+                      },
+                      splitPercentage: 70,
+                    },
+                    second: {
+                      direction: "column",
+                      first: "assembly",
+                      second: "timeline",
+                      splitPercentage: 50,
+                    },
+                    splitPercentage: 60,
+                  })
+                )
+              ),
+            []
+          )}
+          onChange={useCallback(
+            (newNode: any) => setItem("mosaicLayout", JSON.stringify(newNode)),
+            []
+          )}
+          blueprintNamespace="bp5"
+        />
+      </div>
+    </EmulatorContext.Provider>
   );
 }
 
