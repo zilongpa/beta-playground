@@ -44,7 +44,7 @@ HALT() | exit
 `;
 
 const DEFAULT_FRAME = {
-  offsetOfInstruction: 0x00, // 目前正在运行的这条指令本身的位置
+  offsetOfInstruction: -1, // 目前正在运行的这条指令本身的位置
   titleOfInstruction: "Reset",
   descriptionOfInstruction: "initial state of processor",
   iconOfInstruction: "cog", // 暂时都用cog就行

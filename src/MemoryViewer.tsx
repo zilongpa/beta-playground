@@ -14,7 +14,6 @@ function MemoryViewer() {
         overflowX: "hidden",
       }}
     >
-      {frames[currentFrame].buffer.length}
       <HexEditor
         height="100%"
         width="calc(100%)"
@@ -23,6 +22,7 @@ function MemoryViewer() {
         readonly={false}
         dataBase={2}
         bytesPerLine={2}
+        key={currentFrame + frames[currentFrame].offsetOfInstruction}
       />
     </div>
   );
