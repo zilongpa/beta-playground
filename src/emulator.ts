@@ -591,6 +591,32 @@ jsep.addIdentifierChar(":");
 
 const HALT_OPCODE = instructionSet.HALT.opcode;
 
+function evaluate(expression: any): any {
+  return expression;
+  console.log(expression);
+  if (Array.isArray(expression)) {
+    return expression.map(evaluate);
+  }
+  switch (expression.type) {
+    case "Literal":
+      return expression.value;
+    case "UnaryExpression":
+      if (expression.operator === "-" && expression.prefix) {
+        return -evaluate(expression.argument);
+      }
+      return evaluate(expression.argument);
+    case "Compound":
+      return expression.body.map(evaluate);
+    case "CallExpression":
+      return {
+        ...expression,
+        arguments: expression.arguments.map(evaluate),
+      };
+    default:
+      return expression;
+  }
+}
+
 export function assemble(
   assemblyCode: string,
   buffer: ArrayBuffer = new ArrayBuffer(128),
@@ -606,7 +632,8 @@ export function assemble(
     throw new Error("Offset is out of the ArrayBuffer bounds");
   }
 
-  let parsedAsm = jsep(assemblyCode);
+  let parsedAsm = evaluate(jsep(assemblyCode));
+  console.log(parsedAsm)
   if (parsedAsm.type !== "Compound") {
     parsedAsm = {
       type: "Compound",
@@ -756,14 +783,14 @@ function executeALUFN(A: number, B: number, alufn: string): number {
       }
       return result;
     }
-    case "A MUL B": {
+    case "A*B": {
       const result = (A * B) | 0;
       if (A !== 0 && B !== 0 && (result / A !== B)) { 
         console.log("Arithmetic overflow in multiplication");
       }
       return result;
     }
-    case "A DIV B": {
+    case "A/B": {
       if (B === 0) {
         console.log("Division by zero is an error."); // todo: 到这一步才应该把WASEl设置为1
         return 0;
@@ -771,68 +798,37 @@ function executeALUFN(A: number, B: number, alufn: string): number {
       const result = (A / B) | 0; 
       return result;
     }
-    case "A AND B": {
+    case "A&B": {
       const result = A & B;
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Bitwise AND operation may result in overflow.");
-      }
       return result;
     }
-    case "A OR B": {
+    case "A|B": {
       const result = A | B;
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Bitwise OR operation may result in overflow.");
-      }
       return result;
     }
-    case "A XOR B": {
-      const result = A ^ B;
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Bitwise XOR operation may result in overflow.");
-      }
-      return result;
+    case "A^B": {
+      return A ^ B;
     }
-    case "A NAND B": {
-      const result = ~(A & B) | 0; 
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Bitwise NAND operation may result in overflow.");
-      }
-      return result;
+    case "A": {
+      return A; // 直接返回 A
     }
-    case "A NOR B": {
-      const result = ~(A | B) | 0; 
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Bitwise NOR operation may result in overflow.");
-      }
-      return result;
+    case "A<<B": { // Logical Shift Left
+      return (A << B) | 0;
     }
-    case "A SHL B": { 
-      const result = (A << B) | 0;
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Shift Left Logical operation may result in overflow.");
-      }
-      return result;
+    case "A>>B": { // Logical Shift Right
+      return (A >>> B) | 0;
     }
-    case "A SRL B": { 
-      const result = (A >>> B) | 0;
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Shift Right Logical operation may result in overflow.");
-      }
-      return result;
+    case "A>>>B": { // Arithmetic Shift Right
+      return (A >> B) | 0;
     }
-    case "A SLA B": {
-      const result = (A << B) | 0;
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Shift Left Arithmetic operation may result in overflow.");
-      }
-      return result;
+    case "A==B": {
+      return A === B ? 1 : 0;
     }
-    case "A SRA B": { 
-      const result = (A >> B) | 0;
-      if ((A >= 0 && B < 0 && result < 0) || (A < 0 && B >= 0 && result > 0)) {
-        console.log("Shift Right Arithmetic operation may result in overflow.");
-      }
-      return result;
+    case "A<B": {
+      return A < B ? 1 : 0;
+    }
+    case "A<=B": {
+      return A <= B ? 1 : 0;
     }
     default:
       throw new Error(`Unknown ALUFN: ${alufn}`);
@@ -920,14 +916,15 @@ export function simulate(
   let XP = 0;
 
   let frames = [{
-    offsetOfInstruction: 0x00, // 目前正在运行的这条指令本身的位置
-    titleOfInstruction: "ADD(R1, R2, R3)",
-    descriptionOfInstruction: "write R1+R2 to R3",
-    iconOfInstruction: "cog", // 暂时都用cog就行
-    titleOfStep: "Fetch: Read instruction from memory",
-    descriptionOfStep: "Read the instruction from the memory at the address specified by the program counter at 0x0.",
-    iconOfStep: "cog", // 花里胡哨的图标，从https://blueprintjs.com/docs/#icons/icons-list 里面找你觉得能对应上的
-    exception : false, // 这一步是否运行出错，error handle不会exception，只有没找到对应的instruction或者除以0的时候这个会变成true
+    offsetOfInstruction: -2, // 目前正在运行的这条指令本身的位置
+    titleOfInstruction: "Reset",
+    descriptionOfInstruction: "initial state of processor",
+    iconOfInstruction: "reset", // 暂时都用cog就行
+    titleOfStep: "The system is reset. All registers and values are set to zero.",
+    descriptionOfStep:
+      "Reminder: This version of processer is still in development, some bugs or issues may occur.",
+    iconOfStep: "reset", // 花里胡哨的图标，从https://blueprintjs.com/docs/#icons/icons-list 里面找你觉得能对应上的
+    exception: false, // 这一步是否运行出错，error handle不会exception，只有没找到对应的instruction或者除以0的时候这个会变成true
     exitingDueToException: false, // 是不是在进行error handle的部分
     flags: {
       z: {
@@ -1253,11 +1250,11 @@ export function simulate(
   }
 
 
-  const initialFrame = structuredClone(frames[0]);
+  // const initialFrame = frames[0];
   for (let step = 0; step <= maximumStep; step += 1) {
     // Fetch
     console.log("\n#Fetch#");
-    const newFrame = structuredClone(initialFrame);
+    const newFrame = structuredClone(frames[0]);
 
     if (frames.length > 0) {
       newFrame.registers = structuredClone(frames[frames.length - 1].registers);
@@ -1268,8 +1265,8 @@ export function simulate(
       resetFocus(frames[frames.length - 1]);
     }
     newFrame.offsetOfInstruction = programCounter;
-    newFrame.mux.pcsel.focus = true;
 
+    newFrame.mux.pcsel.focus = true;
     newFrame.titleOfStep = "Fetch: Read instruction from memory";
     newFrame.descriptionOfStep = "Read the instruction from the memory at the address specified by the program counter.";
     newFrame.iconOfStep = "archive"
@@ -1290,6 +1287,140 @@ export function simulate(
     let instructionDetails = Object.values(instructionSet).find(
       (inst) => inst.opcode === opcode
     );
+
+    if (instructionDetails) {
+      switch (instructionDetails.opcode) {
+        case 24: // LD
+        newFrame.titleOfInstruction = "LD(Ra, offset)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 25: // ST
+        newFrame.titleOfInstruction = "ST(Ra, offset)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 27: // JMP
+        newFrame.titleOfInstruction = "JMP(address)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 29: // BEQ
+        newFrame.titleOfInstruction = "BEQ(Ra, Rb, address)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 30: // BNE
+        newFrame.titleOfInstruction = "BNE(Ra, Rb, address)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 31: // LDR
+        newFrame.titleOfInstruction = "LDR(Ra, Rb, offset)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 32: // ADD
+        newFrame.titleOfInstruction = "ADD(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 33: // SUB
+        newFrame.titleOfInstruction = "SUB(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 34: // MUL
+        newFrame.titleOfInstruction = "MUL(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 35: // DIV
+        newFrame.titleOfInstruction = "DIV(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 36: // CMPEQ
+        newFrame.titleOfInstruction = "CMPEQ(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 37: // CMPLT
+        newFrame.titleOfInstruction = "CMPLT(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 38: // CMPLE
+        newFrame.titleOfInstruction = "CMPLE(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 40: // AND
+        newFrame.titleOfInstruction = "AND(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 41: // OR
+        newFrame.titleOfInstruction = "OR(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 42: // XOR
+        newFrame.titleOfInstruction = "XOR(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 44: // SHL
+        newFrame.titleOfInstruction = "SHL(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 45: // SHR
+        newFrame.titleOfInstruction = "SHR(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 46: // SRA
+        newFrame.titleOfInstruction = "SRA(Ra, Rb, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 48: // ADDC
+        newFrame.titleOfInstruction = "ADDC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 49: // SUBC
+        newFrame.titleOfInstruction = "SUBC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 50: // MULC
+        newFrame.titleOfInstruction = "MULC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 51: // DIVC
+        newFrame.titleOfInstruction = "DIVC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 52: // CMPEQC
+        newFrame.titleOfInstruction = "CMPEQC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 53: // CMPLTC
+        newFrame.titleOfInstruction = "CMPLTC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 54: // CMPLEC
+        newFrame.titleOfInstruction = "CMPLEC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 56: // ANDC
+        newFrame.titleOfInstruction = "ANDC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 57: // ORC
+        newFrame.titleOfInstruction = "ORC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 58: // XORC
+        newFrame.titleOfInstruction = "XORC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 60: // SHLC
+        newFrame.titleOfInstruction = "SHLC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 61: // SHRC
+        newFrame.titleOfInstruction = "SHRC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      case 62: // SRAC
+        newFrame.titleOfInstruction = "SRAC(Ra, literal, Rc)";
+        newFrame.iconOfInstruction = "cog";
+        break;
+      }
+      newFrame.descriptionOfInstruction = instructionDetails.description;
+    } 
     console.log("Opcode:", opcode.toString(2).padStart(6, "0"));
 
     let pcselDescription = "PCSEL default value is 0 (PC + 4)."
@@ -1490,22 +1621,27 @@ export function simulate(
         break;
       }
       if (value.PCSEL === null) {
+        PCSEL = 0;
         newFrame.mux.pcsel.value = 0;
       } else if (Array.isArray(value.PCSEL)) {
         const condition = RD1 === RD2;
         newFrame.mux.pcsel.value = condition ? value.PCSEL[1] : value.PCSEL[0];
+        PCSEL = condition ? value.PCSEL[1] : value.PCSEL[0];
         pcselDescription = `PCSEL is set to ${newFrame.mux.pcsel.value}, selecting ${condition ? "branch target" : "PC + 4 + SXT"}`;
         //branch if equal to 1
       } else {
         newFrame.mux.pcsel.value = value.PCSEL;
         switch (value.PCSEL) {
           case 0:
+            PCSEL = 0;
             pcselDescription = "PCSEL is set to 0 to select PC + 4 as the next program counter value. This is the default behavior, where the program continues to the next instruction";
             break;
           case 1:
+            PCSEL = 1;
             pcselDescription = "PCSEL is set to 1 to select the branch target address. This is used for BEQ/BNE instructions. When a branch instruction is executed, the PC is changed to a calculated branch target, using the offset provided by the instruction."
             break;
           case 2:
+            PCSEL = 2;
             pcselDescription = "PCSEL is set to 2 to select the jump target address. This is used in unconditional jump instructions. When a jump is executed, PCSEL switches to 2 to select the jump target, overriding the normal PC + 4.";
             break;
           default:
@@ -1833,7 +1969,7 @@ export function simulate(
         newFrame_exe.descriptionOfStep += `${alufnDescription}\n`;
         newFrame_exe.descriptionOfStep += `ALU output: ${aluo}\n`;
 
-        if (opcode === 0x27) {
+        if (opcode === 27) {
             // 计算跳转目标地址
             JT = pcpf + params[0] * 4;
             let jtDescription = `Jump Target (JT) is set to address 0x${JT.toString(16)}.`;
@@ -1876,10 +2012,6 @@ export function simulate(
         console.log("\n#Memory#");
         const newFrame_mem = structuredClone(frames[frames.length - 1]); 
         resetFocus(frames[frames.length - 1]);
-        if (frames.length > 0) {
-          newFrame_mem.registers = structuredClone(frames[frames.length - 1].registers);
-        }
-        newFrame_mem.buffer = structuredClone(buffer); 
 
         newFrame_mem.titleOfStep = "Memory: Access memory";
         newFrame_mem.descriptionOfStep = "Access memory for load/store instructions.";
@@ -1912,10 +2044,9 @@ export function simulate(
         }
         memoryDescription += `${mwrDescription}\n`;
         
-        const memoryDataView = new DataView(newFrame_mem.buffer);
         if (MWR == 1) {
           console.log("Write data", mWD, " to memory address:", Adr);
-          memoryDataView.setUint32(Adr, mWD, littleEndian);  
+          memory.setUint16(Adr, mWD, littleEndian);  
         }
 
         let moeDescription = "MOE default value is 0 (no memory read).";
@@ -1952,7 +2083,7 @@ export function simulate(
         memoryDescription += `${moeDescription}\n`;
 
         if (MOE == 1) {
-          RD = uint16ToTwosComplement(memoryDataView.getUint32(Adr, littleEndian));
+          RD = uint16ToTwosComplement(memory.getUint32(Adr, littleEndian));
           console.log("Read data", RD, " from memory address:", Adr);
           if (instructionDetails.WERF === 1 && params[3] !== 31) {
             newFrame_mem.registers[params[3]] = RD;
@@ -1968,9 +2099,6 @@ export function simulate(
         console.log("\n#Write Back#");
         const newFrame_wb = structuredClone(frames[frames.length - 1]); 
         resetFocus(frames[frames.length - 1]);
-        if (frames.length > 0) {
-          newFrame_wb.registers = structuredClone(frames[frames.length - 1].registers);
-        }
 
         newFrame_wb.titleOfStep = "Write Back: Write results to register";
         newFrame_wb.descriptionOfStep = "Write the results of the operation back to the register.";
@@ -2050,7 +2178,8 @@ export function simulate(
             case 1:
             // Currently, ignore XP
             console.log("Write value",rWD,"to register","R"+params[3]);
-            newFrame_wb.registers[params[3]] = rWD;
+            setRegisterValue(params[3], rWD);
+            newFrame_wb.registers = registers.slice(0);
             werfDescription = "WERF is set to 1, writing back to register. This occurs when an instruction requires the result to be written back into a register, such as in arithmetic, logical instructions.";
             break;
 
@@ -2081,7 +2210,6 @@ export function simulate(
       }
     }
   }
-  frames.shift(); // todo: 用这个移除example frame，直接删除会跑不了？
   console.log(frames);
   return frames;
   // todo: XP, Z, WASEL after the exam :(
