@@ -5,6 +5,7 @@ import {
   ButtonGroup,
   OverlayToaster,
   Intent,
+  BlueprintProvider,
 } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
@@ -373,9 +374,7 @@ function App() {
       />
     ),
     registers: () => (
-      <Registers
-       
-      />
+      <Registers/>
     ),
     memory: () => (
       <MemoryViewer />
@@ -385,6 +384,7 @@ function App() {
   };
 
   return (
+    <BlueprintProvider>
     <EmulatorContext.Provider
       value={{ frames, currentFrame, setFrames, setCurrentFrame }}
     >
@@ -580,6 +580,7 @@ function App() {
         />
       </div>
     </EmulatorContext.Provider>
+    </BlueprintProvider>
   );
 }
 
