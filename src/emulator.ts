@@ -878,6 +878,19 @@ export function simulate(
     return uint16;
   }
 
+  function ensureTwoComplement(aluOutput: number): number {
+    // 限制为 32 位范围
+    const maskedOutput = aluOutput & 0xFFFF;
+  
+    // 如果最高位为 1，表示负数，转换为 two's complement
+    if (maskedOutput & 0x8000) {
+      return maskedOutput; // 处理负数
+    }
+  
+    return maskedOutput; // 正数直接返回
+  }
+  
+
   const memory = new DataView(buffer);
   // const result: string[] = [];
 
@@ -925,7 +938,7 @@ export function simulate(
       }
     },
     registers: Array(32).fill(0),
-    buffer: new ArrayBuffer(128),
+    buffer: buffer,
     programCounter: 0, // 当前的PC，在没有jump和error handle的情况下应该和offsetOfInstruction相同
     mux: {
       pcsel: {
@@ -1169,12 +1182,14 @@ export function simulate(
           dirty: true,
           description: "",
           focus: false,
-        },"instruction-memory-to-bsel": {
+        },
+        "instruction-memory-to-bsel": {
           value: 0,
           dirty: true,
           description: "The instruction determines whether BSEL selects an immediate value or RD2.",
           focus: false,
-        },"plus-four-to-pcsel": {
+        },
+        "plus-four-to-pcsel": {
           value: 0,
           dirty: true,
           description: "",
@@ -1237,25 +1252,6 @@ export function simulate(
     }
   }
 
-  function updateFrameForInstruction(
-    key: string,
-    instructionSet: Record<string, any>,
-    currentFrame: any
-  ) {
-    const newFrame = { ...currentFrame }; // 复制当前帧
-    newFrame.iconOfInstruction = "cog"; // 所有 icon 为 cog
-  
-    // 针对指令处理
-    const instructionInfo = instructionSet[key] || null;
-    if (instructionInfo) {
-      newFrame.titleOfInstruction = `${key}`;
-      newFrame.descriptionOfInstruction = instructionInfo.description;
-    } else {
-      newFrame.titleOfInstruction = "Unknown Instruction";
-      newFrame.descriptionOfInstruction = "No description available for this instruction.";
-      newFrame.exception = true; // Instruction not find, set exception to true
-    }
-  } 
 
   const initialFrame = structuredClone(frames[0]);
   for (let step = 0; step <= maximumStep; step += 1) {
@@ -1266,7 +1262,7 @@ export function simulate(
     if (frames.length > 0) {
       newFrame.registers = structuredClone(frames[frames.length - 1].registers);
     }
-    newFrame.buffer = newFrame.buffer.slice(0);
+    newFrame.buffer = structuredClone(buffer);
     
     if (frames.length > 0) {
       resetFocus(frames[frames.length - 1]);
@@ -1299,24 +1295,68 @@ export function simulate(
     let pcselDescription = "PCSEL default value is 0 (PC + 4)."
     let instructionFound = false;
 
+    function clearPathStates(frame) {
+      // 清理 path
+      for (const key in frame.path) {
+        frame.path[key].value = 0; // 黑色
+        frame.path[key].dirty = false;
+        frame.path[key].focus = false; // 非高亮状态
+      }
+    
+      // 清理 cl 信号
+      for (const key in frame.cl) {
+        frame.cl[key].value = 0; // 重置控制信号的值
+        frame.cl[key].dirty = false;
+        frame.cl[key].focus = false;
+      }
+    
+      // 清理 mux 信号
+      for (const key in frame.mux) {
+        frame.mux[key].value = 0; // 重置多路复用器的值
+        frame.mux[key].dirty = false;
+        frame.mux[key].focus = false;
+      }
+    }
+
     function updatePathsBasedOnInstruction(frame, instructionDetails, phase) {
       for (const pathKey in frame.path) {
         switch (phase) {
           case "fetch":
             switch (pathKey) {
               case "pc-to-instruction-memory":
+                frame.path["pc-to-instruction-memory"].value = 1;
+                frame.path["pc-to-instruction-memory"].dirty = false;
+                frame.path["pc-to-instruction-memory"].focus = true;
+                break;
               case "pc-to-plus-four":
-                frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = false;
-                frame.path[pathKey].focus = true;
+                frame.path["pc-to-plus-four"].value = 1;
+                frame.path["pc-to-plus-four"].dirty = false;
+                frame.path["pc-to-plus-four"].focus = true;
                 break;
               case "plus-four-to-wdsel":
-                frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = false; // 逻辑参与但不确定
-                frame.path[pathKey].focus = false;
+                frame.path["plus-four-to-wdsel"].value = 1;
+                frame.path["plus-four-to-wdsel"].dirty = false; // 逻辑参与但不确定
+                frame.path["plus-four-to-wdsel"].focus = true;
                 break;
-              default:
-                frame.path[pathKey].focus = false; // 其他路径默认
+              case "pcsel-to-reset":
+                  frame.path["pcsel-to-reset"].value = 1;
+                  frame.path["pcsel-to-reset"].dirty = false;
+                
+                frame.path["pcsel-to-reset"].focus = true;
+                break;
+              case "reset-to-pc":
+                frame.path["reset-to-pc"].value = 1;
+                frame.path["reset-to-pc"].dirty = false;
+                frame.path["reset-to-pc"].focus = true;
+                break;
+              case "plus-four-to-pcsel":
+                if (instructionDetails && instructionDetails.PCSEL !== null) {
+                if (instructionDetails.PCSEL === 0) {
+                  frame.path["plus-four-to-pcsel"].value = 1;
+                  frame.path["plus-four-to-pcsel"].dirty = false;
+                }
+              }
+                frame.path["plus-four-to-pcsel"].focus = true;
                 break;
             }
             break;
@@ -1324,37 +1364,63 @@ export function simulate(
           case "decode":
             switch (pathKey) {
               case "instruction-memory-to-control-logic":
-                frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = false;
-                frame.path[pathKey].focus = true;
+                frame.path["instruction-memory-to-control-logic"].value = 1;
+                frame.path["instruction-memory-to-control-logic"].dirty = false;
+                frame.path["instruction-memory-to-control-logic"].focus = true;
+                break;
+              case "wasel-to-register-file":
+                frame.path["wasel-to-register-file"].value = 1;
+                frame.path["wasel-to-register-file"].dirty = false;
+                frame.path["wasel-to-register-file"].focus = true;
                 break;
               case "ra2sel-to-register-file":
-                if (instructionDetails.RA2SEL !== null) {
-                  frame.path[pathKey].value = instructionDetails.RA2SEL;
-                  frame.path[pathKey].dirty = false;
-                  frame.path[pathKey].focus = true;
-                } else {
-                  frame.path[pathKey].focus = false;
-                }
+                if (instructionDetails.RA2SEL != null) {
+                  frame.path["ra2sel-to-register-file"].value = 1;
+                  frame.path["ra2sel-to-register-file"].dirty = false;
+              } 
+                frame.path["ra2sel-to-register-file"].focus = true;
                 break;
               case "instruction-memory-to-ra2sel-as-rc":
+                if (instructionDetails.MWR === 1) {
+                  frame.path["instruction-memory-to-ra2sel-as-rc"].value = 1;
+                  frame.path["instruction-memory-to-ra2sel-as-rc"].dirty = false;
+                } 
+                frame.path["instruction-memory-to-ra2sel-as-rc"].focus = true;
+                break;
+              case "register-file-to-asel":
+                if (instructionDetails.ASEL === 0) {
+                  frame.path["register-file-to-asel"].value = 1;
+                  frame.path["register-file-to-asel"].dirty = false;
+                }
+                frame.path["register-file-to-asel"].focus = true;
+                break;
               case "instruction-memory-to-ra2sel-as-rb":
-                frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = true; // 标记为逻辑参与
-                frame.path[pathKey].focus = true;
+                if (instructionDetails.MWR !== 1) {
+                  frame.path["instruction-memory-to-ra2sel-as-rb"].value = 1;
+                  frame.path["instruction-memory-to-ra2sel-as-rb"].dirty = false;
+                } 
+                frame.path["instruction-memory-to-ra2sel-as-rb"].focus = true;
                 break;
               case "register-file-to-bsel":
-                frame.path[pathKey].value = instructionDetails.BSEL || 0;
-                frame.path[pathKey].dirty = false;
-                frame.path[pathKey].focus = true;
+                if (instructionDetails.bsel === 0) {
+                  frame.path["register-file-to-bsel"].value = 1;
+                  frame.path["register-file-to-bsel"].dirty = false;
+              } 
+                frame.path["register-file-to-bsel"].focus = true;
+                break;
+              case "register-file-to-data-memory":
+                if (instructionDetails.MWR === 1) {
+                  frame.path["register-file-to-data-memory"].value = 1;
+                  frame.path["register-file-to-data-memory"].dirty = false;
+                }
+                frame.path["register-file-to-data-memory"].focus = true;
                 break;
               case "instruction-memory-to-bsel":
-                frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = true; // 逻辑参与但不高亮
-                frame.path[pathKey].focus = false;
-                break;
-              default:
-                frame.path[pathKey].focus = false;
+                if (instructionDetails.bsel === 1) {
+                  frame.path["instruction-memory-to-bsel"].value = 1;
+                  frame.path["instruction-memory-to-bsel"].dirty = false;
+              } 
+                frame.path["instruction-memory-to-bsel"].focus = true;
                 break;
             }
             break;
@@ -1362,27 +1428,21 @@ export function simulate(
           case "execute":
             switch (pathKey) {
               case "asel-to-alu":
-                frame.path[pathKey].value = instructionDetails.ASEL || 0;
-                frame.path[pathKey].dirty = instructionDetails.ASEL === 0;
-                frame.path[pathKey].focus = true;
+                if (instructionDetails.ALUFN != null) {
+                  frame.path["asel-to-alu"].value = 1;
+                  frame.path["asel-to-alu"].dirty = false;
+              } 
+                frame.path["asel-to-alu"].focus = true;
                 break;
               case "bsel-to-alu":
-                frame.path[pathKey].value = instructionDetails.BSEL || 0;
-                frame.path[pathKey].dirty = instructionDetails.BSEL === 0;
-                frame.path[pathKey].focus = true;
-                break;
-              case "alu-to-data-memory":
-                frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = true; 
-                frame.path[pathKey].focus = false;
-                break;
-              case "alu-to-wdsel":
-                frame.path[pathKey].value = 1;
-                frame.path[pathKey].dirty = true;
-                frame.path[pathKey].focus = true;
-                break;
+                if (instructionDetails.ALUFN != null) {
+                    frame.path["bsel-to-alu"].value = 1;
+                    frame.path["bsel-to-alu"].dirty = false;
+                } 
+                  frame.path["bsel-to-alu"].focus = true;
+                  break;
               default:
-                frame.path[pathKey].focus = false;
+                frame.path["bsel-to-alu"].focus = false;
                 break;
             }
             break;
@@ -1391,24 +1451,17 @@ export function simulate(
             switch (pathKey) {
               case "alu-to-data-memory":
                 if (instructionDetails.MWR === 1) {
-                  frame.path[pathKey].value = 1;
-                  frame.path[pathKey].dirty = false;
-                  frame.path[pathKey].focus = true;
-                } else {
-                  frame.path[pathKey].focus = false;
-                }
+                  frame.path["alu-to-data-memory"].value = 1;
+                  frame.path["alu-to-data-memory"].dirty = false;
+                } 
+                  frame.path["alu-to-data-memory"].focus = true;
                 break;
               case "data-memory-to-wdsel":
                 if (instructionDetails.MOE === 1) {
-                  frame.path[pathKey].value = 1;
-                  frame.path[pathKey].dirty = false;
-                  frame.path[pathKey].focus = true;
-                } else {
-                  frame.path[pathKey].focus = false;
+                  frame.path["data-memory-to-wdsel"].value = 1;
+                  frame.path["data-memory-to-wdsel"].dirty = false;
                 }
-                break;
-              default:
-                frame.path[pathKey].focus = false;
+                  frame.path["data-memory-to-wdsel"].focus = true;
                 break;
             }
             break;
@@ -1416,22 +1469,20 @@ export function simulate(
           case "writeBack":
             switch (pathKey) {
               case "wdsel-to-register-file":
-                frame.path[pathKey].value = instructionDetails.WDSEL || 0;
-                frame.path[pathKey].dirty = false;
-                frame.path[pathKey].focus = true;
-                break;
+                if (instructionDetails.MWR !== 1) {
+                  frame.path["wdsel-to-register-file"].value = 1;
+                  frame.path["wdsel-to-register-file"].dirty = false;
+
+                }
+                frame.path["wdsel-to-register-file"].focus = true;
             }
-            break;
-    
-          default:
-            frame.path[pathKey].focus = false; // 默认不高亮
-            break;
+          break;
         }
       }
     }
     for (const [key, value] of Object.entries(instructionSet)) {
       
-      updatePathsBasedOnInstruction(newFrame, null, "fetch");
+      clearPathStates(newFrame);
       if (value.opcode === opcode) {
         newFrame.titleOfInstruction = `${key}`;
         newFrame.descriptionOfInstruction = value.description;
@@ -1470,16 +1521,18 @@ export function simulate(
       newFrame.exception = true; // error
       XP = programCounter;
 
-      newFrame.cl.xp.value = XP;
+      newFrame.cl.xp.value = 1;
       newFrame.cl.xp.dirty = false;
       newFrame.cl.xp.description = `Exception triggered. Stored current PC (0x${programCounter.toString(16)}) as Exception Program Counter.`;
       
       // pcsel = 3 (XP)
-      newFrame.cl.pcsel.value = 3;
+      PCSEL = 3;
+      newFrame.cl.pcsel.value = 1;
       newFrame.cl.pcsel.dirty = false;
       newFrame.cl.pcsel.description = "PCSEL is set to 3, redirecting to exception handler.";
   
       // WASEL = 1 处理xp
+      WASEL = 1;
       newFrame.cl.wasel.value = 1;
       newFrame.cl.wasel.dirty = false;
       newFrame.cl.wasel.description = "WASEL is set to 1, selecting exception address for XP.";
@@ -1491,12 +1544,13 @@ export function simulate(
       console.log("Halt opcode detected, stopping simulation");
       break;
     }
-    newFrame.cl.pcsel.value = newFrame.mux.pcsel.value || 0; //default 0
+    newFrame.cl.pcsel.value = 1; //default 0
     newFrame.cl.pcsel.dirty = false; 
     newFrame.cl.pcsel.description = pcselDescription;
     newFrame.cl.pcsel.focus = true;
     newFrame.mux.pcsel.dirty = false;
 
+    updatePathsBasedOnInstruction(newFrame, instructionDetails, "fetch");
     frames.push(newFrame);
     programCounter = pcpf;
 
@@ -1510,20 +1564,17 @@ export function simulate(
           key
         );
 
-        const newFrame_dec = structuredClone(initialFrame); 
+        const newFrame_dec = structuredClone(frames[frames.length - 1]); 
         resetFocus(frames[frames.length - 1]);
         if (frames.length > 0) {
           newFrame_dec.registers = structuredClone(frames[frames.length - 1].registers);
         }
         newFrame_dec.buffer = newFrame_dec.buffer.slice(0);
 
-        updatePathsBasedOnInstruction(newFrame_dec, instructionDetails, "decode");
-        newFrame_dec.mux.ra2sel.focus = true;
-        newFrame_dec.mux.ra2sel.description = "RA2SEL is active, selecting the second operand from the register.";
         newFrame_dec.titleOfStep = "Decode: Decode the instruction";
         newFrame_dec.iconOfStep = "unlock"
 
-        newFrame_dec.cl.ra2sel.value = value.RA2SEL || 0;
+        newFrame_dec.cl.ra2sel.value = 1;
         newFrame_dec.cl.ra2sel.dirty = false;
         newFrame_dec.cl.ra2sel.description = "RA2SEL is active, selecting the second operand from the register.";
         newFrame_dec.cl.ra2sel.focus = true;
@@ -1553,7 +1604,7 @@ export function simulate(
             }
               if (parseInt(bit) === 31) {
                 console.log(`Parameter ${index} (R${parseInt(bit)}) is R31 (always 0). Skipping this instruction.`);
-                decodeDescription += `Parameter ${index} (R${parseInt(bit)}) is R31. Ignoring.\n`;
+                decodeDescription += `Parameter ${index} (R${parseInt(bit)}) is 0. Set the value as 0.\n`;
                 params[parseInt(bit)] = 0; 
               }
                 switch (bit) {
@@ -1645,6 +1696,9 @@ export function simulate(
         }
         if (value.WASEL === 1) {
           newFrame_dec.cl.wasel.value = 1;
+          newFrame_dec.cl.wasel.dirty = false;
+          newFrame_dec.mux.wasel.dirty = false;
+          newFrame_dec.mux.wasel.value = 1
           newFrame_dec.cl.wasel.description = "WASEL is set to 1 because the operation has triggered an Exception. The PC is stored in XP.";
           newFrame_dec.cl.wasel.focus = true;
           newFrame_dec.mux.wasel.description = "WASEL is set to 1 because the operation has triggered an Exception. Normally, WASEL is 0 to write the result to Rc, but when an Exception occurs, WASEL is switched to 1 to store the Program Counter (PC) to the XP register."
@@ -1661,30 +1715,28 @@ export function simulate(
 
         newFrame_dec.descriptionOfStep = decodeDescription.trim();
 
-        newFrame_dec.cl.wasel.dirty = false;
-        newFrame_dec.mux.wasel.dirty = false;
         newFrame_dec.mux.ra2sel.value = RA2SEL;
         newFrame_dec.mux.ra2sel.dirty = false;
+        newFrame_dec.mux.ra2sel.focus = true;
         newFrame_dec.mux.ra2sel.description = ra2selDescription;
+        updatePathsBasedOnInstruction(newFrame_dec, instructionDetails, "decode");
         frames.push(newFrame_dec);
 
         // Execute
         console.log("\n#Execute#");
-        const newFrame_exe = structuredClone(initialFrame); 
+        const newFrame_exe = structuredClone(frames[frames.length - 1]); 
         resetFocus(frames[frames.length - 1]); 
         if (frames.length > 0) {
           newFrame_exe.registers = structuredClone(frames[frames.length - 1].registers);
         }
-        updatePathsBasedOnInstruction(newFrame_exe, instructionDetails, "execute");
 
         newFrame_exe.titleOfStep = "Execute: Perform the operation";
         newFrame_exe.iconOfStep = "social-media";
         newFrame_exe.descriptionOfStep = "";
 
-        newFrame_exe.cl.alufn.focus = true
         console.log("[CU signal]", "ASEL:", value.ASEL);
-
         let aselDescription = "";
+        if (value.ASEL != null) {
         const aselValue = value.ASEL !== null ? value.ASEL : 0; 
         switch (aselValue) {
           case 0:
@@ -1707,15 +1759,16 @@ export function simulate(
             );
             break;
         }
-        newFrame_exe.mux.asel.value = aselValue;
+        newFrame_exe.mux.asel.value = A;
         newFrame_exe.mux.asel.dirty = false;
         newFrame_exe.mux.asel.description = aselDescription;
         newFrame_exe.mux.asel.focus = true;
         newFrame_exe.descriptionOfStep += `${aselDescription}\n`;
 
-        console.log("[CU signal]", "BSEL:", value.BSEL);
-
-        let bselDescription = "";
+      }
+      console.log("[CU signal]", "BSEL:", value.BSEL);
+      let bselDescription = "";
+      if (value.BSEL != null) {
         const bselValue = value.BSEL !== null ? value.BSEL : 0;
         switch (bselValue) {
           case 0:
@@ -1738,12 +1791,12 @@ export function simulate(
             );
             break;
         }
-        newFrame_exe.mux.bsel.value = bselValue;
+        newFrame_exe.mux.bsel.value = B;
         newFrame_exe.mux.bsel.dirty = false;
         newFrame_exe.mux.bsel.description = bselDescription;
         newFrame_exe.mux.bsel.focus = true;
         newFrame_exe.descriptionOfStep += `${bselDescription}\n`;
-
+      }
         let alufnDescription = "ALUFN default value is null.";
         
         if (value.ALUFN != null) {
@@ -1751,6 +1804,22 @@ export function simulate(
           aluo = executeALUFN(A, B, ALUFN); //todo: ensure the output is two complement
           alufnDescription = `ALUFN is set to ${ALUFN}, performing ALU operation.`;
           console.log("ALU Operation:", ALUFN, "ALU Output:", aluo);
+          newFrame_exe.cl.asel.value = 1;
+          newFrame_exe.cl.asel.dirty = false;
+          newFrame_exe.cl.asel.description = aselDescription;
+          newFrame_exe.cl.asel.focus = true;
+  
+          newFrame_exe.cl.bsel.value = 1;
+          newFrame_exe.cl.bsel.dirty = false;
+          newFrame_exe.cl.bsel.description = bselDescription;
+          newFrame_exe.cl.bsel.focus = true;
+  
+          // Update ALUFN
+          newFrame_exe.cl.alufn.value = 1; 
+          newFrame_exe.cl.alufn.dirty = false;
+          newFrame_exe.cl.alufn.description = alufnDescription;
+          newFrame_exe.cl.alufn.focus = true;
+  
         } else {
           alufnDescription = "ALUFN not selected, using dirty value for ALU operation.";
           console.log(
@@ -1761,22 +1830,6 @@ export function simulate(
           );
         }
         
-        newFrame_exe.cl.asel.value = aselValue;
-        newFrame_exe.cl.asel.dirty = false;
-        newFrame_exe.cl.asel.description = aselDescription;
-        newFrame_exe.cl.asel.focus = true;
-
-        newFrame_exe.cl.bsel.value = bselValue;
-        newFrame_exe.cl.bsel.dirty = false;
-        newFrame_exe.cl.bsel.description = bselDescription;
-        newFrame_exe.cl.bsel.focus = true;
-
-        // Update ALUFN
-        newFrame_exe.cl.alufn.value = ALUFN || 0; // 默认值为 0
-        newFrame_exe.cl.alufn.dirty = false;
-        newFrame_exe.cl.alufn.description = alufnDescription;
-        newFrame_exe.cl.alufn.focus = true;
-
         newFrame_exe.descriptionOfStep += `${alufnDescription}\n`;
         newFrame_exe.descriptionOfStep += `ALU output: ${aluo}\n`;
 
@@ -1796,6 +1849,7 @@ export function simulate(
         
             newFrame_exe.descriptionOfStep += `${jtDescription}\n`;
             programCounter = JT;
+            //pcsel == 2
         } else if (opcode === 0x28 || opcode === 0x29) {
           JT = pcpf + params[0] * 4;
           if ((opcode === 0x28 && RD1 === RD2) || (opcode === 0x29 && RD1 !== RD2)) {
@@ -1815,17 +1869,17 @@ export function simulate(
       }
 
         console.log("ALU output:", aluo);
+        updatePathsBasedOnInstruction(newFrame_exe, instructionDetails, "execute");
         frames.push(newFrame_exe);
 
         //Memory
         console.log("\n#Memory#");
-        const newFrame_mem = structuredClone(initialFrame); 
+        const newFrame_mem = structuredClone(frames[frames.length - 1]); 
         resetFocus(frames[frames.length - 1]);
         if (frames.length > 0) {
           newFrame_mem.registers = structuredClone(frames[frames.length - 1].registers);
         }
         newFrame_mem.buffer = structuredClone(buffer); 
-        updatePathsBasedOnInstruction(newFrame_mem, instructionDetails, "memory");
 
         newFrame_mem.titleOfStep = "Memory: Access memory";
         newFrame_mem.descriptionOfStep = "Access memory for load/store instructions.";
@@ -1907,16 +1961,16 @@ export function simulate(
         }
 
         newFrame_mem.descriptionOfStep = memoryDescription.trim();
+        updatePathsBasedOnInstruction(newFrame_mem, instructionDetails, "memory");
         frames.push(newFrame_mem)
 
         //Write Back
         console.log("\n#Write Back#");
-        const newFrame_wb = structuredClone(initialFrame); 
+        const newFrame_wb = structuredClone(frames[frames.length - 1]); 
         resetFocus(frames[frames.length - 1]);
         if (frames.length > 0) {
           newFrame_wb.registers = structuredClone(frames[frames.length - 1].registers);
         }
-        updatePathsBasedOnInstruction(newFrame_wb, instructionDetails, "writeBack");
 
         newFrame_wb.titleOfStep = "Write Back: Write results to register";
         newFrame_wb.descriptionOfStep = "Write the results of the operation back to the register.";
@@ -1944,7 +1998,7 @@ export function simulate(
             console.log("[MUX]", "rWD=(PC+4)=" + rWD);
             break;
           case 1:
-            rWD = aluo;
+            rWD = ensureTwoComplement(aluo);
             wdselDescription = "WDSEL is set to 1 to select the ALU output as the data to write back to the register file. This is the default in most arithmetic or logical instructions.";
             console.log("[MUX]", "rWD=ALU output=" + rWD);
             break;
@@ -1969,7 +2023,7 @@ export function simulate(
         newFrame_wb.mux.wdsel.focus = true;
         newFrame_wb.descriptionOfStep += `${wdselDescription}\n`;
 
-        newFrame_wb.cl.wdsel.value = WDSEL;
+        newFrame_wb.cl.wdsel.value = 1;
         newFrame_wb.cl.wdsel.dirty = false;
         newFrame_wb.cl.wdsel.description = wdselDescription;
         newFrame_wb.cl.wdsel.focus = true;
@@ -2010,12 +2064,13 @@ export function simulate(
               break;
           }
           console.log("\n\n");
-          newFrame_wb.cl.werf.value = WERF;
+          newFrame_wb.cl.werf.value = 1;
           newFrame_wb.cl.werf.dirty = false;
           newFrame_wb.cl.werf.description = werfDescription;
           newFrame_wb.cl.werf.focus = true;
           newFrame_wb.descriptionOfStep += `${werfDescription}\n`;
 
+          updatePathsBasedOnInstruction(newFrame_wb, instructionDetails, "writeBack");
           frames.push(newFrame_wb);
         programCounter = pcpf;
         break;
