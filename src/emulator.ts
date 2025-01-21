@@ -507,6 +507,30 @@ const instructionSet = {
     description: "Shift {Ra} right arithmetically by the number of bits specified in {literal} and write to {Rc}",
   },
 };
+let pcpf = 0;
+let RA2SEL = 0;
+let RD1 = 0;
+let RD2 = 0;
+let A = 0;
+let B = 0;
+let ALUFN = "";
+let aluo = 0;
+let JT = 0;
+
+let MWR = 0;
+let MOE = 0;
+let mWD = 0;
+let Adr = 0;
+let RD = 0;
+
+let rWD = 0;
+let WDSEL = 0;
+
+let WERF = 0;
+let WASEL = 0;
+
+let PCSEL = 0;
+let XP = 0;
 
 const registerSymbols = [];
 for (let i = 0; i <= 31; i++) {
@@ -793,6 +817,7 @@ function executeALUFN(A: number, B: number, alufn: string): number {
     case "A/B": {
       if (B === 0) {
         console.log("Division by zero is an error."); // todo: 到这一步才应该把WASEl设置为1
+        WASEL = 1;
         return 0;
       }
       const result = (A / B) | 0; 
@@ -890,30 +915,6 @@ export function simulate(
   const memory = new DataView(buffer);
   // const result: string[] = [];
 
-  let pcpf = 0;
-  let RA2SEL = 0;
-  let RD1 = 0;
-  let RD2 = 0;
-  let A = 0;
-  let B = 0;
-  let ALUFN = "";
-  let aluo = 0;
-  let JT = 0;
-
-  let MWR = 0;
-  let MOE = 0;
-  let mWD = 0;
-  let Adr = 0;
-  let RD = 0;
-
-  let rWD = 0;
-  let WDSEL = 0;
-
-  let WERF = 0;
-  let WASEL = 0;
-
-  let PCSEL = 0;
-  let XP = 0;
 
   let frames = [{
     offsetOfInstruction: -2, // 目前正在运行的这条指令本身的位置
@@ -1288,139 +1289,52 @@ export function simulate(
       (inst) => inst.opcode === opcode
     );
 
-    if (instructionDetails) {
-      switch (instructionDetails.opcode) {
-        case 24: // LD
-        newFrame.titleOfInstruction = "LD(Ra, offset)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 25: // ST
-        newFrame.titleOfInstruction = "ST(Ra, offset)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 27: // JMP
-        newFrame.titleOfInstruction = "JMP(address)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 29: // BEQ
-        newFrame.titleOfInstruction = "BEQ(Ra, Rb, address)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 30: // BNE
-        newFrame.titleOfInstruction = "BNE(Ra, Rb, address)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 31: // LDR
-        newFrame.titleOfInstruction = "LDR(Ra, Rb, offset)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 32: // ADD
-        newFrame.titleOfInstruction = "ADD(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 33: // SUB
-        newFrame.titleOfInstruction = "SUB(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 34: // MUL
-        newFrame.titleOfInstruction = "MUL(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 35: // DIV
-        newFrame.titleOfInstruction = "DIV(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 36: // CMPEQ
-        newFrame.titleOfInstruction = "CMPEQ(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 37: // CMPLT
-        newFrame.titleOfInstruction = "CMPLT(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 38: // CMPLE
-        newFrame.titleOfInstruction = "CMPLE(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 40: // AND
-        newFrame.titleOfInstruction = "AND(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 41: // OR
-        newFrame.titleOfInstruction = "OR(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 42: // XOR
-        newFrame.titleOfInstruction = "XOR(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 44: // SHL
-        newFrame.titleOfInstruction = "SHL(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 45: // SHR
-        newFrame.titleOfInstruction = "SHR(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 46: // SRA
-        newFrame.titleOfInstruction = "SRA(Ra, Rb, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 48: // ADDC
-        newFrame.titleOfInstruction = "ADDC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 49: // SUBC
-        newFrame.titleOfInstruction = "SUBC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 50: // MULC
-        newFrame.titleOfInstruction = "MULC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 51: // DIVC
-        newFrame.titleOfInstruction = "DIVC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 52: // CMPEQC
-        newFrame.titleOfInstruction = "CMPEQC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 53: // CMPLTC
-        newFrame.titleOfInstruction = "CMPLTC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 54: // CMPLEC
-        newFrame.titleOfInstruction = "CMPLEC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 56: // ANDC
-        newFrame.titleOfInstruction = "ANDC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 57: // ORC
-        newFrame.titleOfInstruction = "ORC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 58: // XORC
-        newFrame.titleOfInstruction = "XORC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 60: // SHLC
-        newFrame.titleOfInstruction = "SHLC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 61: // SHRC
-        newFrame.titleOfInstruction = "SHRC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      case 62: // SRAC
-        newFrame.titleOfInstruction = "SRAC(Ra, literal, Rc)";
-        newFrame.iconOfInstruction = "cog";
-        break;
-      }
-      newFrame.descriptionOfInstruction = instructionDetails.description;
-    } 
+    function getInstructionDetails(opcode) {
+      const instructionMap = {
+        24: "LD(Rc, Ra, literal)",
+        25: "ST(Rc, literal, Ra)",
+        27: "JMP(Ra, Rc)",
+        29: "BEQ(Ra, literal, Rc)",
+        30: "BNE(Ra, literal, Rc)",
+        31: "LDR(literal, Rc)",
+        32: "ADD(Ra, Rb, Rc)",
+        33: "SUB(Ra, Rb, Rc)",
+        34: "MUL(Ra, Rb, Rc)",
+        35: "DIV(Ra, Rb, Rc)",
+        36: "CMPEQ(Ra, Rb, Rc)",
+        37: "CMPLT(Ra, Rb, Rc)",
+        38: "CMPLE(Ra, Rb, Rc)",
+        40: "AND(Ra, Rb, Rc)",
+        41: "OR(Ra, Rb, Rc)",
+        42: "XOR(Ra, Rb, Rc)",
+        44: "SHL(Ra, Rb, Rc)",
+        45: "SHR(Ra, Rb, Rc)",
+        46: "SRA(Ra, Rb, Rc)",
+        48: "ADDC(Ra, literal, Rc)",
+        49: "SUBC(Ra, literal, Rc)",
+        50: "MULC(Ra, literal, Rc)",
+        51: "DIVC(Ra, literal, Rc)",
+        52: "CMPEQC(Ra, literal, Rc)",
+        53: "CMPLTC(Ra, literal, Rc)",
+        54: "CMPLEC(Ra, literal, Rc)",
+        56: "ANDC(Ra, literal, Rc)",
+        57: "ORC(Ra, literal, Rc)",
+        58: "XORC(Ra, literal, Rc)",
+        60: "SHLC(Ra, literal, Rc)",
+        61: "SHRC(Ra, literal, Rc)",
+        62: "SRAC(Ra, literal, Rc)",
+      };
+    
+      // 获取指令标题
+      const title = instructionMap[opcode]
+      const description = `Description for ${title}`;
+
+      return {
+        title,
+        description,
+      };
+    }
+    
     console.log("Opcode:", opcode.toString(2).padStart(6, "0"));
 
     let pcselDescription = "PCSEL default value is 0 (PC + 4)."
@@ -1611,12 +1525,13 @@ export function simulate(
         }
       }
     }
-    for (const [key, value] of Object.entries(instructionSet)) {
-      
+    for (const [key, value] of Object.entries(instructionSet)) { 
       clearPathStates(newFrame);
       if (value.opcode === opcode) {
-        newFrame.titleOfInstruction = `${key}`;
-        newFrame.descriptionOfInstruction = value.description;
+        const { title, description } = getInstructionDetails(opcode);
+        newFrame.titleOfInstruction = title;
+        newFrame.descriptionOfInstruction = description;
+        newFrame.iconOfInstruction = "cog";
         instructionFound = true;
         break;
       }
@@ -1624,7 +1539,14 @@ export function simulate(
         PCSEL = 0;
         newFrame.mux.pcsel.value = 0;
       } else if (Array.isArray(value.PCSEL)) {
-        const condition = RD1 === RD2;
+        let condition;
+        if (opcode === 28) { // BEQ
+          condition = RD1 === RD2; // BEQ: equa;
+        } else if (opcode === 29) { // BNE
+          condition = RD1 !== RD2;
+        } else {
+          condition = false;
+        }
         newFrame.mux.pcsel.value = condition ? value.PCSEL[1] : value.PCSEL[0];
         PCSEL = condition ? value.PCSEL[1] : value.PCSEL[0];
         pcselDescription = `PCSEL is set to ${newFrame.mux.pcsel.value}, selecting ${condition ? "branch target" : "PC + 4 + SXT"}`;
@@ -1830,9 +1752,10 @@ export function simulate(
             );
             break;
         }
-        if (value.WASEL === 1) {
+        if (WASEL === 1) {
           newFrame_dec.cl.wasel.value = 1;
           newFrame_dec.cl.wasel.dirty = false;
+          newFrame_dec.mux.wasel.value = 1;
           newFrame_dec.mux.wasel.dirty = false;
           newFrame_dec.mux.wasel.value = 1
           newFrame_dec.cl.wasel.description = "WASEL is set to 1 because the operation has triggered an Exception. The PC is stored in XP.";
@@ -1933,9 +1856,8 @@ export function simulate(
         newFrame_exe.mux.bsel.focus = true;
         newFrame_exe.descriptionOfStep += `${bselDescription}\n`;
       }
-        let alufnDescription = "ALUFN default value is null.";
-        
-        if (value.ALUFN != null) {
+      let alufnDescription = "ALUFN default value is null.";
+      if (value.ALUFN != null) {
           ALUFN = value.ALUFN;
           aluo = executeALUFN(A, B, ALUFN); //todo: ensure the output is two complement
           alufnDescription = `ALUFN is set to ${ALUFN}, performing ALU operation.`;
@@ -1969,40 +1891,46 @@ export function simulate(
         newFrame_exe.descriptionOfStep += `${alufnDescription}\n`;
         newFrame_exe.descriptionOfStep += `ALU output: ${aluo}\n`;
 
-        if (opcode === 27) {
+          if (PCSEL === 2) {
             // 计算跳转目标地址
-            JT = pcpf + params[0] * 4;
+            JT = pcpf;
             let jtDescription = `Jump Target (JT) is set to address 0x${JT.toString(16)}.`;
             if (instructionDetails.WERF === 1 && params[3] !== 31) {
               newFrame_exe.registers[params[3]] = JT;
             }
         
+            programCounter = newFrame_exe.registers[params[2]];
+            console.log(`Program Counter updated to: 0x${programCounter.toString(16)}`);
             // 更新 cl.jt
-            newFrame_exe.cl.jt.value = JT;
+            newFrame_exe.cl.jt.value = 1;
             newFrame_exe.cl.jt.dirty = false;
             newFrame_exe.cl.jt.description = jtDescription;
             newFrame_exe.cl.jt.focus = true;
-        
             newFrame_exe.descriptionOfStep += `${jtDescription}\n`;
-            programCounter = JT;
-            //pcsel == 2
-        } else if (opcode === 0x28 || opcode === 0x29) {
+          } else if (PCSEL === 1) {
           JT = pcpf + params[0] * 4;
-          if ((opcode === 0x28 && RD1 === RD2) || (opcode === 0x29 && RD1 !== RD2)) {
-            programCounter = JT; 
-            if (instructionDetails.WERF === 1 && params[3] !== 31) {
-            newFrame_exe.registers[params[3]] = JT;
-            }
-            newFrame_exe.descriptionOfStep += `Branch taken to address 0x${JT.toString(16)}.\n`;
-
-            newFrame_exe.cl.jt.value = JT;
-            newFrame_exe.cl.jt.dirty = false;
-            newFrame_exe.cl.jt.description = `Branch taken to address 0x${JT.toString(16)}.\n`;
-            newFrame_exe.cl.jt.focus = true;
-        } else {
-            programCounter = pcpf; // 条件不满足，继续执行下一条指令
+          const Ra = RD1; 
+          const Rc = params[3];
+          const branchTaken = (opcode === 28 && Ra === 0) || (opcode === 29 && Ra !== 0);
+      
+            if (branchTaken) {
+              programCounter = JT;
+      
+              if (instructionDetails.WERF === 1 && Rc !== 31) {
+                  newFrame_exe.registers[Rc] = pcpf; // PC+4 写入 Rc
+                  console.log(`Reg[Rc] (${Rc}) updated with return address: 0x${pcpf.toString(16)}`);
+              }
+      
+              newFrame_exe.descriptionOfStep += `Branch taken to address 0x${JT.toString(16)}.\n`;
+              newFrame_exe.cl.jt.value = JT;
+              newFrame_exe.cl.jt.dirty = false;
+              newFrame_exe.cl.jt.description = `Branch taken to address 0x${JT.toString(16)}.\n`;
+              newFrame_exe.cl.jt.focus = true;
+            } else {
+              programCounter = pcpf;
+              newFrame_exe.descriptionOfStep += "Branch not taken. Continue to next instruction.\n";
+          }
         }
-      }
 
         console.log("ALU output:", aluo);
         updatePathsBasedOnInstruction(newFrame_exe, instructionDetails, "execute");
@@ -2156,9 +2084,9 @@ export function simulate(
         newFrame_wb.cl.wdsel.description = wdselDescription;
         newFrame_wb.cl.wdsel.focus = true;
 
-        let werfDescription = "";
+          let werfDescription = "";
 
-        if (value.WERF != null) {
+          if (value.WERF != null) {
             WERF = value.WERF;
             console.log("WERF=" + WERF);
           } else {
@@ -2203,10 +2131,6 @@ export function simulate(
           frames.push(newFrame_wb);
         programCounter = pcpf;
         break;
-      } else {
-        console.log("No instruction found for opcode " + opcode.toString(2));
-        XP=programCounter;
-        // PCSEL=3;
       }
     }
   }
