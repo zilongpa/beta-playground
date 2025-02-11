@@ -34,13 +34,50 @@ import { EmulatorContext } from "./emulatorContext";
 
 localStorage.setItem("version", "0.0.0");
 
-const DEFAULT_ASSEMBLY_CODE = `ADDC(R31, 6, R1)
-SUBC(R31, 18, R2)
-ADD(R1, R2, R3) | write R1+R2 to R3
-HALT() | exit
+const DEFAULT_ASSEMBLY_CODE = 
+`// This is just a poc version of the program so some error may occur
+// Open an issue on Github if you find any bug
 
-// This is just a poc version of the program so it's not optimized
-// We will fix this after finishing up the transfer applications :(
+LD(R31, 0x0000,R10)
+ADDC(R31, 11, R1)
+SUBC(R1, 1, R2)
+MULC(R2, 2, R3)
+DIVC(R3, 4, R4)
+CMPEQC(R4, 5, R5)
+CMPLTC(R4, 10, R6)
+CMPLEC(R4, 5, R7)
+LDR(R9, 0x0000, R8)
+ST(R1, 0x0002, R31)
+ADDC(R31, 0x0010, R11)
+ADDC(R31, 01, R12)
+JMP(R11, R12)
+SUBC(R5, 1, R5)
+BEQ(R5, 0x0020, R13)
+ADDC(R31, 0x0030, R14)
+BNE(R5, 0x0040, R14)
+ADD(R1, R2, R15)
+SUB(R1, R2, R16)
+MUL(R2, R4, R17)
+DIV(R17, R2, R18)
+CMPEQ(R1, R2, R19)
+CMPLT(R1, R2, R20)
+CMPLE(R1, R2, R21)
+AND(R1, R2, R22)
+OR(R1, R2, R23)
+XOR(R1, R2, R24)
+SHL(R1, R2, R25)
+SHR(R1, R2, R26)
+SRA(R1, R2, R27)
+ANDC(R1, 0x000F, R28)
+ORC(R2, 0x000F, R29)
+XORC(R2, 0x000F, R30)
+SHLC(R1, 2, R1)
+SHRC(R1, 1, R2)
+SRAC(R1, 1, R3)
+ADDC(R31, 0x1, R9)
+JMP(R9, R31)
+
+HALT() | exit
 `;
 
 const DEFAULT_FRAME = {

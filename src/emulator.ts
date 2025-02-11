@@ -546,6 +546,7 @@ jsep.addLiteral("XP", registerSymbols[30]);
 const FSLSH_CODE = 47; // /
 const ASTSK_CODE = 42; // *
 const PIPE_CODE = 124; // |
+const SHARP_CODE = 35; // #
 const LF_CODE = 10;
 const jsep_plugin: IPlugin = {
   name: "beta-asm-extra",
@@ -579,6 +580,14 @@ const jsep_plugin: IPlugin = {
         }
       } else if (this.code === PIPE_CODE) {
         // '|': read to end of line/input
+        let ch = this.expr.charCodeAt(this.index + 1);
+        this.index += 1;
+        while (ch !== LF_CODE && !isNaN(ch)) {
+          ch = this.expr.charCodeAt(++this.index);
+        }
+        this.gobbleSpaces();
+      } else if (this.code === SHARP_CODE) {
+        // '#': read to end of line/input
         let ch = this.expr.charCodeAt(this.index + 1);
         this.index += 1;
         while (ch !== LF_CODE && !isNaN(ch)) {
@@ -643,7 +652,7 @@ function evaluate(expression: any): any {
 
 export function assemble(
   assemblyCode: string,
-  buffer: ArrayBuffer = new ArrayBuffer(128),
+  buffer: ArrayBuffer = new ArrayBuffer(256),
   offset: number = 0,
   ensureHaltAtEnd: boolean = true,
   littleEndian: boolean = false
@@ -896,7 +905,7 @@ export function simulate(
 
   function uint16ToTwosComplement(uint16: number): number {
     if (uint16 < 0 || uint16 > 0xffff) {
-      throw new RangeError("Input is not a valid 16-bit unsigned integer");
+      throw new RangeError(`${uint16} is not a valid 16-bit unsigned integer`);
     }
     if (uint16 & 0x8000) {
       return uint16 - 0x10000;
@@ -2018,7 +2027,7 @@ export function simulate(
         memoryDescription += `${moeDescription}\n`;
 
         if (MOE == 1) {
-          RD = uint16ToTwosComplement(memory.getUint32(Adr, littleEndian));
+          RD = uint16ToTwosComplement(memory.getUint16(Adr, littleEndian));
           console.log("Read data", RD, " from memory address:", Adr);
           if (instructionDetails.WERF === 1 && params[3] !== 31) {
             newFrame_mem.registers[params[3]] = RD;
