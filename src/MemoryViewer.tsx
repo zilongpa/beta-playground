@@ -13,6 +13,7 @@ function MemoryViewer() {
         overflowY: "auto",
         overflowX: "hidden",
       }}
+      key={currentFrame + frames[currentFrame].offsetOfInstruction}
     >
       <HexEditor
         height="100%"

@@ -867,6 +867,11 @@ export function simulate(
   maximumStep: number = 1000,
   littleEndian: boolean = false
 ) {
+  function copyBuffer(src: ArrayBuffer): ArrayBuffer{
+    let a = new Uint8Array(src);
+    let b = new Uint8Array(a);
+    return b.buffer
+  }
   function setRegisterValue(index: number, value: number): void {
     if (index < 0 || index > 31) {
       throw new Error("Register index out of bounds");
@@ -936,7 +941,7 @@ export function simulate(
       }
     },
     registers: Array(32).fill(0),
-    buffer: buffer,
+    buffer: copyBuffer(buffer),
     programCounter: 0, // 当前的PC，在没有jump和error handle的情况下应该和offsetOfInstruction相同
     mux: {
       pcsel: {
@@ -1975,6 +1980,8 @@ export function simulate(
         if (MWR == 1) {
           console.log("Write data", mWD, " to memory address:", Adr);
           memory.setUint16(Adr, mWD, littleEndian);  
+          newFrame_exe.buffer = copyBuffer(memory.buffer);
+          newFrame_mem.buffer = newFrame_exe.buffer;
         }
 
         let moeDescription = "MOE default value is 0 (no memory read).";
@@ -2031,6 +2038,7 @@ export function simulate(
         newFrame_wb.titleOfStep = "Write Back: Write results to register";
         newFrame_wb.descriptionOfStep = "Write the results of the operation back to the register.";
         newFrame_wb.iconOfStep = "unarchive"
+        newFrame_wb.buffer = newFrame_exe.buffer;
         
         console.log("[CU signal]", "WDSEL:", value.WDSEL);
         let wdselDescription = "";
